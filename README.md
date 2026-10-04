@@ -2,6 +2,8 @@
 
 ![《观气行旅》雾隐渡场景总览](guanqi-game/assets/mist-ferry-world.png)
 
+[在线试玩（GitHub Pages）](https://yiqian-liang.github.io/guanqi-journey-demo/)
+
 一款把传统形势观察与四柱关系转译成空间谜题的中文叙事探索 Demo。玩家以越肩视角进入雾村，先看环境发生了什么，再通过移动屏风、稳定灯火、照出桥痕和启动桥台理解因果；术语只在操作之后出现，不要求玩家先背规则。
 
 这不是现实风水或命运预测工具。命盘用于虚构角色构筑、法式消耗和人物协作；所有传统文本均按历史文化材料处理。
@@ -84,4 +86,3 @@ python3 tools/validate_handoff.py
 地图和人物头像为本项目原创 AI 生成素材，没有使用商业游戏地图、角色、Logo 或字体。Three.js 0.186.0 以 MIT License 随仓库保存；完整台账见 [`guanqi-game/assets/ASSET_LICENSES.md`](guanqi-game/assets/ASSET_LICENSES.md)。
 
 当前 Demo 是单人原型，不宣称已实现真人联机；角色仍使用简化低多边形几何体，重点是镜头、空间、剧情和任务可读性。
-
