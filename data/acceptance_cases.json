@@ -1,0 +1,534 @@
+{
+  "schemaVersion": 4,
+  "scope": "requirements_not_results",
+  "cases": [
+    {
+      "id": "C01",
+      "level": "P0",
+      "title": "创建全模式",
+      "expected": "random/custom/code/template都保留完整盘；模板仅示例",
+      "evidenceType": "unit+UI",
+      "status": "NOT_RUN_ON_GAME"
+    },
+    {
+      "id": "C02",
+      "level": "P0",
+      "title": "锁定冲突",
+      "expected": "日干/日柱矛盾、布尔索引、未知字段拒绝且原草稿不改",
+      "evidenceType": "unit",
+      "status": "NOT_RUN_ON_GAME"
+    },
+    {
+      "id": "C03",
+      "level": "P0",
+      "title": "随机跨语言",
+      "expected": "14例冻结选择和64原始向量一致",
+      "evidenceType": "unit",
+      "status": "NOT_RUN_ON_GAME"
+    },
+    {
+      "id": "C04",
+      "level": "P0",
+      "title": "分享码",
+      "expected": "GQ1严格格式/往返，未知版本拒绝",
+      "evidenceType": "unit",
+      "status": "NOT_RUN_ON_GAME"
+    },
+    {
+      "id": "C05",
+      "level": "P0",
+      "title": "完整空间",
+      "expected": "518400结构组合合法；仅参考结构枚举，不声称历日有效",
+      "evidenceType": "reference",
+      "status": "NOT_RUN_ON_GAME"
+    },
+    {
+      "id": "C06",
+      "level": "P0",
+      "title": "确认不可变",
+      "expected": "确认后普通命令不能修改出生盘",
+      "evidenceType": "integration",
+      "status": "NOT_RUN_ON_GAME"
+    },
+    {
+      "id": "R01",
+      "level": "P0",
+      "title": "藏干与预算",
+      "expected": "12表完整；每支合计1，元素8/自身十神7/跨人8",
+      "evidenceType": "unit",
+      "status": "NOT_RUN_ON_GAME"
+    },
+    {
+      "id": "R02",
+      "level": "P0",
+      "title": "生枝土",
+      "expected": "土0.8、隐藏节点11，不再土0",
+      "evidenceType": "unit",
+      "status": "NOT_RUN_ON_GAME"
+    },
+    {
+      "id": "R03",
+      "level": "P0",
+      "title": "十神方向",
+      "expected": "甲癸正印、癸甲伤官；100矩阵一致",
+      "evidenceType": "unit",
+      "status": "NOT_RUN_ON_GAME"
+    },
+    {
+      "id": "R04",
+      "level": "P0",
+      "title": "根透位置",
+      "expected": "同字连接有完整owner/pillar节点；同元素另列",
+      "evidenceType": "unit",
+      "status": "NOT_RUN_ON_GAME"
+    },
+    {
+      "id": "R05",
+      "level": "P0",
+      "title": "合不自动化",
+      "expected": "保留原字与预算；缺一三合不完整",
+      "evidenceType": "unit",
+      "status": "NOT_RUN_ON_GAME"
+    },
+    {
+      "id": "R06",
+      "level": "P0",
+      "title": "重叠关系",
+      "expected": "六合/刑/破等可并存，自刑不自证",
+      "evidenceType": "unit",
+      "status": "NOT_RUN_ON_GAME"
+    },
+    {
+      "id": "R07",
+      "level": "P0",
+      "title": "旬空",
+      "expected": "60日柱覆盖，不能只拿日支算",
+      "evidenceType": "unit",
+      "status": "NOT_RUN_ON_GAME"
+    },
+    {
+      "id": "R08",
+      "level": "P0",
+      "title": "十二阶段",
+      "expected": "明确observer与承载支，阴逆阳顺所选版本",
+      "evidenceType": "unit",
+      "status": "NOT_RUN_ON_GAME"
+    },
+    {
+      "id": "R09",
+      "level": "P0",
+      "title": "12神煞",
+      "expected": "混合天德目标与阴干阳刃not_applicable正确",
+      "evidenceType": "unit",
+      "status": "NOT_RUN_ON_GAME"
+    },
+    {
+      "id": "R10",
+      "level": "P0",
+      "title": "实例证据",
+      "expected": "同位多锚点只多proof；异位同字分开；跨owner不合并",
+      "evidenceType": "unit",
+      "status": "NOT_RUN_ON_GAME"
+    },
+    {
+      "id": "R11",
+      "level": "P0",
+      "title": "来源域",
+      "expected": "当前时辰/队友/地景不能增改本命统计",
+      "evidenceType": "integration",
+      "status": "NOT_RUN_ON_GAME"
+    },
+    {
+      "id": "R12",
+      "level": "P0",
+      "title": "双天乙示例",
+      "expected": "2天乙/月丑旬空/丑未冲同时保留",
+      "evidenceType": "unit",
+      "status": "NOT_RUN_ON_GAME"
+    },
+    {
+      "id": "A01",
+      "level": "P0",
+      "title": "15组件操作",
+      "expected": "同组件前提跨至少2不同对象复用，不用ID元素锁",
+      "evidenceType": "unit+UI",
+      "status": "NOT_RUN_ON_GAME"
+    },
+    {
+      "id": "A02",
+      "level": "P0",
+      "title": "原子失败",
+      "expected": "非法目标/越距/资源不足/反应超限无部分扣除",
+      "evidenceType": "integration",
+      "status": "NOT_RUN_ON_GAME"
+    },
+    {
+      "id": "A03",
+      "level": "P0",
+      "title": "有限资源",
+      "expected": "生长/水/土/材料不复制，换队不返蓝",
+      "evidenceType": "integration",
+      "status": "NOT_RUN_ON_GAME"
+    },
+    {
+      "id": "A04",
+      "level": "P0",
+      "title": "过量反馈",
+      "expected": "过湿、热损、承重可见且可恢复，不毁关键件",
+      "evidenceType": "UI",
+      "status": "NOT_RUN_ON_GAME"
+    },
+    {
+      "id": "A05",
+      "level": "P0",
+      "title": "通道预约",
+      "expected": "同节点不双用，同支合计不超1，1主1支撑",
+      "evidenceType": "unit",
+      "status": "NOT_RUN_ON_GAME"
+    },
+    {
+      "id": "A06",
+      "level": "P0",
+      "title": "支撑叠加",
+      "expected": "月令/根缓冲只一次，相冲仅当次主动使用",
+      "evidenceType": "unit",
+      "status": "NOT_RUN_ON_GAME"
+    },
+    {
+      "id": "A07",
+      "level": "P0",
+      "title": "10协作",
+      "expected": "来源天干选定，角色本领不变，真实空间发生",
+      "evidenceType": "unit+UI",
+      "status": "NOT_RUN_ON_GAME"
+    },
+    {
+      "id": "A08",
+      "level": "P0",
+      "title": "持续中断",
+      "expected": "费用不足/到期/离队的临时桥安全收回",
+      "evidenceType": "integration+UI",
+      "status": "NOT_RUN_ON_GAME"
+    },
+    {
+      "id": "A09",
+      "level": "P0",
+      "title": "命令幂等",
+      "expected": "相同ID重放返回原结果；相同ID异payload拒绝",
+      "evidenceType": "integration",
+      "status": "NOT_RUN_ON_GAME"
+    },
+    {
+      "id": "A10",
+      "level": "P0",
+      "title": "反应队列",
+      "expected": "草稿深度4/最多32事件，粒子不产权威事实",
+      "evidenceType": "integration",
+      "status": "NOT_RUN_ON_GAME"
+    },
+    {
+      "id": "N01",
+      "level": "P0",
+      "title": "不会默认入队",
+      "expected": "初始所有NPC独立；现场帮助与同行分离",
+      "evidenceType": "UI",
+      "status": "NOT_RUN_ON_GAME"
+    },
+    {
+      "id": "N02",
+      "level": "P0",
+      "title": "作息覆盖",
+      "expected": "12时辰/地点可达，在队约定优先作息",
+      "evidenceType": "unit+UI",
+      "status": "NOT_RUN_ON_GAME"
+    },
+    {
+      "id": "N03",
+      "level": "P0",
+      "title": "邀请条件",
+      "expected": "义务/时间/路线/容量/接受都验证",
+      "evidenceType": "integration",
+      "status": "NOT_RUN_ON_GAME"
+    },
+    {
+      "id": "N04",
+      "level": "P0",
+      "title": "自由队伍",
+      "expected": "0/1/2伙伴任意合法组合，安全告别和重逢",
+      "evidenceType": "UI",
+      "status": "NOT_RUN_ON_GAME"
+    },
+    {
+      "id": "N05",
+      "level": "P0",
+      "title": "随机窗口",
+      "expected": "同窗口不重抽；无效不涨；第4有效保底",
+      "evidenceType": "unit",
+      "status": "NOT_RUN_ON_GAME"
+    },
+    {
+      "id": "N06",
+      "level": "P0",
+      "title": "预约替代",
+      "expected": "调查后可约相遇，但不强制对方入队",
+      "evidenceType": "UI",
+      "status": "NOT_RUN_ON_GAME"
+    },
+    {
+      "id": "S01",
+      "level": "P0",
+      "title": "12类与6家族",
+      "expected": "12类查询+六家族+辅助分支全部实接",
+      "evidenceType": "UI",
+      "status": "NOT_RUN_ON_GAME"
+    },
+    {
+      "id": "S02",
+      "level": "P0",
+      "title": "状态解耦",
+      "expected": "结构/认知/运行/阻碍独立保存",
+      "evidenceType": "integration",
+      "status": "NOT_RUN_ON_GAME"
+    },
+    {
+      "id": "S03",
+      "level": "P0",
+      "title": "作用域",
+      "expected": "same_carrier不跨位置/owner拼，未知组合无效果",
+      "evidenceType": "unit",
+      "status": "NOT_RUN_ON_GAME"
+    },
+    {
+      "id": "S04",
+      "level": "P0",
+      "title": "限额不删记录",
+      "expected": "2主动/2显化只排队，送信不被挡",
+      "evidenceType": "integration",
+      "status": "NOT_RUN_ON_GAME"
+    },
+    {
+      "id": "S05",
+      "level": "P0",
+      "title": "奖励幂等",
+      "expected": "实例多/重进/重连不重复发唯一奖",
+      "evidenceType": "integration",
+      "status": "NOT_RUN_ON_GAME"
+    },
+    {
+      "id": "S06",
+      "level": "P0",
+      "title": "错过可恢复",
+      "expected": "窗口过后能再来，事件租约不瞬间删NPC",
+      "evidenceType": "UI",
+      "status": "NOT_RUN_ON_GAME"
+    },
+    {
+      "id": "W01",
+      "level": "P0",
+      "title": "地图三层",
+      "expected": "走路/环境/作息用同一状态衔接，layer不串",
+      "evidenceType": "integration+UI",
+      "status": "NOT_RUN_ON_GAME"
+    },
+    {
+      "id": "W02",
+      "level": "P0",
+      "title": "初始钥匙",
+      "expected": "三识路线索/轴芯/手记都在门前可达",
+      "evidenceType": "graph+UI",
+      "status": "NOT_RUN_ON_GAME"
+    },
+    {
+      "id": "W03",
+      "level": "P0",
+      "title": "三主线",
+      "expected": "水/风/识路各由真实键鼠从创建走完",
+      "evidenceType": "UI",
+      "status": "NOT_RUN_ON_GAME"
+    },
+    {
+      "id": "W04",
+      "level": "P0",
+      "title": "六入口路径",
+      "expected": "随机/定制×水/风/识路共6真实流程",
+      "evidenceType": "UI",
+      "status": "NOT_RUN_ON_GAME"
+    },
+    {
+      "id": "W05",
+      "level": "P0",
+      "title": "水量账",
+      "expected": "每状态输入=三个输出；气脉不得混算水量",
+      "evidenceType": "unit",
+      "status": "NOT_RUN_ON_GAME"
+    },
+    {
+      "id": "W06",
+      "level": "P0",
+      "title": "恢复边界",
+      "expected": "夜/零蓝/无NPC/拒绝/错过随机仍存在推进路",
+      "evidenceType": "integration+UI",
+      "status": "NOT_RUN_ON_GAME"
+    },
+    {
+      "id": "W07",
+      "level": "P0",
+      "title": "九点位组",
+      "expected": "各有观察→判断→操作→反馈，不是9同款箱",
+      "evidenceType": "UI",
+      "status": "NOT_RUN_ON_GAME"
+    },
+    {
+      "id": "W08",
+      "level": "P0",
+      "title": "安全返程",
+      "expected": "首次到渡口后始终能返回，空亡市出口始终可用",
+      "evidenceType": "UI",
+      "status": "NOT_RUN_ON_GAME"
+    },
+    {
+      "id": "W09",
+      "level": "P0",
+      "title": "结尾不可追写",
+      "expected": "首次快照、信状态、完成回执一次事务",
+      "evidenceType": "integration",
+      "status": "NOT_RUN_ON_GAME"
+    },
+    {
+      "id": "P01",
+      "level": "P0",
+      "title": "结构验证",
+      "expected": "恶意/过大JSON、未知版本、原盘不合法拒绝",
+      "evidenceType": "unit",
+      "status": "NOT_RUN_ON_GAME"
+    },
+    {
+      "id": "P02",
+      "level": "P0",
+      "title": "双代际",
+      "expected": "写入失败保留最后有效current且不报成功",
+      "evidenceType": "browser",
+      "status": "NOT_RUN_ON_GAME"
+    },
+    {
+      "id": "P03",
+      "level": "P0",
+      "title": "身份不丢",
+      "expected": "全部chart/origin/locks/code/显示名保留",
+      "evidenceType": "integration",
+      "status": "NOT_RUN_ON_GAME"
+    },
+    {
+      "id": "P04",
+      "level": "P0",
+      "title": "迁移未知来源",
+      "expected": "schema3缺origin显式unknown不编seed",
+      "evidenceType": "integration",
+      "status": "NOT_RUN_ON_GAME"
+    },
+    {
+      "id": "P05",
+      "level": "P0",
+      "title": "历史迁移",
+      "expected": "旧阵完成/旧队友/旧通关快照保留事实",
+      "evidenceType": "integration",
+      "status": "NOT_RUN_ON_GAME"
+    },
+    {
+      "id": "P06",
+      "level": "P0",
+      "title": "真人档隔离",
+      "expected": "房主环境不覆盖访客个人世界",
+      "evidenceType": "network",
+      "status": "NOT_RUN_ON_GAME"
+    },
+    {
+      "id": "U01",
+      "level": "P1",
+      "title": "画面可读",
+      "expected": "主要是可行走地图，中文放大仍能操作",
+      "evidenceType": "UI",
+      "status": "NOT_RUN_ON_GAME"
+    },
+    {
+      "id": "U02",
+      "level": "P1",
+      "title": "环境可见",
+      "expected": "不开观气也能辨水/风/叶/雾变化",
+      "evidenceType": "UI",
+      "status": "NOT_RUN_ON_GAME"
+    },
+    {
+      "id": "U03",
+      "level": "P1",
+      "title": "可访问操作",
+      "expected": "鼠标替代、舒适模式、字幕、减动态可用",
+      "evidenceType": "UI",
+      "status": "NOT_RUN_ON_GAME"
+    },
+    {
+      "id": "U04",
+      "level": "P1",
+      "title": "性能报告",
+      "expected": "记录硬件/浏览器/分辨率/测量方法，目标与实测分开",
+      "evidenceType": "measurement",
+      "status": "NOT_RUN_ON_GAME"
+    },
+    {
+      "id": "U05",
+      "level": "P1",
+      "title": "趣味性",
+      "expected": "5—8人实际试玩或明确未做，不用单测冒充",
+      "evidenceType": "human",
+      "status": "NOT_RUN_ON_GAME"
+    },
+    {
+      "id": "CO01",
+      "level": "P0-COOP",
+      "title": "真实客户端",
+      "expected": "2—3实际浏览器共享机关/时钟/队伍",
+      "evidenceType": "network",
+      "status": "NOT_RUN_ON_GAME"
+    },
+    {
+      "id": "CO02",
+      "level": "P0-COOP",
+      "title": "并发机关",
+      "expected": "权威顺序＋revision/幂等，不双发奖励",
+      "evidenceType": "network",
+      "status": "NOT_RUN_ON_GAME"
+    },
+    {
+      "id": "CO03",
+      "level": "P0-COOP",
+      "title": "断线桥上",
+      "expected": "安全迁移，重连snapshot不覆盖新状态",
+      "evidenceType": "network",
+      "status": "NOT_RUN_ON_GAME"
+    },
+    {
+      "id": "CO04",
+      "level": "P0-COOP",
+      "title": "个人菜单",
+      "expected": "不暂停他人，全员ready才跳时",
+      "evidenceType": "network",
+      "status": "NOT_RUN_ON_GAME"
+    },
+    {
+      "id": "CO05",
+      "level": "P0-COOP",
+      "title": "隐私同意",
+      "expected": "完整虚构盘未同意不下发，只给协作摘要",
+      "evidenceType": "network",
+      "status": "NOT_RUN_ON_GAME"
+    },
+    {
+      "id": "CO06",
+      "level": "P0-COOP",
+      "title": "世界隔离",
+      "expected": "访客离房保留获准个人结果不覆盖自己的地形",
+      "evidenceType": "network",
+      "status": "NOT_RUN_ON_GAME"
+    }
+  ]
+}

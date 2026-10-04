@@ -1,0 +1,223 @@
+{
+  "schemaVersion": 4,
+  "id": "mist_ferry",
+  "contentVersion": "0.4.0",
+  "startNode": "camp",
+  "goal": "在旧渡口与摆渡人交信",
+  "initialFlags": {
+    "letterReceived": true,
+    "lensTutorialSeen": false,
+    "reachedVillage": false,
+    "reachedDock": false,
+    "letterDelivered": false,
+    "chapterComplete": false,
+    "markerPositionObserved": false,
+    "traceLearned": false,
+    "bellReturned": false,
+    "riverNamesLearned": false,
+    "milestoneRestored": false,
+    "routeSurveyed": false,
+    "inscriptionCompared": false,
+    "publicStoryHeard": false,
+    "cargoDisputeKnown": false,
+    "cargoDisputeResolved": false,
+    "cargoSupportRepaired": false,
+    "cargoSafeCutDone": false,
+    "mediatorAvailable": false,
+    "insideEmptyMarket": false,
+    "missingNameObserved": false,
+    "missingNameReturned": false,
+    "fastTravelUnlocked": false,
+    "lanternLit": false,
+    "toolsReturned": false,
+    "planExplained": false,
+    "careArranged": false,
+    "journeyAgreed": false,
+    "gorgeVineReady": false,
+    "gorgeStonesExposed": false,
+    "gorgeSlopeStable": false,
+    "met_a_lan": false,
+    "met_shi_heng": false,
+    "met_sang_yu": false,
+    "met_road_guest": false,
+    "protectionActionCompleted": false,
+    "teamAtTwoSafePosts": false,
+    "safeCutPathObserved": false
+  },
+  "items": [
+    {
+      "id": "letter",
+      "name": "渡口信",
+      "kind": "quest_bound",
+      "max": 1
+    },
+    {
+      "id": "axis_core",
+      "name": "旧轴芯",
+      "kind": "quest_bound",
+      "max": 1
+    },
+    {
+      "id": "ancient_bell",
+      "name": "古铃",
+      "kind": "quest_bound",
+      "max": 1
+    },
+    {
+      "id": "tool_bag",
+      "name": "巡渠工具袋",
+      "kind": "quest_bound",
+      "max": 1
+    },
+    {
+      "id": "echo_token",
+      "name": "集市回响签",
+      "kind": "echo_only",
+      "max": 9
+    },
+    {
+      "id": "reed_rope",
+      "name": "芦绳",
+      "kind": "ordinary",
+      "max": 20
+    },
+    {
+      "id": "solder",
+      "name": "补缝料",
+      "kind": "ordinary",
+      "max": 20
+    }
+  ],
+  "clues": [
+    {
+      "id": "clue_water_trace",
+      "node": "canal",
+      "meaning": "缺水来自通路不连通"
+    },
+    {
+      "id": "clue_wind_bell",
+      "node": "bell",
+      "meaning": "铃声与安全侧路方向"
+    },
+    {
+      "id": "clue_stone_inscription",
+      "node": "reflection_stone",
+      "meaning": "实际路标的方向与观察位置"
+    },
+    {
+      "id": "clue_old_river_name_a",
+      "node": "reflection_stone",
+      "meaning": "旧河名上半段"
+    },
+    {
+      "id": "clue_old_river_name_b",
+      "node": "village",
+      "meaning": "旧河名下半段"
+    },
+    {
+      "id": "clue_echo_name",
+      "node": "old_shrine",
+      "meaning": "缺名碑的可核对名字"
+    },
+    {
+      "id": "clue_hidden_return",
+      "node": "ferry",
+      "meaning": "已访问回程的安全支路"
+    }
+  ],
+  "manuals": [
+    {
+      "id": "manual_wood",
+      "node": "workshop",
+      "skills": [
+        "wood_growth",
+        "wood_bind"
+      ]
+    },
+    {
+      "id": "manual_fire",
+      "node": "ridge",
+      "skills": [
+        "fire_light",
+        "fire_rise"
+      ]
+    },
+    {
+      "id": "manual_earth",
+      "node": "herb",
+      "skills": [
+        "earth_channel",
+        "earth_store"
+      ]
+    },
+    {
+      "id": "manual_metal",
+      "node": "workshop",
+      "skills": [
+        "metal_join",
+        "metal_resonate"
+      ]
+    },
+    {
+      "id": "manual_water",
+      "node": "canal",
+      "skills": [
+        "water_moisten",
+        "water_reflect"
+      ]
+    }
+  ],
+  "initialInventory": {
+    "letter": 1,
+    "reed_rope": 2,
+    "solder": 2
+  },
+  "initialLearnedSkillIds": [
+    "wood_shape",
+    "fire_heat",
+    "earth_base",
+    "metal_cut",
+    "water_flow"
+  ],
+  "initialEnvironment": {
+    "gateRepaired": false,
+    "rootMode": "blocked",
+    "ventState": "closed",
+    "herbShield": false
+  },
+  "criticalPlacements": {
+    "axis_core": "canal",
+    "ancient_bell": "reflection_stone",
+    "tool_bag": "canal"
+  },
+  "personas": [
+    {
+      "id": "ferryman",
+      "name": "摆渡人",
+      "node": "ferry",
+      "kind": "story_persona",
+      "acceptsLetterAlways": true,
+      "partyEligible": false
+    },
+    {
+      "id": "yima_walker",
+      "name": "驿路行者",
+      "node": "ferry",
+      "kind": "manifestation",
+      "partyEligible": false
+    }
+  ],
+  "mainRouteIds": [
+    "water",
+    "wind",
+    "trace"
+  ],
+  "firstEntryClassification": "trace if fog>45 with trace lease, else mixed if water>0 and wind>0, else water or wind; store only once",
+  "comfortModeAvailable": true,
+  "chapterGoalDurationMinutes": [
+    35,
+    70
+  ],
+  "durationClaim": "design_target_not_measured",
+  "worldDayCycleStart": 0
+}

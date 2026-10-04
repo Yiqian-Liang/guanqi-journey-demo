@@ -1,0 +1,127 @@
+{
+  "schemaVersion": 4,
+  "groups": [
+    {
+      "id": "p01",
+      "name": "弯枝与近路",
+      "node": "camp",
+      "skillIds": [
+        "wood_shape",
+        "earth_base"
+      ],
+      "firstObservation": "柔性活枝挡着可选小径，附近有绕路。",
+      "resolution": "改变枝向或从踏石绕行；教学不会卡住主线。",
+      "singlePlayerFallback": true,
+      "origin": "original_game_rule"
+    },
+    {
+      "id": "p02",
+      "name": "旧桥轴芯",
+      "node": "canal",
+      "skillIds": [
+        "metal_cut",
+        "fire_heat"
+      ],
+      "firstObservation": "旧转轴与工具袋位于门外可达一侧。",
+      "resolution": "取轴芯；加热封胶或使用旁边手工具。",
+      "singlePlayerFallback": true,
+      "origin": "original_game_rule"
+    },
+    {
+      "id": "p03",
+      "name": "偏转的根",
+      "node": "canal",
+      "skillIds": [
+        "wood_shape",
+        "metal_cut",
+        "earth_channel"
+      ],
+      "firstObservation": "水尺、水车声与下游叶片共同显示堵点。",
+      "resolution": "导根、剪根或开旁渠；增长不是通用正确答案。",
+      "singlePlayerFallback": true,
+      "origin": "original_game_rule"
+    },
+    {
+      "id": "p04",
+      "name": "两个方向的铃",
+      "node": "wall",
+      "skillIds": [
+        "fire_rise",
+        "fire_light"
+      ],
+      "firstObservation": "墙外响而墙内不响。",
+      "resolution": "开风板或上山辨风；观察局部气流不等于永久开主路。",
+      "singlePlayerFallback": true,
+      "origin": "original_game_rule"
+    },
+    {
+      "id": "p05",
+      "name": "护苗与承载",
+      "node": "herb",
+      "skillIds": [
+        "earth_base",
+        "earth_store",
+        "wood_growth"
+      ],
+      "firstObservation": "叶片低垂与护屏裂缝可以前后对照。",
+      "resolution": "稳基、护屏、恢复通风；看见改变后果。",
+      "singlePlayerFallback": true,
+      "origin": "original_game_rule"
+    },
+    {
+      "id": "p06",
+      "name": "峡谷三径",
+      "node": "gorge_near",
+      "skillIds": [
+        "wood_bind",
+        "water_flow",
+        "earth_base"
+      ],
+      "firstObservation": "活藤、踏石、塌坡指向三个办法。",
+      "resolution": "三路同达对岸；原主环始终可绕行。",
+      "singlePlayerFallback": true,
+      "origin": "original_game_rule"
+    },
+    {
+      "id": "p07",
+      "name": "可修的金属接缝",
+      "node": "workshop",
+      "skillIds": [
+        "metal_join",
+        "metal_resonate",
+        "fire_heat"
+      ],
+      "firstObservation": "回声在裂缝处断开。",
+      "resolution": "按热窗口接合，或使用现成备用转轴；不要求唯一金命。",
+      "singlePlayerFallback": true,
+      "origin": "original_game_rule"
+    },
+    {
+      "id": "p08",
+      "name": "镜里少一行",
+      "node": "reflection_stone",
+      "skillIds": [
+        "water_reflect",
+        "water_moisten",
+        "fire_light"
+      ],
+      "firstObservation": "雾门前的反射碑与路标方向对应。",
+      "resolution": "取得初始可达的识路线索；不得放到门后碑廊。",
+      "singlePlayerFallback": true,
+      "origin": "original_game_rule"
+    },
+    {
+      "id": "p09",
+      "name": "渡口名字与驿路",
+      "node": "old_shrine",
+      "skillIds": [
+        "water_reflect",
+        "metal_resonate"
+      ],
+      "firstObservation": "缺名碑、废驿碑和远路传闻相互解释。",
+      "resolution": "完成支线后回访；关键路线无需等随机旅人。",
+      "singlePlayerFallback": true,
+      "origin": "original_game_rule"
+    }
+  ]
+}

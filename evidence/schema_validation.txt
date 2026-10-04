@@ -1,0 +1,2 @@
+PASS: 3 partial schemas; 7 charts, 1 selection, 1 synthetic save, 3 negative cases. jsonschema=4.26.0
+NOT TESTED: remaining business rules, actual browser persistence, save migration or game runtime.

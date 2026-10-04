@@ -1,0 +1,17 @@
+{
+  "inputs": [
+    {
+      "name": "guanqi_codex_handoff_v0.2.zip",
+      "sizeBytes": 76405,
+      "sha256": "25bf0c2cd19606a2752c418eaae148d8c38bc23da3541e7b3f643c1a4dfbff28",
+      "role": "read_only_merge_input_not_runtime_dependency"
+    },
+    {
+      "name": "guanqi_redesign_v0.3.zip",
+      "sizeBytes": 59309,
+      "sha256": "521e4ef1b012fa32119122d7807fb4cb19d2699af443ff57d2de82d685863c5c",
+      "role": "read_only_merge_input_not_runtime_dependency"
+    }
+  ],
+  "policy": "Old packages not changed and not embedded; this package is standalone."
+}

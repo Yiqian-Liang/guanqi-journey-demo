@@ -1,0 +1,91 @@
+{
+  "profileId": "GQ-BALANCE-0.4",
+  "origin": "original_unplaytested_parameters",
+  "sourceTotalBudget": 8,
+  "baseCastCost": 20,
+  "maxNatalDiscount": 0.15,
+  "castCostFormula": "ceil(baseCastCost * (1 - maxNatalDiscount * elementBudget / 8))",
+  "finalCastCostFloor": 8,
+  "simultaneousPrimarySources": 1,
+  "simultaneousSupportSources": 1,
+  "hiddenSourcePreparationSeconds": 2,
+  "sharedBranchBudgetCannotOverdraft": true,
+  "monthlyOrExactRootBufferSeconds": 2,
+  "monthlyAndRootBufferStacks": false,
+  "selectedClashingSourceOptions": {
+    "extraPreparationSeconds": 1,
+    "alternativeDurationSeconds": 10,
+    "normalDurationSeconds": 12
+  },
+  "strongWeakInterpretation": "not_implemented_no_claim",
+  "seasonDepth": "unknown_without_corresponding_calendar_or_explicit_fictional_season_metadata",
+  "notes": "原型参数不代表古法比例；数据成立不能证明效果可感知或平衡。日主参与元素预算8，但自己的十神统计排除日干，份额总7；跨人观察目标整盘为8。",
+  "schemaVersion": 4,
+  "channelBudget": {
+    "visiblePerPillar": 1,
+    "hiddenTotalPerBranch": 1,
+    "sharesByArity": {
+      "1": [
+        1.0
+      ],
+      "2": [
+        0.7,
+        0.3
+      ],
+      "3": [
+        0.6,
+        0.3,
+        0.1
+      ]
+    },
+    "claim": "original_game_budget_not_classical_strength"
+  },
+  "simulation": {
+    "ticksPerSecond": 60,
+    "maxCatchupSteps": 5,
+    "ticksPerPhase": 5400,
+    "phasesPerDay": 12,
+    "startPhase": 3,
+    "seasonTag": "spring"
+  },
+  "actor": {
+    "healthMax": 100,
+    "spiritMax": 100,
+    "npcFocusMax": 60,
+    "speedPixelsPerSecond": 192,
+    "tilePixels": 48,
+    "interactionTiles": 1.5,
+    "castRangeTiles": 4,
+    "castCooldownTicks": 60,
+    "supportCooldownTicks": 720,
+    "dodgeCooldownTicks": 60
+  },
+  "world": {
+    "temporaryDurationTicks": 720,
+    "occupiedEdgeGraceTicks": 480,
+    "traceWindowTicks": 1800,
+    "resourceFloorAfterRescue": 40,
+    "comfortDamage": 0,
+    "normalHazardDamage": 10,
+    "hazardWindupTicks": 48,
+    "hazardIntervalTicks": 180
+  },
+  "limits": {
+    "activePersonalEvents": 2,
+    "strongManifestationsPerScene": 2,
+    "maxReactionDepth": 4,
+    "maxEventsPerTransaction": 32,
+    "saveMaxBytes": 1048576
+  },
+  "channelRules": {
+    "hiddenPrepareTicks": 120,
+    "hiddenReadyTicks": 1200,
+    "monthlyOrExactRootBufferTicks": 120,
+    "clashExtraPrepareTicks": 60,
+    "clashShortDurationTicks": 600,
+    "maxReservationsPerActor": 2,
+    "reservationScope": "node_share_with_shared_branch_capacity",
+    "sustainCostPerSecond": 2
+  },
+  "baseCollaborationFocusCost": 12
+}

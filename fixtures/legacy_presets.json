@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "immutableCharts": {
+    "sprout": {
+      "mode": "authored_ganzhi",
+      "calendarVerified": false,
+      "year": "壬申",
+      "month": "乙巳",
+      "day": "甲寅",
+      "hour": "庚午"
+    },
+    "ember": {
+      "mode": "authored_ganzhi",
+      "calendarVerified": false,
+      "year": "戊寅",
+      "month": "壬戌",
+      "day": "丙子",
+      "hour": "乙未"
+    },
+    "edge": {
+      "mode": "authored_ganzhi",
+      "calendarVerified": false,
+      "year": "乙酉",
+      "month": "丁亥",
+      "day": "辛卯",
+      "hour": "壬辰"
+    }
+  },
+  "usage": "migration_only_not_player_limits"
+}

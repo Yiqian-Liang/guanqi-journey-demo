@@ -1,0 +1,136 @@
+{
+  "schemaVersion": 4,
+  "origin": "original_game_rule",
+  "selection": "getTenGod(primaryActor.dayStem, supportNode.stem)",
+  "oneSupportPerCast": true,
+  "cooldownTicks": 720,
+  "entries": [
+    {
+      "tenGod": "比肩",
+      "id": "hold_parallel",
+      "name": "同调",
+      "supportFocusCost": 12,
+      "parameters": {
+        "durationTicks": 480
+      },
+      "requiredAffordances": [
+        "secondary_pad",
+        "holdable_structure"
+      ]
+    },
+    {
+      "tenGod": "劫财",
+      "id": "share_cost",
+      "name": "分担",
+      "supportFocusCost": 18,
+      "parameters": {
+        "casterCostReduction": 6
+      },
+      "requiredAffordances": [
+        "any_valid_cast"
+      ]
+    },
+    {
+      "tenGod": "食神",
+      "id": "extend_duration",
+      "name": "延展",
+      "supportFocusCost": 12,
+      "parameters": {
+        "durationBonusTicks": 480
+      },
+      "requiredAffordances": [
+        "temporary_effect"
+      ]
+    },
+    {
+      "tenGod": "伤官",
+      "id": "extend_range",
+      "name": "外放",
+      "supportFocusCost": 12,
+      "parameters": {
+        "rangeBonusTiles": 1
+      },
+      "requiredAffordances": [
+        "ranged_cast"
+      ]
+    },
+    {
+      "tenGod": "偏财",
+      "id": "substitute_material",
+      "name": "周转",
+      "supportFocusCost": 12,
+      "parameters": {
+        "casterExtraSpirit": 10,
+        "ordinaryMaterialUnits": 1
+      },
+      "requiredAffordances": [
+        "substitutable_noncritical_material"
+      ]
+    },
+    {
+      "tenGod": "正财",
+      "id": "economize",
+      "name": "精用",
+      "supportFocusCost": 12,
+      "parameters": {
+        "casterCostReduction": 4
+      },
+      "requiredAffordances": [
+        "any_valid_cast"
+      ]
+    },
+    {
+      "tenGod": "七杀",
+      "id": "suppress_hazard",
+      "name": "镇压",
+      "supportFocusCost": 12,
+      "parameters": {
+        "durationTicks": 480,
+        "radiusTiles": 3,
+        "casterSpeedMultiplier": 0.75
+      },
+      "requiredAffordances": [
+        "suppressible_hazard"
+      ]
+    },
+    {
+      "tenGod": "正官",
+      "id": "stabilize_channel",
+      "name": "定式",
+      "supportFocusCost": 12,
+      "parameters": {
+        "interruptionsAbsorbed": 1,
+        "maxChannelTicks": 180
+      },
+      "requiredAffordances": [
+        "interruptible_channel"
+      ]
+    },
+    {
+      "tenGod": "偏印",
+      "id": "reveal_relation",
+      "name": "洞察",
+      "supportFocusCost": 12,
+      "parameters": {
+        "durationTicks": 480,
+        "clueCount": 1
+      },
+      "requiredAffordances": [
+        "authored_clue"
+      ]
+    },
+    {
+      "tenGod": "正印",
+      "id": "guard_trace",
+      "name": "护持",
+      "supportFocusCost": 12,
+      "parameters": {
+        "durationBonusTicks": 480,
+        "fogPushesAbsorbed": 1
+      },
+      "requiredAffordances": [
+        "trace_marker"
+      ]
+    }
+  ]
+}

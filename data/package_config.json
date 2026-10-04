@@ -1,0 +1,18 @@
+{
+  "packageVersion": "0.4.0",
+  "saveSchemaVersion": 4,
+  "contentVersion": "0.4.0",
+  "cultureProfileId": "GQ-CULTURE-0.3",
+  "balanceProfileId": "GQ-BALANCE-0.4",
+  "stageProfileId": "GQ-STAGE-YINYANG-0.3",
+  "creationProfileId": "gq-structural-v1",
+  "creationAlgorithmVersion": "gq-structural-mulberry32-v1",
+  "environmentProfileId": "GQ-ENV-0.4",
+  "artifactKind": "standalone_design_data_contracts_reference_tests_not_game",
+  "mainStartDocument": "README.md",
+  "agentStartDocument": "CODEX_PROMPT.md",
+  "defaultDelivery": "single_player_chapter",
+  "separateDelivery": "COOP-1",
+  "runtimeAI": false,
+  "onlineServicesRequiredForSinglePlayer": false
+}

@@ -1,0 +1,825 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "PARTIAL reference schema. Some event/receipt arrays and creation origins are shape-only. Requires runtime validation of full TS variants, registry references, ownership, capacity, chartCode equality, timing and finite values. Passing this schema is NOT valid game-save certification.",
+  "type": "object",
+  "properties": {
+    "schemaVersion": {
+      "const": 4
+    },
+    "contentVersion": {
+      "const": "0.4.0"
+    },
+    "cultureProfileId": {
+      "const": "GQ-CULTURE-0.3"
+    },
+    "balanceProfileId": {
+      "const": "GQ-BALANCE-0.4"
+    },
+    "environmentProfileId": {
+      "const": "GQ-ENV-0.4"
+    },
+    "worldId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "worldSeed": {
+      "type": "string",
+      "minLength": 1
+    },
+    "primaryPlayerId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "identities": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "kind": {
+            "enum": [
+              "human",
+              "npc"
+            ]
+          },
+          "displayName": {
+            "type": "string",
+            "minLength": 1
+          },
+          "appearanceId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "chart": {
+            "type": "object",
+            "properties": {
+              "mode": {
+                "enum": [
+                  "structural_ganzhi",
+                  "authored_ganzhi"
+                ]
+              },
+              "calendarVerified": {
+                "const": false
+              },
+              "year": {
+                "enum": [
+                  "甲子",
+                  "乙丑",
+                  "丙寅",
+                  "丁卯",
+                  "戊辰",
+                  "己巳",
+                  "庚午",
+                  "辛未",
+                  "壬申",
+                  "癸酉",
+                  "甲戌",
+                  "乙亥",
+                  "丙子",
+                  "丁丑",
+                  "戊寅",
+                  "己卯",
+                  "庚辰",
+                  "辛巳",
+                  "壬午",
+                  "癸未",
+                  "甲申",
+                  "乙酉",
+                  "丙戌",
+                  "丁亥",
+                  "戊子",
+                  "己丑",
+                  "庚寅",
+                  "辛卯",
+                  "壬辰",
+                  "癸巳",
+                  "甲午",
+                  "乙未",
+                  "丙申",
+                  "丁酉",
+                  "戊戌",
+                  "己亥",
+                  "庚子",
+                  "辛丑",
+                  "壬寅",
+                  "癸卯",
+                  "甲辰",
+                  "乙巳",
+                  "丙午",
+                  "丁未",
+                  "戊申",
+                  "己酉",
+                  "庚戌",
+                  "辛亥",
+                  "壬子",
+                  "癸丑",
+                  "甲寅",
+                  "乙卯",
+                  "丙辰",
+                  "丁巳",
+                  "戊午",
+                  "己未",
+                  "庚申",
+                  "辛酉",
+                  "壬戌",
+                  "癸亥"
+                ]
+              },
+              "month": {
+                "enum": [
+                  "甲子",
+                  "乙丑",
+                  "丙寅",
+                  "丁卯",
+                  "戊辰",
+                  "己巳",
+                  "庚午",
+                  "辛未",
+                  "壬申",
+                  "癸酉",
+                  "甲戌",
+                  "乙亥",
+                  "丙子",
+                  "丁丑",
+                  "戊寅",
+                  "己卯",
+                  "庚辰",
+                  "辛巳",
+                  "壬午",
+                  "癸未",
+                  "甲申",
+                  "乙酉",
+                  "丙戌",
+                  "丁亥",
+                  "戊子",
+                  "己丑",
+                  "庚寅",
+                  "辛卯",
+                  "壬辰",
+                  "癸巳",
+                  "甲午",
+                  "乙未",
+                  "丙申",
+                  "丁酉",
+                  "戊戌",
+                  "己亥",
+                  "庚子",
+                  "辛丑",
+                  "壬寅",
+                  "癸卯",
+                  "甲辰",
+                  "乙巳",
+                  "丙午",
+                  "丁未",
+                  "戊申",
+                  "己酉",
+                  "庚戌",
+                  "辛亥",
+                  "壬子",
+                  "癸丑",
+                  "甲寅",
+                  "乙卯",
+                  "丙辰",
+                  "丁巳",
+                  "戊午",
+                  "己未",
+                  "庚申",
+                  "辛酉",
+                  "壬戌",
+                  "癸亥"
+                ]
+              },
+              "day": {
+                "enum": [
+                  "甲子",
+                  "乙丑",
+                  "丙寅",
+                  "丁卯",
+                  "戊辰",
+                  "己巳",
+                  "庚午",
+                  "辛未",
+                  "壬申",
+                  "癸酉",
+                  "甲戌",
+                  "乙亥",
+                  "丙子",
+                  "丁丑",
+                  "戊寅",
+                  "己卯",
+                  "庚辰",
+                  "辛巳",
+                  "壬午",
+                  "癸未",
+                  "甲申",
+                  "乙酉",
+                  "丙戌",
+                  "丁亥",
+                  "戊子",
+                  "己丑",
+                  "庚寅",
+                  "辛卯",
+                  "壬辰",
+                  "癸巳",
+                  "甲午",
+                  "乙未",
+                  "丙申",
+                  "丁酉",
+                  "戊戌",
+                  "己亥",
+                  "庚子",
+                  "辛丑",
+                  "壬寅",
+                  "癸卯",
+                  "甲辰",
+                  "乙巳",
+                  "丙午",
+                  "丁未",
+                  "戊申",
+                  "己酉",
+                  "庚戌",
+                  "辛亥",
+                  "壬子",
+                  "癸丑",
+                  "甲寅",
+                  "乙卯",
+                  "丙辰",
+                  "丁巳",
+                  "戊午",
+                  "己未",
+                  "庚申",
+                  "辛酉",
+                  "壬戌",
+                  "癸亥"
+                ]
+              },
+              "hour": {
+                "enum": [
+                  "甲子",
+                  "乙丑",
+                  "丙寅",
+                  "丁卯",
+                  "戊辰",
+                  "己巳",
+                  "庚午",
+                  "辛未",
+                  "壬申",
+                  "癸酉",
+                  "甲戌",
+                  "乙亥",
+                  "丙子",
+                  "丁丑",
+                  "戊寅",
+                  "己卯",
+                  "庚辰",
+                  "辛巳",
+                  "壬午",
+                  "癸未",
+                  "甲申",
+                  "乙酉",
+                  "丙戌",
+                  "丁亥",
+                  "戊子",
+                  "己丑",
+                  "庚寅",
+                  "辛卯",
+                  "壬辰",
+                  "癸巳",
+                  "甲午",
+                  "乙未",
+                  "丙申",
+                  "丁酉",
+                  "戊戌",
+                  "己亥",
+                  "庚子",
+                  "辛丑",
+                  "壬寅",
+                  "癸卯",
+                  "甲辰",
+                  "乙巳",
+                  "丙午",
+                  "丁未",
+                  "戊申",
+                  "己酉",
+                  "庚戌",
+                  "辛亥",
+                  "壬子",
+                  "癸丑",
+                  "甲寅",
+                  "乙卯",
+                  "丙辰",
+                  "丁巳",
+                  "戊午",
+                  "己未",
+                  "庚申",
+                  "辛酉",
+                  "壬戌",
+                  "癸亥"
+                ]
+              }
+            },
+            "required": [
+              "mode",
+              "calendarVerified",
+              "year",
+              "month",
+              "day",
+              "hour"
+            ],
+            "additionalProperties": false
+          },
+          "chartCode": {
+            "type": "string",
+            "pattern": "^GQ1-[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2}$"
+          },
+          "chartRulesVersion": {
+            "const": "gq-structural-v1"
+          },
+          "balanceProfileId": {
+            "const": "GQ-BALANCE-0.4"
+          },
+          "origin": {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "enum": [
+                  "random",
+                  "custom",
+                  "template",
+                  "code",
+                  "legacy_preset",
+                  "migrated_unknown",
+                  "authored_npc"
+                ]
+              }
+            },
+            "required": [
+              "kind"
+            ],
+            "additionalProperties": true
+          }
+        },
+        "required": [
+          "id",
+          "kind",
+          "displayName",
+          "appearanceId",
+          "chart",
+          "chartCode",
+          "chartRulesVersion",
+          "balanceProfileId",
+          "origin"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "actors": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "position": {
+            "type": "object",
+            "properties": {
+              "roomId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "layer": {
+                "type": "integer"
+              },
+              "x": {
+                "type": "number"
+              },
+              "y": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "roomId",
+              "layer",
+              "x",
+              "y"
+            ],
+            "additionalProperties": false
+          },
+          "safeNodeId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "health": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 100
+          },
+          "spirit": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 100
+          },
+          "focus": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 60
+          },
+          "learnedSkillIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "uniqueItems": true
+          },
+          "cooldownUntil": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "statuses": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "ownerId": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "startedAtTick": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "expiresAtTick": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "sourceEventId": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "id",
+                "ownerId",
+                "startedAtTick",
+                "expiresAtTick",
+                "sourceEventId"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "position",
+          "safeNodeId",
+          "health",
+          "spirit",
+          "focus",
+          "learnedSkillIds",
+          "cooldownUntil",
+          "statuses"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "worldTick": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "worldRevision": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "environment": {
+      "type": "object",
+      "properties": {
+        "gateRepaired": {
+          "type": "boolean"
+        },
+        "rootMode": {
+          "enum": [
+            "blocked",
+            "trimmed",
+            "shaped",
+            "bypassed"
+          ]
+        },
+        "ventState": {
+          "enum": [
+            "closed",
+            "notch",
+            "open"
+          ]
+        },
+        "herbShield": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "gateRepaired",
+        "rootMode",
+        "ventState",
+        "herbShield"
+      ],
+      "additionalProperties": false
+    },
+    "questFacts": {
+      "type": "object",
+      "additionalProperties": {
+        "type": [
+          "boolean",
+          "number",
+          "string"
+        ]
+      }
+    },
+    "inventoryByActor": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "cluesByActor": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "visitedNodesByActor": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "npcStates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "actorId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "socialByPlayer": {
+            "type": "object",
+            "additionalProperties": {
+              "enum": [
+                "unknown",
+                "acquainted",
+                "trusted",
+                "estranged"
+              ]
+            }
+          },
+          "travel": {
+            "enum": [
+              "independent",
+              "local_assist",
+              "eligible",
+              "invited",
+              "following_temporary",
+              "following_contract",
+              "departing"
+            ]
+          },
+          "obligationIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "scheduleNodeId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "contractId": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "actorId",
+          "socialByPlayer",
+          "travel",
+          "obligationIds",
+          "scheduleNodeId"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "party": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "humanActorIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1,
+          "maxItems": 3,
+          "uniqueItems": true
+        },
+        "npcActorIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "maxItems": 2,
+          "uniqueItems": true
+        },
+        "totalActorCap": {
+          "const": 3
+        },
+        "activeContracts": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "npcId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "inviterId": {
+                "type": "string",
+                "minLength": 1
+              },
+              "mode": {
+                "enum": [
+                  "temporary",
+                  "contract",
+                  "migration_grace"
+                ]
+              },
+              "destinationNodeIds": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "acceptedAtTick": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "endsAtTick": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "endConditionIds": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            },
+            "required": [
+              "id",
+              "npcId",
+              "inviterId",
+              "mode",
+              "destinationNodeIds",
+              "acceptedAtTick",
+              "endConditionIds"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "id",
+        "humanActorIds",
+        "npcActorIds",
+        "totalActorCap",
+        "activeContracts"
+      ],
+      "additionalProperties": false
+    },
+    "encounterReceipts": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "encounterAttempts": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "eventStates": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "shenshaRuntime": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "rewardReceipts": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "routeLeases": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "objectStates": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": {
+          "type": [
+            "boolean",
+            "number",
+            "string"
+          ]
+        }
+      }
+    },
+    "consumedUniqueItemIds": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "firstEndingSnapshot": {
+      "type": [
+        "object",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "contentVersion",
+    "cultureProfileId",
+    "balanceProfileId",
+    "environmentProfileId",
+    "worldId",
+    "worldSeed",
+    "primaryPlayerId",
+    "identities",
+    "actors",
+    "worldTick",
+    "worldRevision",
+    "environment",
+    "questFacts",
+    "inventoryByActor",
+    "cluesByActor",
+    "visitedNodesByActor",
+    "npcStates",
+    "party",
+    "encounterReceipts",
+    "encounterAttempts",
+    "eventStates",
+    "shenshaRuntime",
+    "rewardReceipts",
+    "routeLeases",
+    "objectStates",
+    "consumedUniqueItemIds",
+    "firstEndingSnapshot"
+  ],
+  "additionalProperties": false
+}

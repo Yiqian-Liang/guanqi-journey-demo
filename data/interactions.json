@@ -1,0 +1,660 @@
+{
+  "schemaVersion": 4,
+  "interactions": [
+    {
+      "id": "inspect_clue_water_trace",
+      "node": "canal",
+      "handlerId": "inspect_evidence",
+      "conditionId": "always",
+      "effects": [
+        {
+          "op": "grantClue",
+          "id": "clue_water_trace"
+        }
+      ],
+      "requiresDistance": true,
+      "origin": "original_game_content",
+      "clueId": "clue_water_trace",
+      "receiptScope": "per_player_clue"
+    },
+    {
+      "id": "inspect_clue_wind_bell",
+      "node": "bell",
+      "handlerId": "inspect_evidence",
+      "conditionId": "always",
+      "effects": [
+        {
+          "op": "grantClue",
+          "id": "clue_wind_bell"
+        }
+      ],
+      "requiresDistance": true,
+      "origin": "original_game_content",
+      "clueId": "clue_wind_bell",
+      "receiptScope": "per_player_clue"
+    },
+    {
+      "id": "inspect_clue_stone_inscription",
+      "node": "reflection_stone",
+      "handlerId": "inspect_evidence",
+      "conditionId": "always",
+      "effects": [
+        {
+          "op": "grantClue",
+          "id": "clue_stone_inscription"
+        }
+      ],
+      "requiresDistance": true,
+      "origin": "original_game_content",
+      "clueId": "clue_stone_inscription",
+      "receiptScope": "per_player_clue"
+    },
+    {
+      "id": "inspect_clue_old_river_name_a",
+      "node": "reflection_stone",
+      "handlerId": "inspect_evidence",
+      "conditionId": "always",
+      "effects": [
+        {
+          "op": "grantClue",
+          "id": "clue_old_river_name_a"
+        }
+      ],
+      "requiresDistance": true,
+      "origin": "original_game_content",
+      "clueId": "clue_old_river_name_a",
+      "receiptScope": "per_player_clue"
+    },
+    {
+      "id": "inspect_clue_old_river_name_b",
+      "node": "village",
+      "handlerId": "inspect_evidence",
+      "conditionId": "always",
+      "effects": [
+        {
+          "op": "grantClue",
+          "id": "clue_old_river_name_b"
+        }
+      ],
+      "requiresDistance": true,
+      "origin": "original_game_content",
+      "clueId": "clue_old_river_name_b",
+      "receiptScope": "per_player_clue"
+    },
+    {
+      "id": "inspect_clue_echo_name",
+      "node": "old_shrine",
+      "handlerId": "inspect_evidence",
+      "conditionId": "always",
+      "effects": [
+        {
+          "op": "grantClue",
+          "id": "clue_echo_name"
+        }
+      ],
+      "requiresDistance": true,
+      "origin": "original_game_content",
+      "clueId": "clue_echo_name",
+      "receiptScope": "per_player_clue"
+    },
+    {
+      "id": "inspect_clue_hidden_return",
+      "node": "ferry",
+      "handlerId": "inspect_evidence",
+      "conditionId": "always",
+      "effects": [
+        {
+          "op": "grantClue",
+          "id": "clue_hidden_return"
+        }
+      ],
+      "requiresDistance": true,
+      "origin": "original_game_content",
+      "clueId": "clue_hidden_return",
+      "receiptScope": "per_player_clue"
+    },
+    {
+      "id": "pickup_axis_core",
+      "node": "canal",
+      "handlerId": "pickup_unique",
+      "conditionId": "always",
+      "effects": [
+        {
+          "op": "grantItem",
+          "id": "axis_core",
+          "quantity": 1
+        }
+      ],
+      "requiresDistance": true,
+      "origin": "original_game_content",
+      "receiptScope": "world_item_axis_core"
+    },
+    {
+      "id": "pickup_ancient_bell",
+      "node": "reflection_stone",
+      "handlerId": "pickup_unique",
+      "conditionId": "always",
+      "effects": [
+        {
+          "op": "grantItem",
+          "id": "ancient_bell",
+          "quantity": 1
+        }
+      ],
+      "requiresDistance": true,
+      "origin": "original_game_content",
+      "receiptScope": "world_item_ancient_bell"
+    },
+    {
+      "id": "pickup_tool_bag",
+      "node": "canal",
+      "handlerId": "pickup_unique",
+      "conditionId": "always",
+      "effects": [
+        {
+          "op": "grantItem",
+          "id": "tool_bag",
+          "quantity": 1
+        }
+      ],
+      "requiresDistance": true,
+      "origin": "original_game_content",
+      "receiptScope": "world_item_tool_bag"
+    },
+    {
+      "id": "repair_gate",
+      "node": "canal",
+      "handlerId": "repair_gate",
+      "conditionId": "always",
+      "effects": [
+        {
+          "op": "spendItem",
+          "id": "axis_core",
+          "quantity": 1
+        },
+        {
+          "op": "setMechanism",
+          "key": "gateRepaired",
+          "value": true
+        }
+      ],
+      "requiresDistance": true,
+      "origin": "original_game_content",
+      "extraRequirements": {
+        "item": "axis_core",
+        "gateNotRepaired": true
+      },
+      "durationTicks": 180
+    },
+    {
+      "id": "manual_roots_trimmed",
+      "node": "canal",
+      "handlerId": "manual_root_route",
+      "conditionId": "always",
+      "effects": [
+        {
+          "op": "setMechanism",
+          "key": "rootMode",
+          "value": "trimmed"
+        }
+      ],
+      "requiresDistance": true,
+      "origin": "original_game_content",
+      "durationTicks": 360,
+      "toolProvidedAtScene": true
+    },
+    {
+      "id": "manual_roots_shaped",
+      "node": "canal",
+      "handlerId": "manual_root_route",
+      "conditionId": "always",
+      "effects": [
+        {
+          "op": "setMechanism",
+          "key": "rootMode",
+          "value": "shaped"
+        }
+      ],
+      "requiresDistance": true,
+      "origin": "original_game_content",
+      "durationTicks": 360,
+      "toolProvidedAtScene": true
+    },
+    {
+      "id": "manual_roots_bypassed",
+      "node": "canal",
+      "handlerId": "manual_root_route",
+      "conditionId": "always",
+      "effects": [
+        {
+          "op": "setMechanism",
+          "key": "rootMode",
+          "value": "bypassed"
+        }
+      ],
+      "requiresDistance": true,
+      "origin": "original_game_content",
+      "durationTicks": 360,
+      "toolProvidedAtScene": true
+    },
+    {
+      "id": "vent_closed",
+      "node": "wall",
+      "handlerId": "manual_vent",
+      "conditionId": "always",
+      "effects": [
+        {
+          "op": "setMechanism",
+          "key": "ventState",
+          "value": "closed"
+        }
+      ],
+      "requiresDistance": true,
+      "origin": "original_game_content",
+      "durationTicks": 180
+    },
+    {
+      "id": "vent_notch",
+      "node": "wall",
+      "handlerId": "manual_vent",
+      "conditionId": "always",
+      "effects": [
+        {
+          "op": "setMechanism",
+          "key": "ventState",
+          "value": "notch"
+        }
+      ],
+      "requiresDistance": true,
+      "origin": "original_game_content",
+      "durationTicks": 180
+    },
+    {
+      "id": "vent_open",
+      "node": "wall",
+      "handlerId": "manual_vent",
+      "conditionId": "always",
+      "effects": [
+        {
+          "op": "setMechanism",
+          "key": "ventState",
+          "value": "open"
+        }
+      ],
+      "requiresDistance": true,
+      "origin": "original_game_content",
+      "durationTicks": 180
+    },
+    {
+      "id": "manual_shield",
+      "node": "herb",
+      "handlerId": "manual_shield",
+      "conditionId": "always",
+      "effects": [
+        {
+          "op": "setMechanism",
+          "key": "herbShield",
+          "value": true
+        }
+      ],
+      "requiresDistance": true,
+      "origin": "original_game_content",
+      "durationTicks": 360,
+      "toolProvidedAtScene": true
+    },
+    {
+      "id": "inspect_marker_position",
+      "node": "reflection_stone",
+      "handlerId": "inspect_marker",
+      "conditionId": "always",
+      "effects": [
+        {
+          "op": "setFlag",
+          "key": "markerPositionObserved",
+          "value": true
+        }
+      ],
+      "requiresDistance": true,
+      "origin": "original_game_content"
+    },
+    {
+      "id": "prepare_trace",
+      "node": "fog_gate",
+      "handlerId": "prepare_trace",
+      "conditionId": "trace_ready",
+      "effects": [
+        {
+          "op": "addStatus",
+          "id": "trace_window",
+          "durationTicks": 1800
+        }
+      ],
+      "requiresDistance": true,
+      "origin": "original_game_content",
+      "durationTicks": 120,
+      "usesOrdinaryLamp": true
+    },
+    {
+      "id": "deliver_letter",
+      "node": "ferry",
+      "handlerId": "deliver_letter",
+      "conditionId": "visited_ferry",
+      "effects": [],
+      "requiresDistance": true,
+      "origin": "original_game_content",
+      "receiptScope": "world_player_letter",
+      "dedicatedAtomicFinalization": true
+    },
+    {
+      "id": "return_bell",
+      "node": "ferry",
+      "handlerId": "return_bell",
+      "conditionId": "visited_ferry",
+      "effects": [
+        {
+          "op": "spendItem",
+          "id": "ancient_bell",
+          "quantity": 1
+        },
+        {
+          "op": "setFlag",
+          "key": "bellReturned",
+          "value": true
+        }
+      ],
+      "requiresDistance": true,
+      "origin": "original_game_content",
+      "receiptScope": "world_bell_returned"
+    },
+    {
+      "id": "return_tools",
+      "node": "canal",
+      "handlerId": "return_tools",
+      "conditionId": "always",
+      "effects": [
+        {
+          "op": "spendItem",
+          "id": "tool_bag",
+          "quantity": 1
+        },
+        {
+          "op": "setFlag",
+          "key": "toolsReturned",
+          "value": true
+        }
+      ],
+      "requiresDistance": true,
+      "origin": "original_game_content",
+      "receiptScope": "world_tools_returned"
+    },
+    {
+      "id": "read_manual_wood",
+      "node": "workshop",
+      "handlerId": "read_manual",
+      "conditionId": "always",
+      "effects": [
+        {
+          "op": "learnSkill",
+          "id": "wood_growth"
+        },
+        {
+          "op": "learnSkill",
+          "id": "wood_bind"
+        }
+      ],
+      "requiresDistance": true,
+      "origin": "original_game_content",
+      "receiptScope": "player_manual_wood"
+    },
+    {
+      "id": "read_manual_fire",
+      "node": "ridge",
+      "handlerId": "read_manual",
+      "conditionId": "always",
+      "effects": [
+        {
+          "op": "learnSkill",
+          "id": "fire_light"
+        },
+        {
+          "op": "learnSkill",
+          "id": "fire_rise"
+        }
+      ],
+      "requiresDistance": true,
+      "origin": "original_game_content",
+      "receiptScope": "player_manual_fire"
+    },
+    {
+      "id": "read_manual_earth",
+      "node": "herb",
+      "handlerId": "read_manual",
+      "conditionId": "always",
+      "effects": [
+        {
+          "op": "learnSkill",
+          "id": "earth_channel"
+        },
+        {
+          "op": "learnSkill",
+          "id": "earth_store"
+        }
+      ],
+      "requiresDistance": true,
+      "origin": "original_game_content",
+      "receiptScope": "player_manual_earth"
+    },
+    {
+      "id": "read_manual_metal",
+      "node": "workshop",
+      "handlerId": "read_manual",
+      "conditionId": "always",
+      "effects": [
+        {
+          "op": "learnSkill",
+          "id": "metal_join"
+        },
+        {
+          "op": "learnSkill",
+          "id": "metal_resonate"
+        }
+      ],
+      "requiresDistance": true,
+      "origin": "original_game_content",
+      "receiptScope": "player_manual_metal"
+    },
+    {
+      "id": "read_manual_water",
+      "node": "canal",
+      "handlerId": "read_manual",
+      "conditionId": "always",
+      "effects": [
+        {
+          "op": "learnSkill",
+          "id": "water_moisten"
+        },
+        {
+          "op": "learnSkill",
+          "id": "water_reflect"
+        }
+      ],
+      "requiresDistance": true,
+      "origin": "original_game_content",
+      "receiptScope": "player_manual_water"
+    },
+    {
+      "id": "observe_planExplained",
+      "node": "wall",
+      "handlerId": "inspect_or_discuss",
+      "conditionId": "always",
+      "effects": [
+        {
+          "op": "setFlag",
+          "key": "planExplained",
+          "value": true
+        }
+      ],
+      "requiresDistance": true,
+      "origin": "original_game_content"
+    },
+    {
+      "id": "observe_careArranged",
+      "node": "herb",
+      "handlerId": "inspect_or_discuss",
+      "conditionId": "always",
+      "effects": [
+        {
+          "op": "setFlag",
+          "key": "careArranged",
+          "value": true
+        }
+      ],
+      "requiresDistance": true,
+      "origin": "original_game_content"
+    },
+    {
+      "id": "observe_journeyAgreed",
+      "node": "ferry",
+      "handlerId": "inspect_or_discuss",
+      "conditionId": "always",
+      "effects": [
+        {
+          "op": "setFlag",
+          "key": "journeyAgreed",
+          "value": true
+        }
+      ],
+      "requiresDistance": true,
+      "origin": "original_game_content"
+    },
+    {
+      "id": "observe_publicStoryHeard",
+      "node": "village",
+      "handlerId": "inspect_or_discuss",
+      "conditionId": "always",
+      "effects": [
+        {
+          "op": "setFlag",
+          "key": "publicStoryHeard",
+          "value": true
+        }
+      ],
+      "requiresDistance": true,
+      "origin": "original_game_content"
+    },
+    {
+      "id": "observe_cargoDisputeKnown",
+      "node": "ferry",
+      "handlerId": "inspect_or_discuss",
+      "conditionId": "always",
+      "effects": [
+        {
+          "op": "setFlag",
+          "key": "cargoDisputeKnown",
+          "value": true
+        }
+      ],
+      "requiresDistance": true,
+      "origin": "original_game_content"
+    },
+    {
+      "id": "observe_missingNameObserved",
+      "node": "empty_market",
+      "handlerId": "inspect_or_discuss",
+      "conditionId": "always",
+      "effects": [
+        {
+          "op": "setFlag",
+          "key": "missingNameObserved",
+          "value": true
+        }
+      ],
+      "requiresDistance": true,
+      "origin": "original_game_content"
+    },
+    {
+      "id": "observe_safeCutPathObserved",
+      "node": "ferry",
+      "handlerId": "inspect_or_discuss",
+      "conditionId": "always",
+      "effects": [
+        {
+          "op": "setFlag",
+          "key": "safeCutPathObserved",
+          "value": true
+        }
+      ],
+      "requiresDistance": true,
+      "origin": "original_game_content"
+    },
+    {
+      "id": "restore_milestone",
+      "node": "ferry",
+      "handlerId": "restore_milestone",
+      "conditionId": "visited_ferry",
+      "effects": [
+        {
+          "op": "setFlag",
+          "key": "milestoneRestored",
+          "value": true
+        }
+      ],
+      "requiresDistance": true,
+      "origin": "original_game_content",
+      "durationTicks": 180
+    },
+    {
+      "id": "survey_route",
+      "node": "ferry",
+      "handlerId": "survey_visited_route",
+      "conditionId": "visited_ferry",
+      "effects": [
+        {
+          "op": "setFlag",
+          "key": "routeSurveyed",
+          "value": true
+        }
+      ],
+      "requiresDistance": true,
+      "origin": "original_game_content",
+      "requiresVisitedNodes": [
+        "camp",
+        "ferry"
+      ]
+    }
+  ],
+  "handlerRegistry": [
+    "deliver_letter",
+    "inspect_evidence",
+    "inspect_marker",
+    "inspect_or_discuss",
+    "manual_root_route",
+    "manual_shield",
+    "manual_vent",
+    "pickup_unique",
+    "prepare_trace",
+    "read_manual",
+    "repair_gate",
+    "restore_milestone",
+    "return_bell",
+    "return_tools",
+    "survey_visited_route"
+  ],
+  "projectionRules": [
+    {
+      "whenAllClues": [
+        "clue_old_river_name_a",
+        "clue_old_river_name_b"
+      ],
+      "setFlag": "riverNamesLearned"
+    },
+    {
+      "whenAllClues": [
+        "clue_water_trace",
+        "clue_wind_bell",
+        "clue_stone_inscription"
+      ],
+      "setFlag": "traceLearned"
+    }
+  ]
+}

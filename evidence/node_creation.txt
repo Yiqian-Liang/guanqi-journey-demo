@@ -1,0 +1,2 @@
+PASS: 64 raw uint32 vectors and 14 creation cases match in JavaScript.
+NOT TESTED: production generator, game UI, map routes, saves or player experience.

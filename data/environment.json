@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 4,
+  "profileId": "GQ-ENV-0.4",
+  "origin": "original_game_rule",
+  "hydraulics": {
+    "externalInflowUnitsPerStep": 8,
+    "gateCapacityRepaired": 8,
+    "gateCapacityBroken": 0,
+    "herbDemand": 6,
+    "ferryDemand": 2,
+    "modesAllowingThroughput": [
+      "trimmed",
+      "shaped",
+      "bypassed"
+    ],
+    "balance": "input=herbOutput+ferryOutput+spillOutput; normalized steady-state step, not calendar seconds"
+  },
+  "air": {
+    "ventCoefficients": {
+      "closed": 0,
+      "notch": 0.5,
+      "open": 1
+    },
+    "baselineDoesNotIncludeTemporaryUpdraft": true
+  },
+  "atmosphere": {
+    "fogBase": 80,
+    "waterReduction": 45,
+    "windReduction": 40,
+    "phaseFogBonus": [
+      20,
+      20,
+      10,
+      0,
+      0,
+      0,
+      0,
+      0,
+      10,
+      20,
+      20,
+      20
+    ],
+    "passThreshold": 45,
+    "herbBase": 90,
+    "waterHerbBenefit": 10,
+    "windHerbPenalty": 50,
+    "shieldHerbBenefit": 25,
+    "herbStableThreshold": 60
+  },
+  "fieldSemantics": "Water flow budget, airflow abstraction and fictional fog signal are typed separately. This local reference is not a general fluid solver."
+}

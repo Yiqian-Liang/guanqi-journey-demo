@@ -1,0 +1,1728 @@
+{
+  "schemaVersion": 4,
+  "contentVersion": "0.4.0",
+  "chartRulesVersion": "gq-structural-v1",
+  "algorithmVersion": "gq-structural-mulberry32-v1",
+  "defaultMode": "random",
+  "primaryModes": [
+    "random",
+    "custom"
+  ],
+  "templatesOptional": true,
+  "calendarVerified": false,
+  "combinationCount": 518400,
+  "selectionOrder": [
+    "yearCycle",
+    "monthBranch",
+    "dayCycle",
+    "hourBranch"
+  ],
+  "bounds": {
+    "yearCycle": [
+      0,
+      59
+    ],
+    "monthBranch": [
+      0,
+      11
+    ],
+    "dayCycle": [
+      0,
+      59
+    ],
+    "hourBranch": [
+      0,
+      11
+    ]
+  },
+  "allowedLocks": [
+    "yearCycle",
+    "monthBranch",
+    "dayCycle",
+    "hourBranch",
+    "dayStem"
+  ],
+  "codePrefix": "GQ1",
+  "sexagenaryCycle": [
+    "甲子",
+    "乙丑",
+    "丙寅",
+    "丁卯",
+    "戊辰",
+    "己巳",
+    "庚午",
+    "辛未",
+    "壬申",
+    "癸酉",
+    "甲戌",
+    "乙亥",
+    "丙子",
+    "丁丑",
+    "戊寅",
+    "己卯",
+    "庚辰",
+    "辛巳",
+    "壬午",
+    "癸未",
+    "甲申",
+    "乙酉",
+    "丙戌",
+    "丁亥",
+    "戊子",
+    "己丑",
+    "庚寅",
+    "辛卯",
+    "壬辰",
+    "癸巳",
+    "甲午",
+    "乙未",
+    "丙申",
+    "丁酉",
+    "戊戌",
+    "己亥",
+    "庚子",
+    "辛丑",
+    "壬寅",
+    "癸卯",
+    "甲辰",
+    "乙巳",
+    "丙午",
+    "丁未",
+    "戊申",
+    "己酉",
+    "庚戌",
+    "辛亥",
+    "壬子",
+    "癸丑",
+    "甲寅",
+    "乙卯",
+    "丙辰",
+    "丁巳",
+    "戊午",
+    "己未",
+    "庚申",
+    "辛酉",
+    "壬戌",
+    "癸亥"
+  ],
+  "monthStemRowsFromYin": [
+    [
+      "丙",
+      "丁",
+      "戊",
+      "己",
+      "庚",
+      "辛",
+      "壬",
+      "癸",
+      "甲",
+      "乙",
+      "丙",
+      "丁"
+    ],
+    [
+      "戊",
+      "己",
+      "庚",
+      "辛",
+      "壬",
+      "癸",
+      "甲",
+      "乙",
+      "丙",
+      "丁",
+      "戊",
+      "己"
+    ],
+    [
+      "庚",
+      "辛",
+      "壬",
+      "癸",
+      "甲",
+      "乙",
+      "丙",
+      "丁",
+      "戊",
+      "己",
+      "庚",
+      "辛"
+    ],
+    [
+      "壬",
+      "癸",
+      "甲",
+      "乙",
+      "丙",
+      "丁",
+      "戊",
+      "己",
+      "庚",
+      "辛",
+      "壬",
+      "癸"
+    ],
+    [
+      "甲",
+      "乙",
+      "丙",
+      "丁",
+      "戊",
+      "己",
+      "庚",
+      "辛",
+      "壬",
+      "癸",
+      "甲",
+      "乙"
+    ]
+  ],
+  "hourStemRowsFromZi": [
+    [
+      "甲",
+      "乙",
+      "丙",
+      "丁",
+      "戊",
+      "己",
+      "庚",
+      "辛",
+      "壬",
+      "癸",
+      "甲",
+      "乙"
+    ],
+    [
+      "丙",
+      "丁",
+      "戊",
+      "己",
+      "庚",
+      "辛",
+      "壬",
+      "癸",
+      "甲",
+      "乙",
+      "丙",
+      "丁"
+    ],
+    [
+      "戊",
+      "己",
+      "庚",
+      "辛",
+      "壬",
+      "癸",
+      "甲",
+      "乙",
+      "丙",
+      "丁",
+      "戊",
+      "己"
+    ],
+    [
+      "庚",
+      "辛",
+      "壬",
+      "癸",
+      "甲",
+      "乙",
+      "丙",
+      "丁",
+      "戊",
+      "己",
+      "庚",
+      "辛"
+    ],
+    [
+      "壬",
+      "癸",
+      "甲",
+      "乙",
+      "丙",
+      "丁",
+      "戊",
+      "己",
+      "庚",
+      "辛",
+      "壬",
+      "癸"
+    ]
+  ],
+  "tableSource": "C8: Hong Kong Observatory; inherited frozen structural reference rows",
+  "randomCases": [
+    {
+      "id": "creation-00",
+      "seedHex": "00000000",
+      "locks": {},
+      "selection": {
+        "yearCycle": 38,
+        "monthBranch": 7,
+        "dayCycle": 16,
+        "hourBranch": 0
+      },
+      "chart": {
+        "mode": "structural_ganzhi",
+        "calendarVerified": false,
+        "year": "壬寅",
+        "month": "丁未",
+        "day": "庚辰",
+        "hour": "丙子"
+      },
+      "chartCode": "GQ1-38-07-16-00"
+    },
+    {
+      "id": "creation-01",
+      "seedHex": "00000001",
+      "locks": {},
+      "selection": {
+        "yearCycle": 7,
+        "monthBranch": 9,
+        "dayCycle": 47,
+        "hourBranch": 5
+      },
+      "chart": {
+        "mode": "structural_ganzhi",
+        "calendarVerified": false,
+        "year": "辛未",
+        "month": "丁酉",
+        "day": "辛亥",
+        "hour": "癸巳"
+      },
+      "chartCode": "GQ1-07-09-47-05"
+    },
+    {
+      "id": "creation-02",
+      "seedHex": "ffffffff",
+      "locks": {},
+      "selection": {
+        "yearCycle": 11,
+        "monthBranch": 8,
+        "dayCycle": 8,
+        "hourBranch": 0
+      },
+      "chart": {
+        "mode": "structural_ganzhi",
+        "calendarVerified": false,
+        "year": "乙亥",
+        "month": "甲申",
+        "day": "壬申",
+        "hour": "庚子"
+      },
+      "chartCode": "GQ1-11-08-08-00"
+    },
+    {
+      "id": "creation-03",
+      "seedHex": "12345678",
+      "locks": {},
+      "selection": {
+        "yearCycle": 46,
+        "monthBranch": 9,
+        "dayCycle": 15,
+        "hourBranch": 3
+      },
+      "chart": {
+        "mode": "structural_ganzhi",
+        "calendarVerified": false,
+        "year": "庚戌",
+        "month": "乙酉",
+        "day": "己卯",
+        "hour": "丁卯"
+      },
+      "chartCode": "GQ1-46-09-15-03"
+    },
+    {
+      "id": "creation-04",
+      "seedHex": "deadbeef",
+      "locks": {},
+      "selection": {
+        "yearCycle": 46,
+        "monthBranch": 11,
+        "dayCycle": 22,
+        "hourBranch": 4
+      },
+      "chart": {
+        "mode": "structural_ganzhi",
+        "calendarVerified": false,
+        "year": "庚戌",
+        "month": "丁亥",
+        "day": "丙戌",
+        "hour": "壬辰"
+      },
+      "chartCode": "GQ1-46-11-22-04"
+    },
+    {
+      "id": "creation-05",
+      "seedHex": "00000000",
+      "locks": {
+        "dayStem": "甲"
+      },
+      "selection": {
+        "yearCycle": 38,
+        "monthBranch": 7,
+        "dayCycle": 40,
+        "hourBranch": 0
+      },
+      "chart": {
+        "mode": "structural_ganzhi",
+        "calendarVerified": false,
+        "year": "壬寅",
+        "month": "丁未",
+        "day": "甲辰",
+        "hour": "甲子"
+      },
+      "chartCode": "GQ1-38-07-40-00"
+    },
+    {
+      "id": "creation-06",
+      "seedHex": "12345678",
+      "locks": {
+        "dayStem": "癸"
+      },
+      "selection": {
+        "yearCycle": 46,
+        "monthBranch": 9,
+        "dayCycle": 39,
+        "hourBranch": 3
+      },
+      "chart": {
+        "mode": "structural_ganzhi",
+        "calendarVerified": false,
+        "year": "庚戌",
+        "month": "乙酉",
+        "day": "癸卯",
+        "hour": "乙卯"
+      },
+      "chartCode": "GQ1-46-09-39-03"
+    },
+    {
+      "id": "creation-07",
+      "seedHex": "12345678",
+      "locks": {
+        "yearCycle": 8
+      },
+      "selection": {
+        "yearCycle": 8,
+        "monthBranch": 9,
+        "dayCycle": 15,
+        "hourBranch": 3
+      },
+      "chart": {
+        "mode": "structural_ganzhi",
+        "calendarVerified": false,
+        "year": "壬申",
+        "month": "己酉",
+        "day": "己卯",
+        "hour": "丁卯"
+      },
+      "chartCode": "GQ1-08-09-15-03"
+    },
+    {
+      "id": "creation-08",
+      "seedHex": "12345678",
+      "locks": {
+        "monthBranch": 5
+      },
+      "selection": {
+        "yearCycle": 46,
+        "monthBranch": 5,
+        "dayCycle": 15,
+        "hourBranch": 3
+      },
+      "chart": {
+        "mode": "structural_ganzhi",
+        "calendarVerified": false,
+        "year": "庚戌",
+        "month": "辛巳",
+        "day": "己卯",
+        "hour": "丁卯"
+      },
+      "chartCode": "GQ1-46-05-15-03"
+    },
+    {
+      "id": "creation-09",
+      "seedHex": "12345678",
+      "locks": {
+        "dayCycle": 50
+      },
+      "selection": {
+        "yearCycle": 46,
+        "monthBranch": 9,
+        "dayCycle": 50,
+        "hourBranch": 3
+      },
+      "chart": {
+        "mode": "structural_ganzhi",
+        "calendarVerified": false,
+        "year": "庚戌",
+        "month": "乙酉",
+        "day": "甲寅",
+        "hour": "丁卯"
+      },
+      "chartCode": "GQ1-46-09-50-03"
+    },
+    {
+      "id": "creation-10",
+      "seedHex": "12345678",
+      "locks": {
+        "hourBranch": 6
+      },
+      "selection": {
+        "yearCycle": 46,
+        "monthBranch": 9,
+        "dayCycle": 15,
+        "hourBranch": 6
+      },
+      "chart": {
+        "mode": "structural_ganzhi",
+        "calendarVerified": false,
+        "year": "庚戌",
+        "month": "乙酉",
+        "day": "己卯",
+        "hour": "庚午"
+      },
+      "chartCode": "GQ1-46-09-15-06"
+    },
+    {
+      "id": "creation-11",
+      "seedHex": "ffffffff",
+      "locks": {
+        "yearCycle": 8,
+        "monthBranch": 5,
+        "dayCycle": 50,
+        "hourBranch": 6
+      },
+      "selection": {
+        "yearCycle": 8,
+        "monthBranch": 5,
+        "dayCycle": 50,
+        "hourBranch": 6
+      },
+      "chart": {
+        "mode": "structural_ganzhi",
+        "calendarVerified": false,
+        "year": "壬申",
+        "month": "乙巳",
+        "day": "甲寅",
+        "hour": "庚午"
+      },
+      "chartCode": "GQ1-08-05-50-06"
+    },
+    {
+      "id": "creation-12",
+      "seedHex": "00000001",
+      "locks": {
+        "dayCycle": 50,
+        "dayStem": "甲"
+      },
+      "selection": {
+        "yearCycle": 7,
+        "monthBranch": 9,
+        "dayCycle": 50,
+        "hourBranch": 5
+      },
+      "chart": {
+        "mode": "structural_ganzhi",
+        "calendarVerified": false,
+        "year": "辛未",
+        "month": "丁酉",
+        "day": "甲寅",
+        "hour": "己巳"
+      },
+      "chartCode": "GQ1-07-09-50-05"
+    },
+    {
+      "id": "creation-13",
+      "seedHex": "a1b2c3d4",
+      "locks": {
+        "monthBranch": 0,
+        "hourBranch": 11,
+        "dayStem": "辛"
+      },
+      "selection": {
+        "yearCycle": 40,
+        "monthBranch": 0,
+        "dayCycle": 27,
+        "hourBranch": 11
+      },
+      "chart": {
+        "mode": "structural_ganzhi",
+        "calendarVerified": false,
+        "year": "甲辰",
+        "month": "丙子",
+        "day": "辛卯",
+        "hour": "己亥"
+      },
+      "chartCode": "GQ1-40-00-27-11"
+    }
+  ],
+  "dayCycleRepresentatives": [
+    {
+      "id": "day-00",
+      "selection": {
+        "yearCycle": 0,
+        "monthBranch": 0,
+        "dayCycle": 0,
+        "hourBranch": 0
+      },
+      "chart": {
+        "mode": "structural_ganzhi",
+        "calendarVerified": false,
+        "year": "甲子",
+        "month": "丙子",
+        "day": "甲子",
+        "hour": "甲子"
+      },
+      "chartCode": "GQ1-00-00-00-00"
+    },
+    {
+      "id": "day-01",
+      "selection": {
+        "yearCycle": 7,
+        "monthBranch": 5,
+        "dayCycle": 1,
+        "hourBranch": 7
+      },
+      "chart": {
+        "mode": "structural_ganzhi",
+        "calendarVerified": false,
+        "year": "辛未",
+        "month": "癸巳",
+        "day": "乙丑",
+        "hour": "癸未"
+      },
+      "chartCode": "GQ1-07-05-01-07"
+    },
+    {
+      "id": "day-02",
+      "selection": {
+        "yearCycle": 14,
+        "monthBranch": 10,
+        "dayCycle": 2,
+        "hourBranch": 2
+      },
+      "chart": {
+        "mode": "structural_ganzhi",
+        "calendarVerified": false,
+        "year": "戊寅",
+        "month": "壬戌",
+        "day": "丙寅",
+        "hour": "庚寅"
+      },
+      "chartCode": "GQ1-14-10-02-02"
+    },
+    {
+      "id": "day-03",
+      "selection": {
+        "yearCycle": 21,
+        "monthBranch": 3,
+        "dayCycle": 3,
+        "hourBranch": 9
+      },
+      "chart": {
+        "mode": "structural_ganzhi",
+        "calendarVerified": false,
+        "year": "乙酉",
+        "month": "己卯",
+        "day": "丁卯",
+        "hour": "己酉"
+      },
+      "chartCode": "GQ1-21-03-03-09"
+    },
+    {
+      "id": "day-04",
+      "selection": {
+        "yearCycle": 28,
+        "monthBranch": 8,
+        "dayCycle": 4,
+        "hourBranch": 4
+      },
+      "chart": {
+        "mode": "structural_ganzhi",
+        "calendarVerified": false,
+        "year": "壬辰",
+        "month": "戊申",
+        "day": "戊辰",
+        "hour": "丙辰"
+      },
+      "chartCode": "GQ1-28-08-04-04"
+    },
+    {
+      "id": "day-05",
+      "selection": {
+        "yearCycle": 35,
+        "monthBranch": 1,
+        "dayCycle": 5,
+        "hourBranch": 11
+      },
+      "chart": {
+        "mode": "structural_ganzhi",
+        "calendarVerified": false,
+        "year": "己亥",
+        "month": "丁丑",
+        "day": "己巳",
+        "hour": "乙亥"
+      },
+      "chartCode": "GQ1-35-01-05-11"
+    },
+    {
+      "id": "day-06",
+      "selection": {
+        "yearCycle": 42,
+        "monthBranch": 6,
+        "dayCycle": 6,
+        "hourBranch": 6
+      },
+      "chart": {
+        "mode": "structural_ganzhi",
+        "calendarVerified": false,
+        "year": "丙午",
+        "month": "甲午",
+        "day": "庚午",
+        "hour": "壬午"
+      },
+      "chartCode": "GQ1-42-06-06-06"
+    },
+    {
+      "id": "day-07",
+      "selection": {
+        "yearCycle": 49,
+        "monthBranch": 11,
+        "dayCycle": 7,
+        "hourBranch": 1
+      },
+      "chart": {
+        "mode": "structural_ganzhi",
+        "calendarVerified": false,
+        "year": "癸丑",
+        "month": "癸亥",
+        "day": "辛未",
+        "hour": "己丑"
+      },
+      "chartCode": "GQ1-49-11-07-01"
+    },
+    {
+      "id": "day-08",
+      "selection": {
+        "yearCycle": 56,
+        "monthBranch": 4,
+        "dayCycle": 8,
+        "hourBranch": 8
+      },
+      "chart": {
+        "mode": "structural_ganzhi",
+        "calendarVerified": false,
+        "year": "庚申",
+        "month": "庚辰",
+        "day": "壬申",
+        "hour": "戊申"
+      },
+      "chartCode": "GQ1-56-04-08-08"
+    },
+    {
+      "id": "day-09",
+      "selection": {
+        "yearCycle": 3,
+        "monthBranch": 9,
+        "dayCycle": 9,
+        "hourBranch": 3
+      },
+      "chart": {
+        "mode": "structural_ganzhi",
+        "calendarVerified": false,
+        "year": "丁卯",
+        "month": "己酉",
+        "day": "癸酉",
+        "hour": "乙卯"
+      },
+      "chartCode": "GQ1-03-09-09-03"
+    },
+    {
+      "id": "day-10",
+      "selection": {
+        "yearCycle": 10,
+        "monthBranch": 2,
+        "dayCycle": 10,
+        "hourBranch": 10
+      },
+      "chart": {
+        "mode": "structural_ganzhi",
+        "calendarVerified": false,
+        "year": "甲戌",
+        "month": "丙寅",
+        "day": "甲戌",
+        "hour": "甲戌"
+      },
+      "chartCode": "GQ1-10-02-10-10"
+    },
+    {
+      "id": "day-11",
+      "selection": {
+        "yearCycle": 17,
+        "monthBranch": 7,
+        "dayCycle": 11,
+        "hourBranch": 5
+      },
+      "chart": {
+        "mode": "structural_ganzhi",
+        "calendarVerified": false,
+        "year": "辛巳",
+        "month": "乙未",
+        "day": "乙亥",
+        "hour": "辛巳"
+      },
+      "chartCode": "GQ1-17-07-11-05"
+    },
+    {
+      "id": "day-12",
+      "selection": {
+        "yearCycle": 24,
+        "monthBranch": 0,
+        "dayCycle": 12,
+        "hourBranch": 0
+      },
+      "chart": {
+        "mode": "structural_ganzhi",
+        "calendarVerified": false,
+        "year": "戊子",
+        "month": "甲子",
+        "day": "丙子",
+        "hour": "戊子"
+      },
+      "chartCode": "GQ1-24-00-12-00"
+    },
+    {
+      "id": "day-13",
+      "selection": {
+        "yearCycle": 31,
+        "monthBranch": 5,
+        "dayCycle": 13,
+        "hourBranch": 7
+      },
+      "chart": {
+        "mode": "structural_ganzhi",
+        "calendarVerified": false,
+        "year": "乙未",
+        "month": "辛巳",
+        "day": "丁丑",
+        "hour": "丁未"
+      },
+      "chartCode": "GQ1-31-05-13-07"
+    },
+    {
+      "id": "day-14",
+      "selection": {
+        "yearCycle": 38,
+        "monthBranch": 10,
+        "dayCycle": 14,
+        "hourBranch": 2
+      },
+      "chart": {
+        "mode": "structural_ganzhi",
+        "calendarVerified": false,
+        "year": "壬寅",
+        "month": "庚戌",
+        "day": "戊寅",
+        "hour": "甲寅"
+      },
+      "chartCode": "GQ1-38-10-14-02"
+    },
+    {
+      "id": "day-15",
+      "selection": {
+        "yearCycle": 45,
+        "monthBranch": 3,
+        "dayCycle": 15,
+        "hourBranch": 9
+      },
+      "chart": {
+        "mode": "structural_ganzhi",
+        "calendarVerified": false,
+        "year": "己酉",
+        "month": "丁卯",
+        "day": "己卯",
+        "hour": "癸酉"
+      },
+      "chartCode": "GQ1-45-03-15-09"
+    },
+    {
+      "id": "day-16",
+      "selection": {
+        "yearCycle": 52,
+        "monthBranch": 8,
+        "dayCycle": 16,
+        "hourBranch": 4
+      },
+      "chart": {
+        "mode": "structural_ganzhi",
+        "calendarVerified": false,
+        "year": "丙辰",
+        "month": "丙申",
+        "day": "庚辰",
+        "hour": "庚辰"
+      },
+      "chartCode": "GQ1-52-08-16-04"
+    },
+    {
+      "id": "day-17",
+      "selection": {
+        "yearCycle": 59,
+        "monthBranch": 1,
+        "dayCycle": 17,
+        "hourBranch": 11
+      },
+      "chart": {
+        "mode": "structural_ganzhi",
+        "calendarVerified": false,
+        "year": "癸亥",
+        "month": "乙丑",
+        "day": "辛巳",
+        "hour": "己亥"
+      },
+      "chartCode": "GQ1-59-01-17-11"
+    },
+    {
+      "id": "day-18",
+      "selection": {
+        "yearCycle": 6,
+        "monthBranch": 6,
+        "dayCycle": 18,
+        "hourBranch": 6
+      },
+      "chart": {
+        "mode": "structural_ganzhi",
+        "calendarVerified": false,
+        "year": "庚午",
+        "month": "壬午",
+        "day": "壬午",
+        "hour": "丙午"
+      },
+      "chartCode": "GQ1-06-06-18-06"
+    },
+    {
+      "id": "day-19",
+      "selection": {
+        "yearCycle": 13,
+        "monthBranch": 11,
+        "dayCycle": 19,
+        "hourBranch": 1
+      },
+      "chart": {
+        "mode": "structural_ganzhi",
+        "calendarVerified": false,
+        "year": "丁丑",
+        "month": "辛亥",
+        "day": "癸未",
+        "hour": "癸丑"
+      },
+      "chartCode": "GQ1-13-11-19-01"
+    },
+    {
+      "id": "day-20",
+      "selection": {
+        "yearCycle": 20,
+        "monthBranch": 4,
+        "dayCycle": 20,
+        "hourBranch": 8
+      },
+      "chart": {
+        "mode": "structural_ganzhi",
+        "calendarVerified": false,
+        "year": "甲申",
+        "month": "戊辰",
+        "day": "甲申",
+        "hour": "壬申"
+      },
+      "chartCode": "GQ1-20-04-20-08"
+    },
+    {
+      "id": "day-21",
+      "selection": {
+        "yearCycle": 27,
+        "monthBranch": 9,
+        "dayCycle": 21,
+        "hourBranch": 3
+      },
+      "chart": {
+        "mode": "structural_ganzhi",
+        "calendarVerified": false,
+        "year": "辛卯",
+        "month": "丁酉",
+        "day": "乙酉",
+        "hour": "己卯"
+      },
+      "chartCode": "GQ1-27-09-21-03"
+    },
+    {
+      "id": "day-22",
+      "selection": {
+        "yearCycle": 34,
+        "monthBranch": 2,
+        "dayCycle": 22,
+        "hourBranch": 10
+      },
+      "chart": {
+        "mode": "structural_ganzhi",
+        "calendarVerified": false,
+        "year": "戊戌",
+        "month": "甲寅",
+        "day": "丙戌",
+        "hour": "戊戌"
+      },
+      "chartCode": "GQ1-34-02-22-10"
+    },
+    {
+      "id": "day-23",
+      "selection": {
+        "yearCycle": 41,
+        "monthBranch": 7,
+        "dayCycle": 23,
+        "hourBranch": 5
+      },
+      "chart": {
+        "mode": "structural_ganzhi",
+        "calendarVerified": false,
+        "year": "乙巳",
+        "month": "癸未",
+        "day": "丁亥",
+        "hour": "乙巳"
+      },
+      "chartCode": "GQ1-41-07-23-05"
+    },
+    {
+      "id": "day-24",
+      "selection": {
+        "yearCycle": 48,
+        "monthBranch": 0,
+        "dayCycle": 24,
+        "hourBranch": 0
+      },
+      "chart": {
+        "mode": "structural_ganzhi",
+        "calendarVerified": false,
+        "year": "壬子",
+        "month": "壬子",
+        "day": "戊子",
+        "hour": "壬子"
+      },
+      "chartCode": "GQ1-48-00-24-00"
+    },
+    {
+      "id": "day-25",
+      "selection": {
+        "yearCycle": 55,
+        "monthBranch": 5,
+        "dayCycle": 25,
+        "hourBranch": 7
+      },
+      "chart": {
+        "mode": "structural_ganzhi",
+        "calendarVerified": false,
+        "year": "己未",
+        "month": "己巳",
+        "day": "己丑",
+        "hour": "辛未"
+      },
+      "chartCode": "GQ1-55-05-25-07"
+    },
+    {
+      "id": "day-26",
+      "selection": {
+        "yearCycle": 2,
+        "monthBranch": 10,
+        "dayCycle": 26,
+        "hourBranch": 2
+      },
+      "chart": {
+        "mode": "structural_ganzhi",
+        "calendarVerified": false,
+        "year": "丙寅",
+        "month": "戊戌",
+        "day": "庚寅",
+        "hour": "戊寅"
+      },
+      "chartCode": "GQ1-02-10-26-02"
+    },
+    {
+      "id": "day-27",
+      "selection": {
+        "yearCycle": 9,
+        "monthBranch": 3,
+        "dayCycle": 27,
+        "hourBranch": 9
+      },
+      "chart": {
+        "mode": "structural_ganzhi",
+        "calendarVerified": false,
+        "year": "癸酉",
+        "month": "乙卯",
+        "day": "辛卯",
+        "hour": "丁酉"
+      },
+      "chartCode": "GQ1-09-03-27-09"
+    },
+    {
+      "id": "day-28",
+      "selection": {
+        "yearCycle": 16,
+        "monthBranch": 8,
+        "dayCycle": 28,
+        "hourBranch": 4
+      },
+      "chart": {
+        "mode": "structural_ganzhi",
+        "calendarVerified": false,
+        "year": "庚辰",
+        "month": "甲申",
+        "day": "壬辰",
+        "hour": "甲辰"
+      },
+      "chartCode": "GQ1-16-08-28-04"
+    },
+    {
+      "id": "day-29",
+      "selection": {
+        "yearCycle": 23,
+        "monthBranch": 1,
+        "dayCycle": 29,
+        "hourBranch": 11
+      },
+      "chart": {
+        "mode": "structural_ganzhi",
+        "calendarVerified": false,
+        "year": "丁亥",
+        "month": "癸丑",
+        "day": "癸巳",
+        "hour": "癸亥"
+      },
+      "chartCode": "GQ1-23-01-29-11"
+    },
+    {
+      "id": "day-30",
+      "selection": {
+        "yearCycle": 30,
+        "monthBranch": 6,
+        "dayCycle": 30,
+        "hourBranch": 6
+      },
+      "chart": {
+        "mode": "structural_ganzhi",
+        "calendarVerified": false,
+        "year": "甲午",
+        "month": "庚午",
+        "day": "甲午",
+        "hour": "庚午"
+      },
+      "chartCode": "GQ1-30-06-30-06"
+    },
+    {
+      "id": "day-31",
+      "selection": {
+        "yearCycle": 37,
+        "monthBranch": 11,
+        "dayCycle": 31,
+        "hourBranch": 1
+      },
+      "chart": {
+        "mode": "structural_ganzhi",
+        "calendarVerified": false,
+        "year": "辛丑",
+        "month": "己亥",
+        "day": "乙未",
+        "hour": "丁丑"
+      },
+      "chartCode": "GQ1-37-11-31-01"
+    },
+    {
+      "id": "day-32",
+      "selection": {
+        "yearCycle": 44,
+        "monthBranch": 4,
+        "dayCycle": 32,
+        "hourBranch": 8
+      },
+      "chart": {
+        "mode": "structural_ganzhi",
+        "calendarVerified": false,
+        "year": "戊申",
+        "month": "丙辰",
+        "day": "丙申",
+        "hour": "丙申"
+      },
+      "chartCode": "GQ1-44-04-32-08"
+    },
+    {
+      "id": "day-33",
+      "selection": {
+        "yearCycle": 51,
+        "monthBranch": 9,
+        "dayCycle": 33,
+        "hourBranch": 3
+      },
+      "chart": {
+        "mode": "structural_ganzhi",
+        "calendarVerified": false,
+        "year": "乙卯",
+        "month": "乙酉",
+        "day": "丁酉",
+        "hour": "癸卯"
+      },
+      "chartCode": "GQ1-51-09-33-03"
+    },
+    {
+      "id": "day-34",
+      "selection": {
+        "yearCycle": 58,
+        "monthBranch": 2,
+        "dayCycle": 34,
+        "hourBranch": 10
+      },
+      "chart": {
+        "mode": "structural_ganzhi",
+        "calendarVerified": false,
+        "year": "壬戌",
+        "month": "壬寅",
+        "day": "戊戌",
+        "hour": "壬戌"
+      },
+      "chartCode": "GQ1-58-02-34-10"
+    },
+    {
+      "id": "day-35",
+      "selection": {
+        "yearCycle": 5,
+        "monthBranch": 7,
+        "dayCycle": 35,
+        "hourBranch": 5
+      },
+      "chart": {
+        "mode": "structural_ganzhi",
+        "calendarVerified": false,
+        "year": "己巳",
+        "month": "辛未",
+        "day": "己亥",
+        "hour": "己巳"
+      },
+      "chartCode": "GQ1-05-07-35-05"
+    },
+    {
+      "id": "day-36",
+      "selection": {
+        "yearCycle": 12,
+        "monthBranch": 0,
+        "dayCycle": 36,
+        "hourBranch": 0
+      },
+      "chart": {
+        "mode": "structural_ganzhi",
+        "calendarVerified": false,
+        "year": "丙子",
+        "month": "庚子",
+        "day": "庚子",
+        "hour": "丙子"
+      },
+      "chartCode": "GQ1-12-00-36-00"
+    },
+    {
+      "id": "day-37",
+      "selection": {
+        "yearCycle": 19,
+        "monthBranch": 5,
+        "dayCycle": 37,
+        "hourBranch": 7
+      },
+      "chart": {
+        "mode": "structural_ganzhi",
+        "calendarVerified": false,
+        "year": "癸未",
+        "month": "丁巳",
+        "day": "辛丑",
+        "hour": "乙未"
+      },
+      "chartCode": "GQ1-19-05-37-07"
+    },
+    {
+      "id": "day-38",
+      "selection": {
+        "yearCycle": 26,
+        "monthBranch": 10,
+        "dayCycle": 38,
+        "hourBranch": 2
+      },
+      "chart": {
+        "mode": "structural_ganzhi",
+        "calendarVerified": false,
+        "year": "庚寅",
+        "month": "丙戌",
+        "day": "壬寅",
+        "hour": "壬寅"
+      },
+      "chartCode": "GQ1-26-10-38-02"
+    },
+    {
+      "id": "day-39",
+      "selection": {
+        "yearCycle": 33,
+        "monthBranch": 3,
+        "dayCycle": 39,
+        "hourBranch": 9
+      },
+      "chart": {
+        "mode": "structural_ganzhi",
+        "calendarVerified": false,
+        "year": "丁酉",
+        "month": "癸卯",
+        "day": "癸卯",
+        "hour": "辛酉"
+      },
+      "chartCode": "GQ1-33-03-39-09"
+    },
+    {
+      "id": "day-40",
+      "selection": {
+        "yearCycle": 40,
+        "monthBranch": 8,
+        "dayCycle": 40,
+        "hourBranch": 4
+      },
+      "chart": {
+        "mode": "structural_ganzhi",
+        "calendarVerified": false,
+        "year": "甲辰",
+        "month": "壬申",
+        "day": "甲辰",
+        "hour": "戊辰"
+      },
+      "chartCode": "GQ1-40-08-40-04"
+    },
+    {
+      "id": "day-41",
+      "selection": {
+        "yearCycle": 47,
+        "monthBranch": 1,
+        "dayCycle": 41,
+        "hourBranch": 11
+      },
+      "chart": {
+        "mode": "structural_ganzhi",
+        "calendarVerified": false,
+        "year": "辛亥",
+        "month": "辛丑",
+        "day": "乙巳",
+        "hour": "丁亥"
+      },
+      "chartCode": "GQ1-47-01-41-11"
+    },
+    {
+      "id": "day-42",
+      "selection": {
+        "yearCycle": 54,
+        "monthBranch": 6,
+        "dayCycle": 42,
+        "hourBranch": 6
+      },
+      "chart": {
+        "mode": "structural_ganzhi",
+        "calendarVerified": false,
+        "year": "戊午",
+        "month": "戊午",
+        "day": "丙午",
+        "hour": "甲午"
+      },
+      "chartCode": "GQ1-54-06-42-06"
+    },
+    {
+      "id": "day-43",
+      "selection": {
+        "yearCycle": 1,
+        "monthBranch": 11,
+        "dayCycle": 43,
+        "hourBranch": 1
+      },
+      "chart": {
+        "mode": "structural_ganzhi",
+        "calendarVerified": false,
+        "year": "乙丑",
+        "month": "丁亥",
+        "day": "丁未",
+        "hour": "辛丑"
+      },
+      "chartCode": "GQ1-01-11-43-01"
+    },
+    {
+      "id": "day-44",
+      "selection": {
+        "yearCycle": 8,
+        "monthBranch": 4,
+        "dayCycle": 44,
+        "hourBranch": 8
+      },
+      "chart": {
+        "mode": "structural_ganzhi",
+        "calendarVerified": false,
+        "year": "壬申",
+        "month": "甲辰",
+        "day": "戊申",
+        "hour": "庚申"
+      },
+      "chartCode": "GQ1-08-04-44-08"
+    },
+    {
+      "id": "day-45",
+      "selection": {
+        "yearCycle": 15,
+        "monthBranch": 9,
+        "dayCycle": 45,
+        "hourBranch": 3
+      },
+      "chart": {
+        "mode": "structural_ganzhi",
+        "calendarVerified": false,
+        "year": "己卯",
+        "month": "癸酉",
+        "day": "己酉",
+        "hour": "丁卯"
+      },
+      "chartCode": "GQ1-15-09-45-03"
+    },
+    {
+      "id": "day-46",
+      "selection": {
+        "yearCycle": 22,
+        "monthBranch": 2,
+        "dayCycle": 46,
+        "hourBranch": 10
+      },
+      "chart": {
+        "mode": "structural_ganzhi",
+        "calendarVerified": false,
+        "year": "丙戌",
+        "month": "庚寅",
+        "day": "庚戌",
+        "hour": "丙戌"
+      },
+      "chartCode": "GQ1-22-02-46-10"
+    },
+    {
+      "id": "day-47",
+      "selection": {
+        "yearCycle": 29,
+        "monthBranch": 7,
+        "dayCycle": 47,
+        "hourBranch": 5
+      },
+      "chart": {
+        "mode": "structural_ganzhi",
+        "calendarVerified": false,
+        "year": "癸巳",
+        "month": "己未",
+        "day": "辛亥",
+        "hour": "癸巳"
+      },
+      "chartCode": "GQ1-29-07-47-05"
+    },
+    {
+      "id": "day-48",
+      "selection": {
+        "yearCycle": 36,
+        "monthBranch": 0,
+        "dayCycle": 48,
+        "hourBranch": 0
+      },
+      "chart": {
+        "mode": "structural_ganzhi",
+        "calendarVerified": false,
+        "year": "庚子",
+        "month": "戊子",
+        "day": "壬子",
+        "hour": "庚子"
+      },
+      "chartCode": "GQ1-36-00-48-00"
+    },
+    {
+      "id": "day-49",
+      "selection": {
+        "yearCycle": 43,
+        "monthBranch": 5,
+        "dayCycle": 49,
+        "hourBranch": 7
+      },
+      "chart": {
+        "mode": "structural_ganzhi",
+        "calendarVerified": false,
+        "year": "丁未",
+        "month": "乙巳",
+        "day": "癸丑",
+        "hour": "己未"
+      },
+      "chartCode": "GQ1-43-05-49-07"
+    },
+    {
+      "id": "day-50",
+      "selection": {
+        "yearCycle": 50,
+        "monthBranch": 10,
+        "dayCycle": 50,
+        "hourBranch": 2
+      },
+      "chart": {
+        "mode": "structural_ganzhi",
+        "calendarVerified": false,
+        "year": "甲寅",
+        "month": "甲戌",
+        "day": "甲寅",
+        "hour": "丙寅"
+      },
+      "chartCode": "GQ1-50-10-50-02"
+    },
+    {
+      "id": "day-51",
+      "selection": {
+        "yearCycle": 57,
+        "monthBranch": 3,
+        "dayCycle": 51,
+        "hourBranch": 9
+      },
+      "chart": {
+        "mode": "structural_ganzhi",
+        "calendarVerified": false,
+        "year": "辛酉",
+        "month": "辛卯",
+        "day": "乙卯",
+        "hour": "乙酉"
+      },
+      "chartCode": "GQ1-57-03-51-09"
+    },
+    {
+      "id": "day-52",
+      "selection": {
+        "yearCycle": 4,
+        "monthBranch": 8,
+        "dayCycle": 52,
+        "hourBranch": 4
+      },
+      "chart": {
+        "mode": "structural_ganzhi",
+        "calendarVerified": false,
+        "year": "戊辰",
+        "month": "庚申",
+        "day": "丙辰",
+        "hour": "壬辰"
+      },
+      "chartCode": "GQ1-04-08-52-04"
+    },
+    {
+      "id": "day-53",
+      "selection": {
+        "yearCycle": 11,
+        "monthBranch": 1,
+        "dayCycle": 53,
+        "hourBranch": 11
+      },
+      "chart": {
+        "mode": "structural_ganzhi",
+        "calendarVerified": false,
+        "year": "乙亥",
+        "month": "己丑",
+        "day": "丁巳",
+        "hour": "辛亥"
+      },
+      "chartCode": "GQ1-11-01-53-11"
+    },
+    {
+      "id": "day-54",
+      "selection": {
+        "yearCycle": 18,
+        "monthBranch": 6,
+        "dayCycle": 54,
+        "hourBranch": 6
+      },
+      "chart": {
+        "mode": "structural_ganzhi",
+        "calendarVerified": false,
+        "year": "壬午",
+        "month": "丙午",
+        "day": "戊午",
+        "hour": "戊午"
+      },
+      "chartCode": "GQ1-18-06-54-06"
+    },
+    {
+      "id": "day-55",
+      "selection": {
+        "yearCycle": 25,
+        "monthBranch": 11,
+        "dayCycle": 55,
+        "hourBranch": 1
+      },
+      "chart": {
+        "mode": "structural_ganzhi",
+        "calendarVerified": false,
+        "year": "己丑",
+        "month": "乙亥",
+        "day": "己未",
+        "hour": "乙丑"
+      },
+      "chartCode": "GQ1-25-11-55-01"
+    },
+    {
+      "id": "day-56",
+      "selection": {
+        "yearCycle": 32,
+        "monthBranch": 4,
+        "dayCycle": 56,
+        "hourBranch": 8
+      },
+      "chart": {
+        "mode": "structural_ganzhi",
+        "calendarVerified": false,
+        "year": "丙申",
+        "month": "壬辰",
+        "day": "庚申",
+        "hour": "甲申"
+      },
+      "chartCode": "GQ1-32-04-56-08"
+    },
+    {
+      "id": "day-57",
+      "selection": {
+        "yearCycle": 39,
+        "monthBranch": 9,
+        "dayCycle": 57,
+        "hourBranch": 3
+      },
+      "chart": {
+        "mode": "structural_ganzhi",
+        "calendarVerified": false,
+        "year": "癸卯",
+        "month": "辛酉",
+        "day": "辛酉",
+        "hour": "辛卯"
+      },
+      "chartCode": "GQ1-39-09-57-03"
+    },
+    {
+      "id": "day-58",
+      "selection": {
+        "yearCycle": 46,
+        "monthBranch": 2,
+        "dayCycle": 58,
+        "hourBranch": 10
+      },
+      "chart": {
+        "mode": "structural_ganzhi",
+        "calendarVerified": false,
+        "year": "庚戌",
+        "month": "戊寅",
+        "day": "壬戌",
+        "hour": "庚戌"
+      },
+      "chartCode": "GQ1-46-02-58-10"
+    },
+    {
+      "id": "day-59",
+      "selection": {
+        "yearCycle": 53,
+        "monthBranch": 7,
+        "dayCycle": 59,
+        "hourBranch": 5
+      },
+      "chart": {
+        "mode": "structural_ganzhi",
+        "calendarVerified": false,
+        "year": "丁巳",
+        "month": "丁未",
+        "day": "癸亥",
+        "hour": "丁巳"
+      },
+      "chartCode": "GQ1-53-07-59-05"
+    }
+  ],
+  "fixtureLimit": "Frozen creation vectors retained from v0.2. No old affinity/cost fixture is included. Not production-game tests.",
+  "prngVectors": [
+    {
+      "seedHex": "00000000",
+      "words": [
+        1144304738,
+        1416247,
+        958946056,
+        627933444,
+        2007157716,
+        2340967985,
+        2642484575,
+        2787370982,
+        1958536065,
+        2496316458,
+        1057668038,
+        420269829,
+        3880206403,
+        1753221639,
+        3093645806,
+        2834277798
+      ]
+    },
+    {
+      "seedHex": "00000001",
+      "words": [
+        2693262067,
+        11749833,
+        2265367787,
+        4213581821,
+        4159151403,
+        1207330352,
+        2632122864,
+        3095568220,
+        1828783984,
+        4272732017,
+        1955374602,
+        2099329838,
+        596715197,
+        1734070562,
+        1063107040,
+        663542962
+      ]
+    },
+    {
+      "seedHex": "ffffffff",
+      "words": [
+        3850105811,
+        813802916,
+        3073704848,
+        4054706436,
+        3630262831,
+        2315588663,
+        2922715533,
+        2042566601,
+        583504547,
+        4245337221,
+        3742924205,
+        813245438,
+        1476122856,
+        3172627373,
+        2044370029,
+        3250051920
+      ]
+    },
+    {
+      "seedHex": "12345678",
+      "words": [
+        455919406,
+        4042750857,
+        4036713555,
+        1004527575,
+        3885174651,
+        3342903291,
+        1200158424,
+        1464636653,
+        858599751,
+        1533772857,
+        1588364917,
+        2804846102,
+        2629854135,
+        3639905998,
+        1129121329,
+        1317854350
+      ]
+    }
+  ]
+}

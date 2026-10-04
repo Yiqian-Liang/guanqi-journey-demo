@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "yearCycle": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 59
+    },
+    "monthBranch": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 11
+    },
+    "dayCycle": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 59
+    },
+    "hourBranch": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 11
+    }
+  },
+  "required": [
+    "yearCycle",
+    "monthBranch",
+    "dayCycle",
+    "hourBranch"
+  ],
+  "additionalProperties": false
+}

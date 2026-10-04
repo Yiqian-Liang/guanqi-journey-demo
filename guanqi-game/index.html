@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="越肩视角探索游戏《观气行旅》首章《雾隐渡》">
+  <title>观气行旅：雾隐渡</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='5' fill='%23283d38'/%3E%3Cpath d='M6 19c5-8 15-8 20 0-5 8-15 8-20 0Z' fill='%23f2e9d7'/%3E%3Ccircle cx='16' cy='19' r='4' fill='%23b55c3e'/%3E%3Cpath d='M16 4v8M12 8h8' stroke='%23d9b760' stroke-width='2'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="./style.css?v=0.5.2">
+</head>
+<body>
+  <main class="shell">
+    <section class="game" aria-label="雾隐渡地图">
+      <div class="canvasWrap">
+        <canvas id="world3d" width="960" height="540" aria-label="近距离越肩探索场景"></canvas>
+        <canvas id="game" width="960" height="540" aria-label="可移动探索地图"></canvas>
+        <div class="sceneHud">
+          <div id="arrayHint" class="arrayHint" aria-live="polite">教学阵局 · 尚未观察</div>
+          <div id="navHint" class="navHint" aria-live="polite"><span>下一步</span><strong>雾村 · 4步</strong></div>
+          <button id="lensToggle" title="显示或收起现场的形势关系">观局</button>
+          <button id="viewToggle" title="在越肩探索与全图视角之间切换">总览地图</button>
+        </div>
+        <ol id="causeTrail" class="causeTrail" aria-label="第一关因果步骤"></ol>
+        <aside id="siteReading" class="siteReading hide" aria-live="polite">
+          <div class="siteReadingHead"><span id="siteReadingKicker">现场观察</span><strong id="siteReadingTitle">风正穿过灯台</strong></div>
+          <div id="siteChecks" class="siteChecks"></div>
+          <p id="siteVerdict"></p>
+          <small id="siteReadingSource">先看见变化，术语会在操作成功后出现。</small>
+        </aside>
+        <div id="toast" class="toast" aria-live="polite"></div>
+        <section id="dialogue" class="dialogue hide" role="dialog" aria-labelledby="dialogueSpeaker" aria-describedby="dialogueText">
+          <div id="dialoguePortrait" class="dialoguePortrait narrator" aria-hidden="true"></div>
+          <div class="dialogueCopy">
+            <p id="dialogueSpeaker" class="dialogueSpeaker">旁白</p>
+            <p id="dialogueText">雾吞掉旧渡口的第三天，你在营地醒来。</p>
+            <span>点击继续，或按 E / Enter</span>
+          </div>
+          <div class="dialogueActions">
+            <button id="dialogueSkip" class="secondary">跳过</button>
+            <button id="dialogueNext" class="primary">继续</button>
+          </div>
+        </section>
+      </div>
+
+      <div class="bar" role="group" aria-label="选择五行">
+        <button data-element="wood"><span>木</span>曲直</button>
+        <button data-element="fire"><span>火</span>温炼</button>
+        <button data-element="earth"><span>土</span>培基</button>
+        <button data-element="metal"><span>金</span>裁形</button>
+        <button data-element="water"><span>水</span>通流</button>
+      </div>
+
+      <section class="contextPanel" aria-labelledby="contextTitle">
+        <div>
+          <h2 id="contextTitle">附近</h2>
+          <p id="contextText">移动到地标附近查看可用行动。</p>
+        </div>
+        <div id="contextActions" class="contextActions"></div>
+      </section>
+
+      <div class="touch" aria-label="触屏操作">
+        <div class="dpad">
+          <button data-move="ArrowUp" aria-label="向上">↑</button>
+          <button data-move="ArrowLeft" aria-label="向左">←</button>
+          <button data-move="ArrowDown" aria-label="向下">↓</button>
+          <button data-move="ArrowRight" aria-label="向右">→</button>
+        </div>
+        <button id="touchObserve">观局</button>
+        <button id="touchAct">行动</button>
+      </div>
+    </section>
+
+    <aside class="panel">
+      <header class="panelHead">
+        <div>
+          <p class="eyebrow">观气行旅</p>
+          <h1>雾隐渡</h1>
+        </div>
+        <span id="saveState" class="saveState">未保存</span>
+      </header>
+
+      <section id="guide" class="guide" aria-labelledby="guideTitle" aria-live="polite">
+        <div class="guideHead">
+          <div>
+            <p id="guideSection" class="eyebrow">学徒教学</p>
+            <span id="guideProgress" class="guideProgress">第 1 / 6 步</span>
+          </div>
+          <button id="guideDismiss" class="secondary" title="关闭指引，进入自由探索">自由探索</button>
+        </div>
+        <h2 id="guideTitle">看清灯为什么会熄</h2>
+        <p id="guideText">靠近石灯，先观察灯焰和门边布条。</p>
+        <p class="guideControls">移动：方向键 / WASD / 屏幕方向键　互动：E / 行动按钮</p>
+        <div class="guideHelp">
+          <button id="guideHint" class="secondary">需要线索</button>
+          <p id="guideHintText" class="hide"></p>
+        </div>
+        <div class="guideTarget"><span>当前目标</span><strong id="guideTarget">雾村</strong></div>
+        <button id="guideDo" class="primary">查看当前目标</button>
+      </section>
+
+      <p id="goal" class="goal">当前目标：点亮护路灯，找出通往雾村的旧桥。</p>
+      <div class="statusGrid">
+        <div><span>角色</span><strong id="heroName">未出发</strong></div>
+        <div><span>灵力</span><strong id="spirit">100</strong></div>
+        <div><span>法式</span><strong id="selected">木 曲直</strong></div>
+        <div><span>时辰</span><strong id="phase">卯</strong></div>
+        <div><span>雾势</span><strong id="fog">80</strong></div>
+        <div><span>同行</span><strong id="party">独行</strong></div>
+      </div>
+
+      <nav class="tabs" aria-label="行旅面板">
+        <button data-tab="journey" class="active">行旅</button>
+        <button data-tab="skills">法式</button>
+        <button data-tab="party">人物</button>
+        <button data-tab="chart">命盘</button>
+        <button data-tab="events">神煞</button>
+      </nav>
+
+      <section data-pane="journey" class="pane active">
+        <h2>路线</h2>
+        <div id="routeSummary" class="routeSummary"></div>
+        <h2>任务</h2>
+        <ol id="journal" class="journal"></ol>
+        <div class="splitLists">
+          <div><h2>背包</h2><ul id="inventory"></ul></div>
+          <div><h2>线索</h2><ul id="clues"></ul></div>
+        </div>
+        <div id="travelActions" class="actions"></div>
+      </section>
+
+      <section data-pane="skills" class="pane">
+        <p class="quiet">同一法式可作用于多个具备相应性质的对象。灰色法式需先找到手记。</p>
+        <div id="skills" class="skills"></div>
+      </section>
+
+      <section data-pane="party" class="pane">
+        <p class="quiet">人物按自己的作息行动。相识、信任和是否有空分别记录。</p>
+        <ul id="npcs" class="people"></ul>
+        <div id="partyDetails"></div>
+      </section>
+
+      <section data-pane="chart" class="pane">
+        <div id="chartSummary"></div>
+        <div id="baziTable" class="baziTable"></div>
+        <details class="chartDetails">
+          <summary>五行与结构详解</summary>
+          <h2>古籍读法</h2>
+          <div id="chartClassics" class="rulesList classics"></div>
+          <h2>原型资源</h2>
+          <div id="budget" class="budget"></div>
+          <h2>明干与藏干</h2>
+          <div id="nodes" class="rulesList"></div>
+          <h2>十神、根透与关系</h2>
+          <div id="relations" class="rulesList"></div>
+        </details>
+      </section>
+
+      <section data-pane="events" class="pane">
+        <p class="quiet">类型、承载证据与当前事件分开记录；没有本命标记也能走普通路线。</p>
+        <ul id="events" class="events"></ul>
+      </section>
+
+      <div class="utility">
+        <button id="guideToggle" title="开启或关闭第一关指引">指引</button>
+        <button id="save" title="保存当前进度">保存</button>
+        <button id="load" title="读取最近有效存档">读取</button>
+        <button id="exportSave" title="导出存档文件">导出</button>
+        <button id="importSave" title="导入存档文件">导入</button>
+        <input id="saveFile" type="file" accept="application/json" hidden>
+        <button id="rest" title="在安全处调息并推进时辰">调息</button>
+        <button id="newGame" title="返回创建角色">新旅程</button>
+      </div>
+
+      <details class="logBox" open>
+        <summary>行旅记录</summary>
+        <ol id="log"></ol>
+      </details>
+    </aside>
+  </main>
+
+  <div id="start" class="start" role="dialog" aria-modal="true" aria-labelledby="startTitle">
+    <div class="startBox">
+      <div class="creationHead">
+        <div>
+          <p class="eyebrow">观气行旅</p>
+          <h1 id="startTitle">选择你的来处</h1>
+        </div>
+        <button id="continue" class="secondary hide">继续上次行旅</button>
+      </div>
+
+      <label class="nameField">姓名
+        <input id="nameInput" maxlength="20" value="行旅人" autocomplete="off">
+      </label>
+
+      <div id="creationPreview" class="creationPreview"></div>
+      <p class="quickHint">不熟悉命盘也没关系，直接开始即可；它只影响法式消耗和人物协作。</p>
+
+      <div class="creationActions">
+        <button id="random">换一组命盘</button>
+        <button id="confirm" class="primary">直接开始第一关</button>
+      </div>
+      <p id="creationHint" class="hint" aria-live="polite"></p>
+
+      <details class="advancedCreation">
+        <summary>自定义命盘与分享码（可选）</summary>
+        <div class="creationGrid">
+          <div class="draftArea">
+          <div class="selectionGrid">
+            <label>年柱<select id="yearCycle"></select><span><input type="checkbox" data-lock="yearCycle"> 锁定年柱</span></label>
+            <label>月支<select id="monthBranch"></select><span><input type="checkbox" data-lock="monthBranch"> 锁定月支</span></label>
+            <label>日柱<select id="dayCycle"></select><span><input type="checkbox" data-lock="dayCycle"> 锁定日柱</span></label>
+            <label>时支<select id="hourBranch"></select><span><input type="checkbox" data-lock="hourBranch"> 锁定时支</span></label>
+          </div>
+          <div class="dayFilter">
+            <label>日主筛选<select id="dayStem"><option value="">不限</option></select></label>
+            <label><input id="lockDayStem" type="checkbox"> 随机时锁定日主</label>
+            <button id="fillDayStem" class="secondary">按筛选补全</button>
+          </div>
+          </div>
+
+          <aside class="templateArea">
+            <h2>示例模板</h2>
+            <div id="templates" class="templates"></div>
+            <p class="quiet">模板只是可编辑起点，不是职业。</p>
+          </aside>
+        </div>
+
+        <div class="shareRow">
+          <input id="codeInput" placeholder="GQ1-08-05-50-06" aria-label="命盘分享码">
+          <button id="importCode">导入分享码</button>
+          <button id="copyCode">复制当前码</button>
+        </div>
+      </details>
+      <p class="disclaimer">虚构角色命盘 · 本作规则 · 未验证真实公历出生时刻</p>
+    </div>
+  </div>
+
+  <script src="./game.js?v=0.5.1"></script>
+  <script type="module" src="./world3d.js?v=0.5.2"></script>
+</body>
+</html>

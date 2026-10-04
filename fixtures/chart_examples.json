@@ -1,0 +1,39 @@
+{
+  "doubleTianyi": {
+    "id": "two_tianyi_example",
+    "name": "双承载位示例",
+    "role": "reference_only",
+    "chart": {
+      "mode": "structural_ganzhi",
+      "calendarVerified": false,
+      "year": "壬申",
+      "month": "癸丑",
+      "day": "甲寅",
+      "hour": "辛未"
+    }
+  },
+  "sproutExpected": {
+    "elementBudget": {
+      "wood": 2.6,
+      "fire": 1.6,
+      "earth": 0.8,
+      "metal": 1.7,
+      "water": 1.3
+    },
+    "hiddenCount": 11,
+    "visibleTenGodCounts": {
+      "偏印": 1,
+      "劫财": 1,
+      "七杀": 1
+    },
+    "hiddenTenGodCounts": {
+      "七杀": 2,
+      "偏印": 1,
+      "偏财": 3,
+      "食神": 2,
+      "比肩": 1,
+      "伤官": 1,
+      "正财": 1
+    }
+  }
+}

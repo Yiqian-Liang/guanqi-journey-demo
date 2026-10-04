@@ -1,0 +1,308 @@
+{
+  "protocol": "sha256-utf8-json-array-v1",
+  "scope": "reference_words_not_game_encounters",
+  "cases": [
+    {
+      "input": {
+        "seed": "00000000",
+        "npc": "road_guest",
+        "window": "0:9:ferry",
+        "attempt": 1,
+        "eligible": true
+      },
+      "expected": {
+        "disposition": "drawn",
+        "drawn": true,
+        "probabilityBasisPoints": 3500,
+        "hashWordHex": "cb3976936a582a94",
+        "encountered": false,
+        "pityUsed": false,
+        "nextAttempt": 2
+      }
+    },
+    {
+      "input": {
+        "seed": "00000000",
+        "npc": "road_guest",
+        "window": "1:9:ferry",
+        "attempt": 2,
+        "eligible": true
+      },
+      "expected": {
+        "disposition": "drawn",
+        "drawn": true,
+        "probabilityBasisPoints": 5000,
+        "hashWordHex": "489159415eea3d19",
+        "encountered": true,
+        "pityUsed": false,
+        "nextAttempt": 1
+      }
+    },
+    {
+      "input": {
+        "seed": "00000000",
+        "npc": "road_guest",
+        "window": "2:9:ferry",
+        "attempt": 3,
+        "eligible": true
+      },
+      "expected": {
+        "disposition": "drawn",
+        "drawn": true,
+        "probabilityBasisPoints": 6500,
+        "hashWordHex": "7e7761a42261e1aa",
+        "encountered": true,
+        "pityUsed": false,
+        "nextAttempt": 1
+      }
+    },
+    {
+      "input": {
+        "seed": "00000000",
+        "npc": "road_guest",
+        "window": "3:9:ferry",
+        "attempt": 4,
+        "eligible": true
+      },
+      "expected": {
+        "disposition": "drawn",
+        "drawn": true,
+        "probabilityBasisPoints": 8000,
+        "hashWordHex": "31e3f5cbb9699adf",
+        "encountered": true,
+        "pityUsed": true,
+        "nextAttempt": 1
+      }
+    },
+    {
+      "input": {
+        "seed": "deadbeef",
+        "npc": "road_guest",
+        "window": "0:9:ferry",
+        "attempt": 1,
+        "eligible": true
+      },
+      "expected": {
+        "disposition": "drawn",
+        "drawn": true,
+        "probabilityBasisPoints": 3500,
+        "hashWordHex": "689d8e6494a301e3",
+        "encountered": false,
+        "pityUsed": false,
+        "nextAttempt": 2
+      }
+    },
+    {
+      "input": {
+        "seed": "deadbeef",
+        "npc": "road_guest",
+        "window": "1:9:ferry",
+        "attempt": 2,
+        "eligible": true
+      },
+      "expected": {
+        "disposition": "drawn",
+        "drawn": true,
+        "probabilityBasisPoints": 5000,
+        "hashWordHex": "a89338a244117f29",
+        "encountered": false,
+        "pityUsed": false,
+        "nextAttempt": 3
+      }
+    },
+    {
+      "input": {
+        "seed": "deadbeef",
+        "npc": "road_guest",
+        "window": "2:9:ferry",
+        "attempt": 3,
+        "eligible": true
+      },
+      "expected": {
+        "disposition": "drawn",
+        "drawn": true,
+        "probabilityBasisPoints": 6500,
+        "hashWordHex": "37a1cdb3ed1336c8",
+        "encountered": true,
+        "pityUsed": false,
+        "nextAttempt": 1
+      }
+    },
+    {
+      "input": {
+        "seed": "deadbeef",
+        "npc": "road_guest",
+        "window": "3:9:ferry",
+        "attempt": 4,
+        "eligible": true
+      },
+      "expected": {
+        "disposition": "drawn",
+        "drawn": true,
+        "probabilityBasisPoints": 8000,
+        "hashWordHex": "8f63464759d93367",
+        "encountered": true,
+        "pityUsed": true,
+        "nextAttempt": 1
+      }
+    },
+    {
+      "input": {
+        "seed": "20260918",
+        "npc": "road_guest",
+        "window": "0:9:ferry",
+        "attempt": 1,
+        "eligible": true
+      },
+      "expected": {
+        "disposition": "drawn",
+        "drawn": true,
+        "probabilityBasisPoints": 3500,
+        "hashWordHex": "3adc35e0a479c85a",
+        "encountered": true,
+        "pityUsed": false,
+        "nextAttempt": 1
+      }
+    },
+    {
+      "input": {
+        "seed": "20260918",
+        "npc": "road_guest",
+        "window": "1:9:ferry",
+        "attempt": 2,
+        "eligible": true
+      },
+      "expected": {
+        "disposition": "drawn",
+        "drawn": true,
+        "probabilityBasisPoints": 5000,
+        "hashWordHex": "9efa99e057e2ba42",
+        "encountered": false,
+        "pityUsed": false,
+        "nextAttempt": 3
+      }
+    },
+    {
+      "input": {
+        "seed": "20260918",
+        "npc": "road_guest",
+        "window": "2:9:ferry",
+        "attempt": 3,
+        "eligible": true
+      },
+      "expected": {
+        "disposition": "drawn",
+        "drawn": true,
+        "probabilityBasisPoints": 6500,
+        "hashWordHex": "6b65c19d9325697e",
+        "encountered": true,
+        "pityUsed": false,
+        "nextAttempt": 1
+      }
+    },
+    {
+      "input": {
+        "seed": "20260918",
+        "npc": "road_guest",
+        "window": "3:9:ferry",
+        "attempt": 4,
+        "eligible": true
+      },
+      "expected": {
+        "disposition": "drawn",
+        "drawn": true,
+        "probabilityBasisPoints": 8000,
+        "hashWordHex": "72019b02fccde1e8",
+        "encountered": true,
+        "pityUsed": true,
+        "nextAttempt": 1
+      }
+    },
+    {
+      "input": {
+        "seed": "a1b2c3d4",
+        "npc": "road_guest",
+        "window": "0:9:ferry",
+        "attempt": 1,
+        "eligible": true
+      },
+      "expected": {
+        "disposition": "drawn",
+        "drawn": true,
+        "probabilityBasisPoints": 3500,
+        "hashWordHex": "0791042033808ba8",
+        "encountered": true,
+        "pityUsed": false,
+        "nextAttempt": 1
+      }
+    },
+    {
+      "input": {
+        "seed": "a1b2c3d4",
+        "npc": "road_guest",
+        "window": "1:9:ferry",
+        "attempt": 2,
+        "eligible": true
+      },
+      "expected": {
+        "disposition": "drawn",
+        "drawn": true,
+        "probabilityBasisPoints": 5000,
+        "hashWordHex": "62de0b46c71b7c73",
+        "encountered": true,
+        "pityUsed": false,
+        "nextAttempt": 1
+      }
+    },
+    {
+      "input": {
+        "seed": "a1b2c3d4",
+        "npc": "road_guest",
+        "window": "2:9:ferry",
+        "attempt": 3,
+        "eligible": true
+      },
+      "expected": {
+        "disposition": "drawn",
+        "drawn": true,
+        "probabilityBasisPoints": 6500,
+        "hashWordHex": "53513550732a5e0f",
+        "encountered": true,
+        "pityUsed": false,
+        "nextAttempt": 1
+      }
+    },
+    {
+      "input": {
+        "seed": "a1b2c3d4",
+        "npc": "road_guest",
+        "window": "3:9:ferry",
+        "attempt": 4,
+        "eligible": true
+      },
+      "expected": {
+        "disposition": "drawn",
+        "drawn": true,
+        "probabilityBasisPoints": 8000,
+        "hashWordHex": "b160703be141f403",
+        "encountered": true,
+        "pityUsed": true,
+        "nextAttempt": 1
+      }
+    },
+    {
+      "input": {
+        "seed": "00000000",
+        "npc": "road_guest",
+        "window": "0:3:village",
+        "attempt": 3,
+        "eligible": false
+      },
+      "expected": {
+        "disposition": "ineligible",
+        "drawn": false,
+        "nextAttempt": 3
+      }
+    }
+  ]
+}

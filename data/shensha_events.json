@@ -1,0 +1,472 @@
+{
+  "schemaVersion": 4,
+  "interactionOrigin": "all_effects_original_game_adaptation_not_classical_fate_rules",
+  "counting": {
+    "occurrenceKey": [
+      "ownerId",
+      "ruleProfileId",
+      "shenshaId",
+      "domain",
+      "carrierNodeId"
+    ],
+    "proofsDeduplicatedBy": [
+      "anchorNodeId",
+      "targetNodeId",
+      "ruleId"
+    ],
+    "catalogTypes": 12,
+    "activePersonalEvents": 2,
+    "activeTeamSpectacles": 2,
+    "keepAllDormantEvidence": true,
+    "sameTypeMultiplicityEffect": "more_candidates_not_linear_power",
+    "differentOwnersNeverDeduplicate": true
+  },
+  "domains": [
+    "natal",
+    "transit",
+    "partner",
+    "place_legend"
+  ],
+  "states": {
+    "knowledge": [
+      "unknown",
+      "hinted",
+      "identified"
+    ],
+    "runtime": [
+      "dormant",
+      "eligible",
+      "manifesting",
+      "engaged",
+      "cooldown"
+    ],
+    "obstruction": [
+      "context_unavailable",
+      "conflict_unresolved",
+      "evidence_incomplete"
+    ],
+    "historicalMatch": [
+      "present",
+      "absent",
+      "not_applicable"
+    ]
+  },
+  "interactions": [
+    {
+      "id": "guide_on_road",
+      "scope": "same_carrier",
+      "condition": "同一承载位同时满足两种记录；已知且旅途事件可用",
+      "effect": "提供一次带路/护送分支；仍需与化身交涉",
+      "boundary": "不生成第二个贵人；不直接传到未访问地图",
+      "referencedTypes": [
+        "tianyi",
+        "yima"
+      ],
+      "requiredEvidence": {
+        "allOf": [
+          "tianyi",
+          "yima"
+        ],
+        "anyOfGroups": []
+      },
+      "evidenceDomains": [
+        "natal"
+      ],
+      "requiresKnownEvidence": true,
+      "handlerId": "guide_on_road",
+      "interpretation": "资格不自动完成事件；必须玩家选分支并满足人物/库存/场景条件。"
+    },
+    {
+      "id": "delayed_help",
+      "scope": "same_carrier",
+      "condition": "天乙承载支同时落本命旬空；河名线索未补齐",
+      "effect": "帮助先以间接线索出现；补齐凭证后可落实",
+      "boundary": "不删除天乙记录，也不把摆渡人从世界中删除",
+      "referencedTypes": [
+        "tianyi",
+        "xunkong"
+      ],
+      "requiredEvidence": {
+        "allOf": [
+          "tianyi",
+          "xunkong"
+        ],
+        "anyOfGroups": []
+      },
+      "evidenceDomains": [
+        "natal"
+      ],
+      "requiresKnownEvidence": true,
+      "handlerId": "delayed_help",
+      "interpretation": "资格不自动完成事件；必须玩家选分支并满足人物/库存/场景条件。"
+    },
+    {
+      "id": "mediated_crisis",
+      "scope": "same_owner_region",
+      "condition": "纠纷事件已触发；玩家选择求援；有帮助者可联系",
+      "effect": "增加协商/担保路线",
+      "boundary": "不是永久清除劫煞、无敌或免除后果",
+      "referencedTypes": [
+        "tianyi",
+        "jiesha"
+      ],
+      "requiredEvidence": {
+        "allOf": [
+          "tianyi",
+          "jiesha"
+        ],
+        "anyOfGroups": []
+      },
+      "evidenceDomains": [
+        "natal"
+      ],
+      "requiresKnownEvidence": true,
+      "handlerId": "mediated_crisis",
+      "interpretation": "资格不自动完成事件；必须玩家选分支并满足人物/库存/场景条件。"
+    },
+    {
+      "id": "virtue_support",
+      "scope": "same_owner_region",
+      "condition": "至少一个德标记可用＋劫煞纠纷；玩家做出相应保护行动",
+      "effect": "可缩短一次救援准备；不与天乙调停数值相乘",
+      "boundary": "与其他调停路径只取一种方案，按事务唯一提交",
+      "referencedTypes": [
+        "tiande",
+        "yuede",
+        "jiesha"
+      ],
+      "requiredEvidence": {
+        "allOf": [
+          "jiesha"
+        ],
+        "anyOfGroups": [
+          [
+            "tiande",
+            "yuede"
+          ]
+        ]
+      },
+      "evidenceDomains": [
+        "natal"
+      ],
+      "requiresKnownEvidence": true,
+      "handlerId": "virtue_support",
+      "interpretation": "资格不自动完成事件；必须玩家选分支并满足人物/库存/场景条件。"
+    },
+    {
+      "id": "supplied_journey",
+      "scope": "same_owner_region",
+      "condition": "商旅委托存在；双方明确交换补给",
+      "effect": "解锁补给运输路线，用实际库存抵一段旅途消耗",
+      "boundary": "不凭空产钱，不随进出队伍重复发物资",
+      "referencedTypes": [
+        "lu",
+        "yima"
+      ],
+      "requiredEvidence": {
+        "allOf": [
+          "lu",
+          "yima"
+        ],
+        "anyOfGroups": []
+      },
+      "evidenceDomains": [
+        "natal"
+      ],
+      "requiresKnownEvidence": true,
+      "handlerId": "supplied_journey",
+      "interpretation": "资格不自动完成事件；必须玩家选分支并满足人物/库存/场景条件。"
+    },
+    {
+      "id": "quiet_or_public",
+      "scope": "same_owner_region",
+      "condition": "同一遗迹提供静观与人群传闻两种调查路线",
+      "effect": "玩家选择独处辨识或社交采证；分别给不同视角",
+      "boundary": "非传统固定互克公式，不判定社交/性格或强制恋爱",
+      "referencedTypes": [
+        "huagai",
+        "xianchi"
+      ],
+      "requiredEvidence": {
+        "allOf": [
+          "huagai",
+          "xianchi"
+        ],
+        "anyOfGroups": []
+      },
+      "evidenceDomains": [
+        "natal"
+      ],
+      "requiresKnownEvidence": true,
+      "handlerId": "quiet_or_public",
+      "interpretation": "资格不自动完成事件；必须玩家选分支并满足人物/库存/场景条件。"
+    }
+  ],
+  "firstChapterEventFamilies": [
+    "tianyi",
+    "yima",
+    "huagai",
+    "xianchi",
+    "jiesha",
+    "xunkong"
+  ],
+  "otherTypesRole": "禄、将星、天月德、太极、阳刃可作为这些事件的可见分支条件；不要求12位独立神仙模型。全部12种定位器与状态仍必须接入规则浏览器。",
+  "fallback": "没有命盘标记也可通过探索/人物委托进入必要内容；标记改变线索、时机和解法，不裁掉主线。",
+  "priorityPolicy": {
+    "order": [
+      "delayed_help",
+      "guide_on_road",
+      "mediated_crisis",
+      "virtue_support",
+      "supplied_journey",
+      "quiet_or_public"
+    ],
+    "sameEffectClass": "player_selects_one_no_multiplicative_stacking",
+    "unconfiguredPair": "no_extra_effect"
+  },
+  "families": [
+    {
+      "id": "tianyi",
+      "name": "归铃引路",
+      "node": "ferry",
+      "eligibility": "event_tianyi",
+      "stages": [
+        "hint",
+        "identify",
+        "request_help",
+        "resolved"
+      ],
+      "choices": [
+        "ask_route",
+        "ask_mediator",
+        "decline"
+      ],
+      "effects": {
+        "ask_route": [
+          {
+            "op": "grantClue",
+            "id": "clue_hidden_return"
+          }
+        ],
+        "ask_mediator": [
+          {
+            "op": "setFlag",
+            "key": "mediatorAvailable",
+            "value": true
+          }
+        ],
+        "decline": []
+      },
+      "rewardId": "tianyi_first_contact",
+      "fallback": "归还古铃＋两条旧河名证据；不要求本命记录。",
+      "variantTypes": [
+        "tiande",
+        "yuede"
+      ]
+    },
+    {
+      "id": "yima",
+      "name": "重立驿碑",
+      "node": "ferry",
+      "eligibility": "event_yima",
+      "stages": [
+        "inspect_milestone",
+        "survey",
+        "follow",
+        "resolved"
+      ],
+      "choices": [
+        "follow_visited_route",
+        "decline"
+      ],
+      "effects": {
+        "follow_visited_route": [
+          {
+            "op": "setFlag",
+            "key": "fastTravelUnlocked",
+            "value": true
+          }
+        ],
+        "decline": []
+      },
+      "rewardId": "yima_road_known",
+      "fallback": "实地调查并标记营地和渡口两处；等待酉时或约定同行；不能传送未探索地点。",
+      "variantTypes": [
+        "lu",
+        "jiangxing"
+      ]
+    },
+    {
+      "id": "huagai",
+      "name": "碑影相照",
+      "node": "old_shrine",
+      "eligibility": "event_huagai",
+      "stages": [
+        "observe",
+        "compare",
+        "resolve"
+      ],
+      "choices": [
+        "quiet_compare",
+        "public_compare"
+      ],
+      "effects": {
+        "quiet_compare": [
+          {
+            "op": "grantClue",
+            "id": "clue_echo_name"
+          }
+        ],
+        "public_compare": [
+          {
+            "op": "grantClue",
+            "id": "clue_echo_name"
+          }
+        ]
+      },
+      "rewardId": "huagai_name_copied",
+      "fallback": "普通灯＋自然静水也能对照，不强制有相关神煞或伙伴。",
+      "variantTypes": [
+        "taiji"
+      ]
+    },
+    {
+      "id": "xianchi",
+      "name": "灯市口述",
+      "node": "village",
+      "eligibility": "event_xianchi",
+      "stages": [
+        "listen",
+        "cross_check",
+        "resolve"
+      ],
+      "choices": [
+        "ask_singer",
+        "read_public_board"
+      ],
+      "effects": {
+        "ask_singer": [
+          {
+            "op": "grantClue",
+            "id": "clue_old_river_name_b"
+          },
+          {
+            "op": "setFlag",
+            "key": "publicStoryHeard",
+            "value": true
+          }
+        ],
+        "read_public_board": [
+          {
+            "op": "grantClue",
+            "id": "clue_old_river_name_b"
+          }
+        ]
+      },
+      "rewardId": "xianchi_story_known",
+      "fallback": "普通公开告示全天可查同一必要河名；额外演出有时段，不锁必要证据。",
+      "variantTypes": []
+    },
+    {
+      "id": "jiesha",
+      "name": "被拦的货箱",
+      "node": "ferry",
+      "eligibility": "event_jiesha",
+      "stages": [
+        "inspect_cargo",
+        "choose_method",
+        "resolve"
+      ],
+      "choices": [
+        "repair_support",
+        "mediate",
+        "controlled_cut"
+      ],
+      "effects": {
+        "repair_support": [
+          {
+            "op": "setFlag",
+            "key": "cargoDisputeResolved",
+            "value": true
+          }
+        ],
+        "mediate": [
+          {
+            "op": "setFlag",
+            "key": "cargoDisputeResolved",
+            "value": true
+          }
+        ],
+        "controlled_cut": [
+          {
+            "op": "setFlag",
+            "key": "cargoDisputeResolved",
+            "value": true
+          }
+        ]
+      },
+      "choiceGuards": {
+        "repair_support": {
+          "op": "flag",
+          "key": "cargoSupportRepaired",
+          "equals": true
+        },
+        "mediate": {
+          "op": "flag",
+          "key": "mediatorAvailable",
+          "equals": true
+        },
+        "controlled_cut": {
+          "op": "flag",
+          "key": "cargoSafeCutDone",
+          "equals": true
+        }
+      },
+      "rewardId": "jiesha_cargo_resolved",
+      "fallback": "修支架是所有命盘共有的路线，不偷关键物；实际完成动作后才能选择结算。",
+      "variantTypes": [
+        "yangren",
+        "tiande",
+        "yuede",
+        "jiangxing"
+      ]
+    },
+    {
+      "id": "xunkong",
+      "name": "集市缺名",
+      "node": "empty_market",
+      "eligibility": "event_xunkong",
+      "stages": [
+        "notice_missing_name",
+        "find_evidence",
+        "return_name",
+        "resolved"
+      ],
+      "choices": [
+        "return_copied_name",
+        "leave"
+      ],
+      "effects": {
+        "return_copied_name": [
+          {
+            "op": "setFlag",
+            "key": "missingNameReturned",
+            "value": true
+          }
+        ],
+        "leave": []
+      },
+      "choiceGuards": {
+        "return_copied_name": {
+          "op": "clue",
+          "id": "clue_echo_name"
+        }
+      },
+      "rewardId": "xunkong_name_returned",
+      "fallback": "市内先发现缺名，退出后在碑廊或口述路径取得证据；退出门始终可用。",
+      "variantTypes": [
+        "taiji"
+      ]
+    }
+  ]
+}

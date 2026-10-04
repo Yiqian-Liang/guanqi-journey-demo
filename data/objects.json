@@ -1,0 +1,439 @@
+{
+  "schemaVersion": 4,
+  "status": "object_seeds_not_final_scene_assets",
+  "objects": [
+    {
+      "id": "camp_vine",
+      "node": "camp",
+      "components": [
+        "Living",
+        "Flexible",
+        "Anchors",
+        "Moisture",
+        "GrowthReserve"
+      ],
+      "initial": {
+        "moisture": 0.5,
+        "reserve": 3,
+        "biomass": 1,
+        "mode": "restore"
+      },
+      "mechanismBindings": {},
+      "boundary": "At node-local safe placement; production author must give exact geometry without blocking mandatory route."
+    },
+    {
+      "id": "canal_roots",
+      "node": "canal",
+      "components": [
+        "Living",
+        "Flexible",
+        "Anchors",
+        "Moisture",
+        "GrowthReserve",
+        "Separable",
+        "Integrity"
+      ],
+      "initial": {
+        "moisture": 0.75,
+        "reserve": 2,
+        "biomass": 3,
+        "integrity": 1,
+        "hardnessRank": 1,
+        "mode": "blocked"
+      },
+      "mechanismBindings": {
+        "wood_shape.clear_path": {
+          "rootMode": "shaped"
+        },
+        "metal_cut.trim": {
+          "rootMode": "trimmed"
+        }
+      },
+      "boundary": "At node-local safe placement; production author must give exact geometry without blocking mandatory route."
+    },
+    {
+      "id": "water_gate",
+      "node": "canal",
+      "components": [
+        "Thermal",
+        "Separable",
+        "Integrity",
+        "HydraulicNetwork"
+      ],
+      "initial": {
+        "heatLevel": 0,
+        "softenLevel": 2,
+        "damageLevel": 3,
+        "integrity": 0.5
+      },
+      "mechanismBindings": {},
+      "boundary": "At node-local safe placement; production author must give exact geometry without blocking mandatory route."
+    },
+    {
+      "id": "canal_control",
+      "node": "canal",
+      "components": [
+        "Soil",
+        "HydraulicBoundary",
+        "HydraulicNetwork"
+      ],
+      "initial": {
+        "soilUnits": 4,
+        "mode": "old_canal"
+      },
+      "mechanismBindings": {
+        "earth_channel.bypass": {
+          "rootMode": "bypassed"
+        }
+      },
+      "boundary": "At node-local safe placement; production author must give exact geometry without blocking mandatory route."
+    },
+    {
+      "id": "wind_panel",
+      "node": "wall",
+      "components": [
+        "Separable",
+        "Integrity",
+        "AirflowVolume"
+      ],
+      "initial": {
+        "ventState": "closed",
+        "integrity": 1
+      },
+      "mechanismBindings": {},
+      "boundary": "At node-local safe placement; production author must give exact geometry without blocking mandatory route."
+    },
+    {
+      "id": "herb_base",
+      "node": "herb",
+      "components": [
+        "Soil",
+        "LoadBearing",
+        "Integrity"
+      ],
+      "initial": {
+        "soilUnits": 4,
+        "integrity": 0.5,
+        "safeLoadActors": 2
+      },
+      "mechanismBindings": {
+        "earth_base.compact": {
+          "herbShield": true
+        }
+      },
+      "boundary": "At node-local safe placement; production author must give exact geometry without blocking mandatory route."
+    },
+    {
+      "id": "herb_patch",
+      "node": "herb",
+      "components": [
+        "Living",
+        "Flexible",
+        "Moisture",
+        "GrowthReserve",
+        "Anchors"
+      ],
+      "initial": {
+        "moisture": 0.5,
+        "reserve": 2,
+        "biomass": 1
+      },
+      "mechanismBindings": {},
+      "boundary": "At node-local safe placement; production author must give exact geometry without blocking mandatory route."
+    },
+    {
+      "id": "storage_urn",
+      "node": "herb",
+      "components": [
+        "Reservoir",
+        "Containment"
+      ],
+      "initial": {
+        "stock": 3,
+        "capacity": 4,
+        "exchangeRate": 1
+      },
+      "mechanismBindings": {},
+      "boundary": "At node-local safe placement; production author must give exact geometry without blocking mandatory route."
+    },
+    {
+      "id": "gorge_vine",
+      "node": "gorge_near",
+      "components": [
+        "Living",
+        "Flexible",
+        "Anchors",
+        "GrowthReserve",
+        "LoadBearing"
+      ],
+      "initial": {
+        "reserve": 2,
+        "lengthTiles": 4,
+        "maxLoadActors": 2
+      },
+      "mechanismBindings": {},
+      "boundary": "At node-local safe placement; production author must give exact geometry without blocking mandatory route."
+    },
+    {
+      "id": "gorge_slope",
+      "node": "gorge_near",
+      "components": [
+        "Soil",
+        "LoadBearing",
+        "Integrity"
+      ],
+      "initial": {
+        "soilUnits": 6,
+        "integrity": 0.5
+      },
+      "mechanismBindings": {},
+      "boundary": "At node-local safe placement; production author must give exact geometry without blocking mandatory route."
+    },
+    {
+      "id": "gorge_water",
+      "node": "gorge_near",
+      "components": [
+        "HydraulicNetwork"
+      ],
+      "initial": {
+        "sourceUnits": 4,
+        "outletUnits": 4
+      },
+      "mechanismBindings": {},
+      "boundary": "At node-local safe placement; production author must give exact geometry without blocking mandatory route."
+    },
+    {
+      "id": "lamp_material",
+      "node": "reflection_stone",
+      "components": [
+        "OpticalReceiver"
+      ],
+      "initial": {
+        "illuminationLevel": 0,
+        "revealLevelMin": 1,
+        "revealLevelMax": 1
+      },
+      "mechanismBindings": {},
+      "boundary": "At node-local safe placement; production author must give exact geometry without blocking mandatory route."
+    },
+    {
+      "id": "heated_vent",
+      "node": "bell",
+      "components": [
+        "Thermal",
+        "AirflowVolume"
+      ],
+      "initial": {
+        "heatLevel": 0,
+        "updraft": 0,
+        "safeExit": true
+      },
+      "mechanismBindings": {},
+      "boundary": "At node-local safe placement; production author must give exact geometry without blocking mandatory route."
+    },
+    {
+      "id": "metal_joint",
+      "node": "workshop",
+      "components": [
+        "Thermal",
+        "JoinableMetal",
+        "MaterialReserve",
+        "Integrity",
+        "Separable"
+      ],
+      "initial": {
+        "heatLevel": 0,
+        "damageLevel": 3,
+        "integrity": 0.5,
+        "solderRequired": 1,
+        "hardnessRank": 1
+      },
+      "mechanismBindings": {},
+      "boundary": "At node-local safe placement; production author must give exact geometry without blocking mandatory route."
+    },
+    {
+      "id": "bronze_pipe",
+      "node": "workshop",
+      "components": [
+        "Resonant",
+        "Connectivity"
+      ],
+      "initial": {
+        "connectedHops": 3,
+        "hasGap": true
+      },
+      "mechanismBindings": {},
+      "boundary": "At node-local safe placement; production author must give exact geometry without blocking mandatory route."
+    },
+    {
+      "id": "water_basin",
+      "node": "canal",
+      "components": [
+        "Moisture",
+        "WaterAccessible",
+        "Reservoir"
+      ],
+      "initial": {
+        "moisture": 0,
+        "stock": 4,
+        "capacity": 4
+      },
+      "mechanismBindings": {},
+      "boundary": "At node-local safe placement; production author must give exact geometry without blocking mandatory route."
+    },
+    {
+      "id": "reflection_pool",
+      "node": "reflection_stone",
+      "components": [
+        "ReflectiveSurface",
+        "AuthoredEcho",
+        "Moisture",
+        "WaterAccessible"
+      ],
+      "initial": {
+        "ripple": 1,
+        "moisture": 1,
+        "illuminationLevel": 1,
+        "echoClueId": "clue_stone_inscription"
+      },
+      "mechanismBindings": {},
+      "boundary": "At node-local safe placement; production author must give exact geometry without blocking mandatory route."
+    },
+    {
+      "id": "shrine_pool",
+      "node": "old_shrine",
+      "components": [
+        "ReflectiveSurface",
+        "AuthoredEcho",
+        "OpticalReceiver"
+      ],
+      "initial": {
+        "ripple": 1,
+        "illuminationLevel": 1,
+        "echoClueId": "clue_echo_name"
+      },
+      "mechanismBindings": {},
+      "boundary": "At node-local safe placement; production author must give exact geometry without blocking mandatory route."
+    },
+    {
+      "id": "route_marker",
+      "node": "fog_gate",
+      "components": [
+        "OpticalReceiver",
+        "Anchors"
+      ],
+      "initial": {
+        "oriented": false
+      },
+      "mechanismBindings": {},
+      "boundary": "At node-local safe placement; production author must give exact geometry without blocking mandatory route."
+    },
+    {
+      "id": "cargo_support",
+      "node": "ferry",
+      "components": [
+        "Soil",
+        "LoadBearing",
+        "Integrity",
+        "Separable"
+      ],
+      "initial": {
+        "integrity": 0.5,
+        "soilUnits": 4,
+        "hardnessRank": 2
+      },
+      "mechanismBindings": {},
+      "boundary": "At node-local safe placement; production author must give exact geometry without blocking mandatory route."
+    },
+    {
+      "id": "milestone",
+      "node": "ferry",
+      "components": [
+        "Integrity",
+        "OpticalReceiver"
+      ],
+      "initial": {
+        "integrity": 0.5
+      },
+      "mechanismBindings": {},
+      "boundary": "At node-local safe placement; production author must give exact geometry without blocking mandatory route."
+    },
+    {
+      "id": "notice_board",
+      "node": "village",
+      "components": [
+        "OpticalReceiver"
+      ],
+      "initial": {
+        "illuminationLevel": 1,
+        "echoClueId": "clue_old_river_name_b"
+      },
+      "mechanismBindings": {},
+      "boundary": "At node-local safe placement; production author must give exact geometry without blocking mandatory route."
+    },
+    {
+      "id": "missing_name_board",
+      "node": "empty_market",
+      "components": [
+        "OpticalReceiver",
+        "AuthoredEcho"
+      ],
+      "initial": {
+        "echoClueId": "clue_echo_name"
+      },
+      "mechanismBindings": {},
+      "boundary": "At node-local safe placement; production author must give exact geometry without blocking mandatory route."
+    },
+    {
+      "id": "mist_spirit",
+      "node": "fog_gate",
+      "components": [
+        "Suppressible",
+        "TelegraphedHazard"
+      ],
+      "initial": {
+        "healthDamage": 10,
+        "windupTicks": 48,
+        "intervalTicks": 180
+      },
+      "mechanismBindings": {},
+      "boundary": "At node-local safe placement; production author must give exact geometry without blocking mandatory route."
+    },
+    {
+      "id": "echo_coin",
+      "node": "empty_market",
+      "components": [
+        "Inspectable"
+      ],
+      "initial": {},
+      "mechanismBindings": {},
+      "boundary": "At node-local safe placement; production author must give exact geometry without blocking mandatory route."
+    },
+    {
+      "id": "secondary_pad",
+      "node": "bell_inside",
+      "components": [
+        "Holdable"
+      ],
+      "initial": {
+        "held": false
+      },
+      "mechanismBindings": {},
+      "boundary": "At node-local safe placement; production author must give exact geometry without blocking mandatory route."
+    },
+    {
+      "id": "flower_frame",
+      "node": "herb",
+      "components": [
+        "MaterialReserve",
+        "JoinableMetal"
+      ],
+      "initial": {
+        "substitutableMaterialId": "reed_rope",
+        "units": 1
+      },
+      "mechanismBindings": {},
+      "boundary": "At node-local safe placement; production author must give exact geometry without blocking mandatory route."
+    }
+  ]
+}

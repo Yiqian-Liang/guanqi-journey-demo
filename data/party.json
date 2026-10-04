@@ -1,0 +1,241 @@
+{
+  "schemaVersion": 4,
+  "singlePlayerPartyCap": 3,
+  "singlePlayerNpcCap": 2,
+  "totalActorsCapInCoop": 3,
+  "socialStates": [
+    "unknown",
+    "acquainted",
+    "trusted",
+    "estranged"
+  ],
+  "travelStates": [
+    "independent",
+    "local_assist",
+    "eligible",
+    "invited",
+    "following_temporary",
+    "following_contract",
+    "departing"
+  ],
+  "inviteRequirements": [
+    "met",
+    "not_hostile",
+    "available_by_schedule",
+    "personal_obligation_resolved_or_destination_aligned",
+    "party_slot_available",
+    "explicit_npc_acceptance"
+  ],
+  "randomEncounter": {
+    "checkAt": "eligible_window_entry_once",
+    "keyParts": [
+      "worldSeed",
+      "npcId",
+      "eligibleWindowId"
+    ],
+    "hash": "sha256_first_8_bytes_big_endian",
+    "randomWordBits": 64,
+    "successTest": "r * 10000 < probabilityBasisPoints * (2**64)",
+    "base": 0.35,
+    "incrementPerFailedEligibleWindow": 0.15,
+    "cap": 0.8,
+    "guaranteeEligibleAttempt": 4,
+    "ineligibleDoesNotIncrement": true,
+    "rngProtocol": "sha256-utf8-json-array-v1",
+    "persistentReceipt": true,
+    "alternative": "可调查行踪并约定会面，跳过随机但不跳过人物意愿",
+    "baseBasisPoints": 3500,
+    "incrementBasisPoints": 1500,
+    "capBasisPoints": 8000,
+    "probabilitiesAsFloats": "UI descriptions only; draw uses integer basis points",
+    "keyEncoding": "UTF-8 of JSON.stringify([worldSeed,npcId,eligibleWindowId]); all protocol key strings restricted to printable ASCII",
+    "windowFormat": "dayIndex:phaseIndex:regionId; one receipt per world/npc/window",
+    "probabilityNote": "第4次有效尝试保底先于8000bp概率上限；base/increment/cap浮点字段仅供显示。"
+  },
+  "npcs": [
+    {
+      "id": "a_lan",
+      "profession": "水工",
+      "spawn": "authored_exists",
+      "initialTravelState": "independent",
+      "schedule": "上午巡渠，下午修具，夜晚回家",
+      "localAssist": "允许借阅一张可达水路图",
+      "inviteGate": "归还工具或提供可信线索，并且自己的上游巡查与玩家目的地一致",
+      "departRule": "到达上游节点后依约离队；可再次邀约",
+      "scheduleSlots": [
+        {
+          "phases": [
+            0,
+            1,
+            2,
+            10,
+            11
+          ],
+          "node": "village",
+          "available": false
+        },
+        {
+          "phases": [
+            3,
+            4,
+            5,
+            6
+          ],
+          "node": "canal",
+          "available": true
+        },
+        {
+          "phases": [
+            7,
+            8,
+            9
+          ],
+          "node": "workshop",
+          "available": true
+        }
+      ],
+      "inviteConditionId": "invite_a_lan",
+      "baseFocusCost": 12,
+      "baseSkillId": "survey_water"
+    },
+    {
+      "id": "shi_heng",
+      "profession": "筑墙与支护匠",
+      "spawn": "authored_exists",
+      "initialTravelState": "independent",
+      "schedule": "白日检查墙体，傍晚守护药圃",
+      "localAssist": "在墙边解释风板结构，无需入队",
+      "inviteGate": "玩家说明拆墙方案并为药圃提供保护，或承诺并实际准备可行替代",
+      "departRule": "若玩家撤除已约定的保护，先提出异议；在安全点离队，不在机关中间撤手",
+      "scheduleSlots": [
+        {
+          "phases": [
+            0,
+            1,
+            2,
+            10,
+            11
+          ],
+          "node": "village",
+          "available": false
+        },
+        {
+          "phases": [
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ],
+          "node": "wall",
+          "available": true
+        },
+        {
+          "phases": [
+            9
+          ],
+          "node": "herb",
+          "available": true
+        }
+      ],
+      "inviteConditionId": "invite_shi_heng",
+      "baseFocusCost": 12,
+      "baseSkillId": "hold_structure"
+    },
+    {
+      "id": "sang_yu",
+      "profession": "种植与药圃管理者",
+      "spawn": "authored_exists",
+      "initialTravelState": "independent",
+      "schedule": "晨间采集，白日照料，雨后巡查",
+      "localAssist": "给出护苗知识，无需拥有角色",
+      "inviteGate": "解决当日照料安排，可约定只去某个区域",
+      "departRule": "按约定时段在安全点返回，保留关系和人物位置",
+      "scheduleSlots": [
+        {
+          "phases": [
+            0,
+            1,
+            2,
+            10,
+            11
+          ],
+          "node": "village",
+          "available": false
+        },
+        {
+          "phases": [
+            3,
+            4
+          ],
+          "node": "ridge",
+          "available": true
+        },
+        {
+          "phases": [
+            5,
+            6,
+            7,
+            8,
+            9
+          ],
+          "node": "herb",
+          "available": true
+        }
+      ],
+      "inviteConditionId": "invite_sang_yu",
+      "baseFocusCost": 12,
+      "baseSkillId": "protect_herbs"
+    },
+    {
+      "id": "road_guest",
+      "profession": "行脚辨路人",
+      "spawn": "seeded_optional",
+      "initialTravelState": "independent",
+      "schedule": "符合驿路开放与行商窗口时抽一次",
+      "localAssist": "给出一条非必需捷径传闻",
+      "inviteGate": "相遇后目标相同且谈妥同行范围",
+      "departRule": "目的地完成后自然分别，不消失为一张卡",
+      "scheduleSlots": [
+        {
+          "phases": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            10,
+            11
+          ],
+          "node": "ferry",
+          "available": false
+        },
+        {
+          "phases": [
+            9
+          ],
+          "node": "ferry",
+          "available": true
+        }
+      ],
+      "inviteConditionId": "invite_road_guest",
+      "baseFocusCost": 12,
+      "baseSkillId": "trace_detour"
+    }
+  ],
+  "coopScope": "独立里程碑COOP-1，非单人NPC组队的别名；本包给接口约束，不含联网实现或部署。",
+  "npcCoopPolicy": "真人房间使用总容量3；NPC加入/离开需房主批准；现场帮助仅限非占位提示或一次定点演示，不允许第四名持续行动角色。",
+  "contractDefaults": {
+    "mode": "temporary",
+    "durationPhases": 2,
+    "departureOnlySafe": true,
+    "keepFocusOnRejoin": true,
+    "returnToScheduleAfterDeparture": true,
+    "contractRouteExtensionsRequireConsent": true
+  }
+}

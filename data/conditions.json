@@ -1,0 +1,395 @@
+{
+  "schemaVersion": 4,
+  "conditions": {
+    "always": {
+      "op": "constant",
+      "value": true
+    },
+    "visited_ferry": {
+      "op": "flag",
+      "key": "reachedDock",
+      "equals": true
+    },
+    "public_or_trace": {
+      "op": "any",
+      "args": [
+        {
+          "op": "environment",
+          "metric": "fog",
+          "compare": "lte",
+          "value": 45
+        },
+        {
+          "op": "status",
+          "id": "trace_window"
+        }
+      ]
+    },
+    "market_window": {
+      "op": "all",
+      "args": [
+        {
+          "op": "flag",
+          "key": "chapterComplete",
+          "equals": true
+        },
+        {
+          "op": "phase",
+          "in": [
+            9,
+            10,
+            11
+          ]
+        },
+        {
+          "op": "flag",
+          "key": "lanternLit",
+          "equals": true
+        }
+      ]
+    },
+    "gorge_passable": {
+      "op": "any",
+      "args": [
+        {
+          "op": "flag",
+          "key": "gorgeVineReady",
+          "equals": true
+        },
+        {
+          "op": "flag",
+          "key": "gorgeStonesExposed",
+          "equals": true
+        },
+        {
+          "op": "flag",
+          "key": "gorgeSlopeStable",
+          "equals": true
+        }
+      ]
+    },
+    "root_access": {
+      "op": "flag",
+      "key": "reachedVillage",
+      "equals": true
+    },
+    "trace_evidence": {
+      "op": "all",
+      "args": [
+        {
+          "op": "clue",
+          "id": "clue_water_trace"
+        },
+        {
+          "op": "clue",
+          "id": "clue_wind_bell"
+        },
+        {
+          "op": "clue",
+          "id": "clue_stone_inscription"
+        }
+      ]
+    },
+    "trace_ready": {
+      "op": "all",
+      "args": [
+        {
+          "op": "ref",
+          "id": "trace_evidence"
+        },
+        {
+          "op": "flag",
+          "key": "markerPositionObserved",
+          "equals": true
+        }
+      ]
+    },
+    "invite_a_lan": {
+      "op": "all",
+      "args": [
+        {
+          "op": "flag",
+          "key": "met_a_lan",
+          "equals": true
+        },
+        {
+          "op": "npcAvailable",
+          "id": "a_lan"
+        },
+        {
+          "op": "any",
+          "args": [
+            {
+              "op": "flag",
+              "key": "toolsReturned",
+              "equals": true
+            },
+            {
+              "op": "clue",
+              "id": "clue_water_trace"
+            }
+          ]
+        }
+      ]
+    },
+    "invite_shi_heng": {
+      "op": "all",
+      "args": [
+        {
+          "op": "flag",
+          "key": "met_shi_heng",
+          "equals": true
+        },
+        {
+          "op": "npcAvailable",
+          "id": "shi_heng"
+        },
+        {
+          "op": "flag",
+          "key": "planExplained",
+          "equals": true
+        },
+        {
+          "op": "mechanism",
+          "key": "herbShield",
+          "equals": true
+        }
+      ]
+    },
+    "invite_sang_yu": {
+      "op": "all",
+      "args": [
+        {
+          "op": "flag",
+          "key": "met_sang_yu",
+          "equals": true
+        },
+        {
+          "op": "npcAvailable",
+          "id": "sang_yu"
+        },
+        {
+          "op": "flag",
+          "key": "careArranged",
+          "equals": true
+        }
+      ]
+    },
+    "invite_road_guest": {
+      "op": "all",
+      "args": [
+        {
+          "op": "flag",
+          "key": "met_road_guest",
+          "equals": true
+        },
+        {
+          "op": "npcAvailable",
+          "id": "road_guest"
+        },
+        {
+          "op": "flag",
+          "key": "journeyAgreed",
+          "equals": true
+        }
+      ]
+    },
+    "road_guest_window": {
+      "op": "all",
+      "args": [
+        {
+          "op": "flag",
+          "key": "reachedDock",
+          "equals": true
+        },
+        {
+          "op": "flag",
+          "key": "milestoneRestored",
+          "equals": true
+        },
+        {
+          "op": "phase",
+          "in": [
+            9
+          ]
+        }
+      ]
+    },
+    "event_tianyi": {
+      "op": "all",
+      "args": [
+        {
+          "op": "flag",
+          "key": "reachedDock",
+          "equals": true
+        },
+        {
+          "op": "flag",
+          "key": "bellReturned",
+          "equals": true
+        },
+        {
+          "op": "any",
+          "args": [
+            {
+              "op": "shensha",
+              "id": "tianyi",
+              "domains": [
+                "natal",
+                "transit"
+              ],
+              "owner": "self"
+            },
+            {
+              "op": "flag",
+              "key": "riverNamesLearned",
+              "equals": true
+            }
+          ]
+        }
+      ]
+    },
+    "event_yima": {
+      "op": "all",
+      "args": [
+        {
+          "op": "flag",
+          "key": "reachedDock",
+          "equals": true
+        },
+        {
+          "op": "flag",
+          "key": "milestoneRestored",
+          "equals": true
+        },
+        {
+          "op": "any",
+          "args": [
+            {
+              "op": "shensha",
+              "id": "yima",
+              "domains": [
+                "natal",
+                "transit"
+              ],
+              "owner": "self"
+            },
+            {
+              "op": "flag",
+              "key": "routeSurveyed",
+              "equals": true
+            }
+          ]
+        }
+      ]
+    },
+    "event_huagai": {
+      "op": "all",
+      "args": [
+        {
+          "op": "flag",
+          "key": "reachedDock",
+          "equals": true
+        },
+        {
+          "op": "any",
+          "args": [
+            {
+              "op": "shensha",
+              "id": "huagai",
+              "domains": [
+                "natal"
+              ],
+              "owner": "self"
+            },
+            {
+              "op": "flag",
+              "key": "inscriptionCompared",
+              "equals": true
+            }
+          ]
+        }
+      ]
+    },
+    "event_xianchi": {
+      "op": "all",
+      "args": [
+        {
+          "op": "flag",
+          "key": "reachedVillage",
+          "equals": true
+        },
+        {
+          "op": "phase",
+          "in": [
+            8,
+            9,
+            10
+          ]
+        },
+        {
+          "op": "any",
+          "args": [
+            {
+              "op": "shensha",
+              "id": "xianchi",
+              "domains": [
+                "natal"
+              ],
+              "owner": "self"
+            },
+            {
+              "op": "flag",
+              "key": "publicStoryHeard",
+              "equals": true
+            }
+          ]
+        }
+      ]
+    },
+    "event_jiesha": {
+      "op": "all",
+      "args": [
+        {
+          "op": "flag",
+          "key": "reachedDock",
+          "equals": true
+        },
+        {
+          "op": "flag",
+          "key": "cargoDisputeKnown",
+          "equals": true
+        }
+      ]
+    },
+    "event_xunkong": {
+      "op": "all",
+      "args": [
+        {
+          "op": "flag",
+          "key": "insideEmptyMarket",
+          "equals": true
+        },
+        {
+          "op": "any",
+          "args": [
+            {
+              "op": "shensha",
+              "id": "xunkong",
+              "domains": [
+                "natal"
+              ],
+              "owner": "self"
+            },
+            {
+              "op": "flag",
+              "key": "missingNameObserved",
+              "equals": true
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "additionalChecks": "Conditions only establish content eligibility; actor distance, resources, consent, party capacity, revision and safety must also pass command validation."
+}

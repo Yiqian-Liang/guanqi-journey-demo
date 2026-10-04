@@ -1,0 +1,126 @@
+{
+  "schemaVersion": 4,
+  "origin": "integration_original_game_rules_not_ancient_formulas",
+  "variants": [
+    {
+      "typeId": "tiande",
+      "id": "protected_mediation",
+      "family": "jiesha",
+      "evidence": {
+        "id": "tiande",
+        "domains": [
+          "natal"
+        ]
+      },
+      "parameters": {
+        "requiredFact": "protectionActionCompleted",
+        "effect": "offer_protection_mediation_hint",
+        "numericBonus": 0
+      },
+      "fallback": "无该条件仍可使用事件的普通路线",
+      "oncePerEvent": true
+    },
+    {
+      "typeId": "yuede",
+      "id": "short_rescue_preparation",
+      "family": "jiesha",
+      "evidence": {
+        "id": "yuede",
+        "domains": [
+          "natal"
+        ]
+      },
+      "parameters": {
+        "requiredFact": "protectionActionCompleted",
+        "effect": "preparation_ticks_reduction",
+        "ticks": 60
+      },
+      "fallback": "无该条件仍可使用事件的普通路线",
+      "oncePerEvent": true
+    },
+    {
+      "typeId": "taiji",
+      "id": "paired_inscription_hint",
+      "family": "huagai",
+      "evidence": {
+        "id": "taiji",
+        "domains": [
+          "natal"
+        ]
+      },
+      "parameters": {
+        "requiredFact": "inscriptionCompared",
+        "effect": "show_two_authored_evidence_sources",
+        "clueIds": [
+          "clue_stone_inscription",
+          "clue_echo_name"
+        ]
+      },
+      "fallback": "无该条件仍可使用事件的普通路线",
+      "oncePerEvent": true
+    },
+    {
+      "typeId": "lu",
+      "id": "stocked_trip",
+      "family": "yima",
+      "evidence": {
+        "id": "lu",
+        "domains": [
+          "natal"
+        ]
+      },
+      "parameters": {
+        "requiredFact": "routeSurveyed",
+        "effect": "transfer_existing_npc_stock",
+        "itemId": "reed_rope",
+        "units": 1
+      },
+      "fallback": "无该条件仍可使用事件的普通路线",
+      "oncePerEvent": true
+    },
+    {
+      "typeId": "jiangxing",
+      "id": "two_safe_posts",
+      "family": "jiesha",
+      "evidence": {
+        "id": "jiangxing",
+        "domains": [
+          "natal"
+        ]
+      },
+      "parameters": {
+        "requiredFact": "teamAtTwoSafePosts",
+        "effect": "offer_parallel_protection",
+        "extraActorsGranted": 0
+      },
+      "fallback": "无该条件仍可使用事件的普通路线",
+      "oncePerEvent": true
+    },
+    {
+      "typeId": "yangren",
+      "id": "controlled_cut_rank",
+      "family": "jiesha",
+      "evidence": {
+        "id": "yangren",
+        "domains": [
+          "natal"
+        ]
+      },
+      "parameters": {
+        "requiredFact": "safeCutPathObserved",
+        "effect": "tool_rank_for_single_cut",
+        "delta": 1,
+        "extraSpirit": 4,
+        "forbidQuestBound": true
+      },
+      "fallback": "无该条件仍可使用事件的普通路线",
+      "oncePerEvent": true
+    }
+  ],
+  "stockLimits": {
+    "road_guest": {
+      "reed_rope": 2
+    }
+  },
+  "numericStackPolicy": "same_outcome_choose_one_no_multiply"
+}

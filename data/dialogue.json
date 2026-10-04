@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 4,
+  "origin": "original_game_writing",
+  "lines": [
+    {
+      "id": "d_open",
+      "speaker": "narrator",
+      "node": "camp",
+      "text": "信上只写着旧渡口。村里人说渡口还在，只是路越来越难找。"
+    },
+    {
+      "id": "d_a_lan",
+      "speaker": "a_lan",
+      "node": "canal",
+      "text": "水不是没来，是来了以后找不到旧路。你沿渠看看，别只修眼前这扇门。"
+    },
+    {
+      "id": "d_shi_heng",
+      "speaker": "shi_heng",
+      "node": "wall",
+      "text": "墙是为了挡风立的。你要开，我不拦着——先看看药圃会怎样。"
+    },
+    {
+      "id": "d_sang_yu",
+      "speaker": "sang_yu",
+      "node": "herb",
+      "text": "你看得见雾，草也在替你看风。看看哪一边的叶子在抖。"
+    },
+    {
+      "id": "d_invite_a",
+      "speaker": "a_lan",
+      "node": "canal",
+      "text": "我正要巡一段上游。顺路可以一起走，到岔口我们再商量。"
+    },
+    {
+      "id": "d_invite_s",
+      "speaker": "shi_heng",
+      "node": "wall",
+      "text": "护屏稳住了，我才放心离开。先把方案摆在这里，别只给我一句保证。"
+    },
+    {
+      "id": "d_invite_y",
+      "speaker": "sang_yu",
+      "node": "herb",
+      "text": "照料安排好了，我能陪你走两个时辰。到了安全地方，再决定接下来的路。"
+    },
+    {
+      "id": "d_guest",
+      "speaker": "road_guest",
+      "node": "ferry",
+      "text": "我并不是每天经过这里。你要去哪里？路相同的话，可以结伴一程。"
+    },
+    {
+      "id": "d_tired",
+      "speaker": "a_lan",
+      "node": "canal",
+      "text": "我愿意帮，但现在没力气了。别把我当成不会累的水车。"
+    },
+    {
+      "id": "d_bell",
+      "speaker": "ferryman",
+      "node": "ferry",
+      "text": "原来铃还记得回来。路有时也一样，只是它不会自己说。"
+    },
+    {
+      "id": "d_letter",
+      "speaker": "ferryman",
+      "node": "ferry",
+      "text": "信我收下了。来的路是你找到的，回去以后，也记得看看它改变了谁的生活。"
+    },
+    {
+      "id": "d_market",
+      "speaker": "narrator",
+      "node": "empty_market",
+      "text": "这张名牌的空白，并不是还没写上。你似乎在外面的碑上见过它。"
+    }
+  ],
+  "interactionPolicy": "仅对白不授予隐含任务结果；按钮命令的状态变更由条件/事务层提交。"
+}

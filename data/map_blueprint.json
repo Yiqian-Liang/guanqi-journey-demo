@@ -1,0 +1,375 @@
+{
+  "schemaVersion": 4,
+  "status": "logical_blueprint_not_playable_tilemap",
+  "regions": [
+    "village",
+    "terraces",
+    "ferry"
+  ],
+  "nodes": [
+    {
+      "id": "camp",
+      "region": "village",
+      "layer": 0,
+      "roomId": "village_outdoor",
+      "x": 8,
+      "y": 39,
+      "safe": true
+    },
+    {
+      "id": "village",
+      "region": "village",
+      "layer": 0,
+      "roomId": "village_outdoor",
+      "x": 24,
+      "y": 28,
+      "safe": true
+    },
+    {
+      "id": "workshop",
+      "region": "village",
+      "layer": 0,
+      "roomId": "workshop_room",
+      "x": 12,
+      "y": 12,
+      "safe": true
+    },
+    {
+      "id": "canal",
+      "region": "terraces",
+      "layer": 0,
+      "roomId": "terraces_outdoor",
+      "x": 14,
+      "y": 34,
+      "safe": false
+    },
+    {
+      "id": "herb",
+      "region": "terraces",
+      "layer": 0,
+      "roomId": "terraces_outdoor",
+      "x": 36,
+      "y": 30,
+      "safe": true
+    },
+    {
+      "id": "wall",
+      "region": "terraces",
+      "layer": 0,
+      "roomId": "terraces_outdoor",
+      "x": 46,
+      "y": 18,
+      "safe": false
+    },
+    {
+      "id": "ridge",
+      "region": "terraces",
+      "layer": 1,
+      "roomId": "terraces_outdoor",
+      "x": 30,
+      "y": 8,
+      "safe": false
+    },
+    {
+      "id": "bell",
+      "region": "terraces",
+      "layer": 1,
+      "roomId": "terraces_outdoor",
+      "x": 54,
+      "y": 9,
+      "safe": false
+    },
+    {
+      "id": "fog_gate",
+      "region": "ferry",
+      "layer": 0,
+      "roomId": "ferry_outdoor",
+      "x": 12,
+      "y": 24,
+      "safe": false
+    },
+    {
+      "id": "ferry",
+      "region": "ferry",
+      "layer": 0,
+      "roomId": "ferry_outdoor",
+      "x": 42,
+      "y": 24,
+      "safe": true
+    },
+    {
+      "id": "old_shrine",
+      "region": "ferry",
+      "layer": 1,
+      "roomId": "ferry_outdoor",
+      "x": 50,
+      "y": 10,
+      "safe": false
+    },
+    {
+      "id": "empty_market",
+      "region": "ferry",
+      "layer": -1,
+      "roomId": "empty_market_room",
+      "x": 12,
+      "y": 12,
+      "safe": true
+    },
+    {
+      "id": "reflection_stone",
+      "region": "ferry",
+      "roomId": "ferry_outdoor",
+      "layer": 0,
+      "x": 8,
+      "y": 16,
+      "safe": true
+    },
+    {
+      "id": "bell_inside",
+      "region": "terraces",
+      "roomId": "bell_chamber",
+      "layer": 1,
+      "x": 12,
+      "y": 12,
+      "safe": true
+    },
+    {
+      "id": "gorge_near",
+      "region": "terraces",
+      "roomId": "terraces_outdoor",
+      "layer": 0,
+      "x": 6,
+      "y": 38,
+      "safe": true
+    },
+    {
+      "id": "gorge_far",
+      "region": "terraces",
+      "roomId": "terraces_outdoor",
+      "layer": 0,
+      "x": 6,
+      "y": 24,
+      "safe": true
+    }
+  ],
+  "edges": [
+    {
+      "a": "camp",
+      "b": "village",
+      "gate": "always",
+      "bidirectional": true,
+      "id": "nav_00",
+      "transitionType": "walk"
+    },
+    {
+      "a": "village",
+      "b": "workshop",
+      "gate": "always",
+      "bidirectional": true,
+      "id": "nav_01",
+      "transitionType": "portal"
+    },
+    {
+      "a": "village",
+      "b": "canal",
+      "gate": "always",
+      "bidirectional": true,
+      "id": "nav_02",
+      "transitionType": "portal"
+    },
+    {
+      "a": "village",
+      "b": "herb",
+      "gate": "always",
+      "bidirectional": true,
+      "id": "nav_03",
+      "transitionType": "portal"
+    },
+    {
+      "a": "herb",
+      "b": "wall",
+      "gate": "always",
+      "bidirectional": true,
+      "id": "nav_04",
+      "transitionType": "walk"
+    },
+    {
+      "a": "canal",
+      "b": "wall",
+      "gate": "always",
+      "bidirectional": true,
+      "id": "nav_05",
+      "transitionType": "walk"
+    },
+    {
+      "a": "wall",
+      "b": "ridge",
+      "gate": "always",
+      "bidirectional": true,
+      "id": "nav_06",
+      "transitionType": "walk"
+    },
+    {
+      "a": "ridge",
+      "b": "bell",
+      "gate": "always",
+      "bidirectional": true,
+      "id": "nav_07",
+      "transitionType": "walk"
+    },
+    {
+      "a": "wall",
+      "b": "fog_gate",
+      "gate": "always",
+      "bidirectional": true,
+      "id": "nav_08",
+      "transitionType": "portal"
+    },
+    {
+      "a": "canal",
+      "b": "fog_gate",
+      "gate": "always",
+      "bidirectional": true,
+      "id": "nav_09",
+      "transitionType": "portal"
+    },
+    {
+      "a": "fog_gate",
+      "b": "ferry",
+      "gate": "public_or_trace",
+      "bidirectional": true,
+      "id": "nav_10",
+      "transitionType": "walk"
+    },
+    {
+      "a": "ferry",
+      "b": "village",
+      "gate": "visited_ferry",
+      "bidirectional": true,
+      "id": "nav_11",
+      "transitionType": "portal"
+    },
+    {
+      "a": "ferry",
+      "b": "old_shrine",
+      "gate": "always",
+      "bidirectional": true,
+      "id": "nav_12",
+      "transitionType": "walk"
+    },
+    {
+      "a": "ferry",
+      "b": "empty_market",
+      "gate": "market_window",
+      "bidirectional": true,
+      "id": "nav_13",
+      "transitionType": "portal"
+    },
+    {
+      "a": "fog_gate",
+      "b": "reflection_stone",
+      "gate": "always",
+      "bidirectional": true,
+      "id": "nav_14",
+      "transitionType": "walk"
+    },
+    {
+      "a": "bell",
+      "b": "bell_inside",
+      "gate": "always",
+      "bidirectional": true,
+      "id": "nav_15",
+      "transitionType": "portal"
+    },
+    {
+      "a": "canal",
+      "b": "gorge_near",
+      "gate": "always",
+      "bidirectional": true,
+      "id": "nav_16",
+      "transitionType": "walk"
+    },
+    {
+      "a": "gorge_near",
+      "b": "gorge_far",
+      "gate": "gorge_passable",
+      "bidirectional": true,
+      "id": "nav_17",
+      "transitionType": "walk"
+    },
+    {
+      "a": "gorge_far",
+      "b": "wall",
+      "gate": "gorge_passable",
+      "bidirectional": true,
+      "id": "nav_18",
+      "transitionType": "walk"
+    }
+  ],
+  "safety": {
+    "marketExitAlwaysOpenOnceInside": true,
+    "leaseForOccupiedTemporaryEdge": true,
+    "npcDepartureOnlyAtSafePoint": true,
+    "mainQuestNoRandomGate": true,
+    "reverseFogGateAfterFirstVisit": "always",
+    "returnPortalFromEmptyMarket": "always"
+  },
+  "mainRouteModes": [
+    "water",
+    "wind",
+    "trace"
+  ],
+  "targets": {
+    "majorLandmarks": 6,
+    "poiGroups": 9,
+    "optionalInteriors": 3,
+    "note": "首轮内容预算/待试玩调整，不是逆水寒官方指标；不是每组一堆可打勾宝箱。"
+  },
+  "fieldGraph": "Independent typed graph; hydraulic mass model, airflow abstraction and fictional qi signals use distinct edge kinds and units.",
+  "rooms": [
+    {
+      "id": "village_outdoor",
+      "region": "village",
+      "width": 64,
+      "height": 48
+    },
+    {
+      "id": "terraces_outdoor",
+      "region": "terraces",
+      "width": 80,
+      "height": 56
+    },
+    {
+      "id": "ferry_outdoor",
+      "region": "ferry",
+      "width": 64,
+      "height": 48
+    },
+    {
+      "id": "workshop_room",
+      "region": "village",
+      "width": 24,
+      "height": 18
+    },
+    {
+      "id": "bell_chamber",
+      "region": "terraces",
+      "width": 24,
+      "height": 18
+    },
+    {
+      "id": "empty_market_room",
+      "region": "ferry",
+      "width": 24,
+      "height": 18
+    }
+  ],
+  "landmarkIds": [
+    "village",
+    "canal",
+    "wall",
+    "herb",
+    "bell",
+    "old_shrine"
+  ]
+}

@@ -1,0 +1,480 @@
+{
+  "schemaVersion": 4,
+  "contentVersion": "0.4.0",
+  "cultureProfileId": "GQ-CULTURE-0.3",
+  "balanceProfileId": "GQ-BALANCE-0.4",
+  "environmentProfileId": "GQ-ENV-0.4",
+  "worldId": "fixture_world",
+  "worldSeed": "20260918",
+  "primaryPlayerId": "p1",
+  "identities": {
+    "p1": {
+      "id": "p1",
+      "kind": "human",
+      "displayName": "行者",
+      "appearanceId": "placeholder_original_p1",
+      "chart": {
+        "mode": "authored_ganzhi",
+        "calendarVerified": false,
+        "year": "壬申",
+        "month": "乙巳",
+        "day": "甲寅",
+        "hour": "庚午"
+      },
+      "chartCode": "GQ1-08-05-50-06",
+      "chartRulesVersion": "gq-structural-v1",
+      "balanceProfileId": "GQ-BALANCE-0.4",
+      "origin": {
+        "kind": "template",
+        "templateId": "sprout"
+      }
+    },
+    "a_lan": {
+      "id": "a_lan",
+      "kind": "npc",
+      "displayName": "阿澜",
+      "appearanceId": "placeholder_original_a_lan",
+      "chart": {
+        "mode": "authored_ganzhi",
+        "calendarVerified": false,
+        "year": "庚辰",
+        "month": "壬午",
+        "day": "癸亥",
+        "hour": "乙卯"
+      },
+      "chartCode": "GQ1-16-06-59-03",
+      "chartRulesVersion": "gq-structural-v1",
+      "balanceProfileId": "GQ-BALANCE-0.4",
+      "origin": {
+        "kind": "authored_npc",
+        "contentId": "a_lan"
+      }
+    },
+    "shi_heng": {
+      "id": "shi_heng",
+      "kind": "npc",
+      "displayName": "石衡",
+      "appearanceId": "placeholder_original_shi_heng",
+      "chart": {
+        "mode": "authored_ganzhi",
+        "calendarVerified": false,
+        "year": "己卯",
+        "month": "丁卯",
+        "day": "庚申",
+        "hour": "己卯"
+      },
+      "chartCode": "GQ1-15-03-56-03",
+      "chartRulesVersion": "gq-structural-v1",
+      "balanceProfileId": "GQ-BALANCE-0.4",
+      "origin": {
+        "kind": "authored_npc",
+        "contentId": "shi_heng"
+      }
+    },
+    "sang_yu": {
+      "id": "sang_yu",
+      "kind": "npc",
+      "displayName": "桑榆",
+      "appearanceId": "placeholder_original_sang_yu",
+      "chart": {
+        "mode": "authored_ganzhi",
+        "calendarVerified": false,
+        "year": "癸未",
+        "month": "乙卯",
+        "day": "乙酉",
+        "hour": "丁亥"
+      },
+      "chartCode": "GQ1-19-03-21-11",
+      "chartRulesVersion": "gq-structural-v1",
+      "balanceProfileId": "GQ-BALANCE-0.4",
+      "origin": {
+        "kind": "authored_npc",
+        "contentId": "sang_yu"
+      }
+    },
+    "road_guest": {
+      "id": "road_guest",
+      "kind": "npc",
+      "displayName": "行脚客",
+      "appearanceId": "placeholder_original_road_guest",
+      "chart": {
+        "mode": "authored_ganzhi",
+        "calendarVerified": false,
+        "year": "癸酉",
+        "month": "乙丑",
+        "day": "丙寅",
+        "hour": "己丑"
+      },
+      "chartCode": "GQ1-09-01-02-01",
+      "chartRulesVersion": "gq-structural-v1",
+      "balanceProfileId": "GQ-BALANCE-0.4",
+      "origin": {
+        "kind": "authored_npc",
+        "contentId": "road_guest"
+      }
+    }
+  },
+  "actors": {
+    "p1": {
+      "position": {
+        "roomId": "village_outdoor",
+        "layer": 0,
+        "x": 8,
+        "y": 39
+      },
+      "safeNodeId": "camp",
+      "health": 100,
+      "spirit": 100,
+      "focus": 60,
+      "learnedSkillIds": [
+        "wood_shape",
+        "fire_heat",
+        "earth_base",
+        "metal_cut",
+        "water_flow"
+      ],
+      "cooldownUntil": {},
+      "statuses": []
+    },
+    "a_lan": {
+      "position": {
+        "roomId": "terraces_outdoor",
+        "layer": 0,
+        "x": 14,
+        "y": 34
+      },
+      "safeNodeId": "village",
+      "health": 100,
+      "spirit": 100,
+      "focus": 60,
+      "learnedSkillIds": [
+        "wood_shape",
+        "fire_heat",
+        "earth_base",
+        "metal_cut",
+        "water_flow"
+      ],
+      "cooldownUntil": {},
+      "statuses": []
+    },
+    "shi_heng": {
+      "position": {
+        "roomId": "terraces_outdoor",
+        "layer": 0,
+        "x": 46,
+        "y": 18
+      },
+      "safeNodeId": "village",
+      "health": 100,
+      "spirit": 100,
+      "focus": 60,
+      "learnedSkillIds": [
+        "wood_shape",
+        "fire_heat",
+        "earth_base",
+        "metal_cut",
+        "water_flow"
+      ],
+      "cooldownUntil": {},
+      "statuses": []
+    },
+    "sang_yu": {
+      "position": {
+        "roomId": "terraces_outdoor",
+        "layer": 1,
+        "x": 30,
+        "y": 8
+      },
+      "safeNodeId": "village",
+      "health": 100,
+      "spirit": 100,
+      "focus": 60,
+      "learnedSkillIds": [
+        "wood_shape",
+        "fire_heat",
+        "earth_base",
+        "metal_cut",
+        "water_flow"
+      ],
+      "cooldownUntil": {},
+      "statuses": []
+    },
+    "road_guest": {
+      "position": {
+        "roomId": "ferry_outdoor",
+        "layer": 0,
+        "x": 42,
+        "y": 24
+      },
+      "safeNodeId": "village",
+      "health": 100,
+      "spirit": 100,
+      "focus": 60,
+      "learnedSkillIds": [
+        "wood_shape",
+        "fire_heat",
+        "earth_base",
+        "metal_cut",
+        "water_flow"
+      ],
+      "cooldownUntil": {},
+      "statuses": []
+    }
+  },
+  "worldTick": 16200,
+  "worldRevision": 0,
+  "environment": {
+    "gateRepaired": false,
+    "rootMode": "blocked",
+    "ventState": "closed",
+    "herbShield": false
+  },
+  "questFacts": {
+    "letterReceived": true,
+    "lensTutorialSeen": false,
+    "reachedVillage": false,
+    "reachedDock": false,
+    "letterDelivered": false,
+    "chapterComplete": false,
+    "markerPositionObserved": false,
+    "traceLearned": false,
+    "bellReturned": false,
+    "riverNamesLearned": false,
+    "milestoneRestored": false,
+    "routeSurveyed": false,
+    "inscriptionCompared": false,
+    "publicStoryHeard": false,
+    "cargoDisputeKnown": false,
+    "cargoDisputeResolved": false,
+    "cargoSupportRepaired": false,
+    "cargoSafeCutDone": false,
+    "mediatorAvailable": false,
+    "insideEmptyMarket": false,
+    "missingNameObserved": false,
+    "missingNameReturned": false,
+    "fastTravelUnlocked": false,
+    "lanternLit": false,
+    "toolsReturned": false,
+    "planExplained": false,
+    "careArranged": false,
+    "journeyAgreed": false,
+    "gorgeVineReady": false,
+    "gorgeStonesExposed": false,
+    "gorgeSlopeStable": false,
+    "met_a_lan": false,
+    "met_shi_heng": false,
+    "met_sang_yu": false,
+    "met_road_guest": false,
+    "protectionActionCompleted": false,
+    "teamAtTwoSafePosts": false,
+    "safeCutPathObserved": false
+  },
+  "inventoryByActor": {
+    "p1": {
+      "letter": 1,
+      "reed_rope": 2,
+      "solder": 2
+    },
+    "a_lan": {},
+    "shi_heng": {},
+    "sang_yu": {},
+    "road_guest": {}
+  },
+  "cluesByActor": {
+    "p1": [],
+    "a_lan": [],
+    "shi_heng": [],
+    "sang_yu": [],
+    "road_guest": []
+  },
+  "visitedNodesByActor": {
+    "p1": [
+      "camp"
+    ],
+    "a_lan": [],
+    "shi_heng": [],
+    "sang_yu": [],
+    "road_guest": []
+  },
+  "npcStates": [
+    {
+      "actorId": "a_lan",
+      "socialByPlayer": {
+        "p1": "unknown"
+      },
+      "travel": "independent",
+      "obligationIds": [],
+      "scheduleNodeId": "canal"
+    },
+    {
+      "actorId": "shi_heng",
+      "socialByPlayer": {
+        "p1": "unknown"
+      },
+      "travel": "independent",
+      "obligationIds": [],
+      "scheduleNodeId": "wall"
+    },
+    {
+      "actorId": "sang_yu",
+      "socialByPlayer": {
+        "p1": "unknown"
+      },
+      "travel": "independent",
+      "obligationIds": [],
+      "scheduleNodeId": "ridge"
+    },
+    {
+      "actorId": "road_guest",
+      "socialByPlayer": {
+        "p1": "unknown"
+      },
+      "travel": "independent",
+      "obligationIds": [],
+      "scheduleNodeId": "ferry"
+    }
+  ],
+  "party": {
+    "id": "fixture_party",
+    "humanActorIds": [
+      "p1"
+    ],
+    "npcActorIds": [],
+    "totalActorCap": 3,
+    "activeContracts": []
+  },
+  "encounterReceipts": [],
+  "encounterAttempts": {},
+  "eventStates": [],
+  "shenshaRuntime": [],
+  "rewardReceipts": [],
+  "routeLeases": [],
+  "objectStates": {
+    "camp_vine": {
+      "moisture": 0.5,
+      "reserve": 3,
+      "biomass": 1,
+      "mode": "restore"
+    },
+    "canal_roots": {
+      "moisture": 0.75,
+      "reserve": 2,
+      "biomass": 3,
+      "integrity": 1,
+      "hardnessRank": 1,
+      "mode": "blocked"
+    },
+    "water_gate": {
+      "heatLevel": 0,
+      "softenLevel": 2,
+      "damageLevel": 3,
+      "integrity": 0.5
+    },
+    "canal_control": {
+      "soilUnits": 4,
+      "mode": "old_canal"
+    },
+    "wind_panel": {
+      "ventState": "closed",
+      "integrity": 1
+    },
+    "herb_base": {
+      "soilUnits": 4,
+      "integrity": 0.5,
+      "safeLoadActors": 2
+    },
+    "herb_patch": {
+      "moisture": 0.5,
+      "reserve": 2,
+      "biomass": 1
+    },
+    "storage_urn": {
+      "stock": 3,
+      "capacity": 4,
+      "exchangeRate": 1
+    },
+    "gorge_vine": {
+      "reserve": 2,
+      "lengthTiles": 4,
+      "maxLoadActors": 2
+    },
+    "gorge_slope": {
+      "soilUnits": 6,
+      "integrity": 0.5
+    },
+    "gorge_water": {
+      "sourceUnits": 4,
+      "outletUnits": 4
+    },
+    "lamp_material": {
+      "illuminationLevel": 0,
+      "revealLevelMin": 1,
+      "revealLevelMax": 1
+    },
+    "heated_vent": {
+      "heatLevel": 0,
+      "updraft": 0,
+      "safeExit": true
+    },
+    "metal_joint": {
+      "heatLevel": 0,
+      "damageLevel": 3,
+      "integrity": 0.5,
+      "solderRequired": 1,
+      "hardnessRank": 1
+    },
+    "bronze_pipe": {
+      "connectedHops": 3,
+      "hasGap": true
+    },
+    "water_basin": {
+      "moisture": 0,
+      "stock": 4,
+      "capacity": 4
+    },
+    "reflection_pool": {
+      "ripple": 1,
+      "moisture": 1,
+      "illuminationLevel": 1,
+      "echoClueId": "clue_stone_inscription"
+    },
+    "shrine_pool": {
+      "ripple": 1,
+      "illuminationLevel": 1,
+      "echoClueId": "clue_echo_name"
+    },
+    "route_marker": {
+      "oriented": false
+    },
+    "cargo_support": {
+      "integrity": 0.5,
+      "soilUnits": 4,
+      "hardnessRank": 2
+    },
+    "milestone": {
+      "integrity": 0.5
+    },
+    "notice_board": {
+      "illuminationLevel": 1,
+      "echoClueId": "clue_old_river_name_b"
+    },
+    "missing_name_board": {
+      "echoClueId": "clue_echo_name"
+    },
+    "mist_spirit": {
+      "healthDamage": 10,
+      "windupTicks": 48,
+      "intervalTicks": 180
+    },
+    "echo_coin": {},
+    "secondary_pad": {
+      "held": false
+    },
+    "flower_frame": {
+      "substitutableMaterialId": "reed_rope",
+      "units": 1
+    }
+  },
+  "consumedUniqueItemIds": [],
+  "firstEndingSnapshot": null
+}

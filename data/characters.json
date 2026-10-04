@@ -1,0 +1,111 @@
+[
+  {
+    "id": "sprout",
+    "name": "生枝",
+    "role": "player_template",
+    "chart": {
+      "mode": "authored_ganzhi",
+      "calendarVerified": false,
+      "year": "壬申",
+      "month": "乙巳",
+      "day": "甲寅",
+      "hour": "庚午"
+    },
+    "sourceNote": "原创虚构命盘；检查结构，不声称对应真实公历时刻",
+    "initialPartyMember": false
+  },
+  {
+    "id": "ember",
+    "name": "明烛",
+    "role": "player_template",
+    "chart": {
+      "mode": "authored_ganzhi",
+      "calendarVerified": false,
+      "year": "戊寅",
+      "month": "壬戌",
+      "day": "丙子",
+      "hour": "乙未"
+    },
+    "sourceNote": "原创虚构命盘；检查结构，不声称对应真实公历时刻",
+    "initialPartyMember": false
+  },
+  {
+    "id": "edge",
+    "name": "听锋",
+    "role": "player_template",
+    "chart": {
+      "mode": "authored_ganzhi",
+      "calendarVerified": false,
+      "year": "乙酉",
+      "month": "丁亥",
+      "day": "辛卯",
+      "hour": "壬辰"
+    },
+    "sourceNote": "原创虚构命盘；检查结构，不声称对应真实公历时刻",
+    "initialPartyMember": false
+  },
+  {
+    "id": "a_lan",
+    "name": "阿澜",
+    "role": "potential_companion",
+    "chart": {
+      "mode": "authored_ganzhi",
+      "calendarVerified": false,
+      "year": "庚辰",
+      "month": "壬午",
+      "day": "癸亥",
+      "hour": "乙卯"
+    },
+    "sourceNote": "原创虚构命盘；检查结构，不声称对应真实公历时刻",
+    "baseSkill": "survey_water",
+    "initialPartyMember": false
+  },
+  {
+    "id": "shi_heng",
+    "name": "石衡",
+    "role": "potential_companion",
+    "chart": {
+      "mode": "authored_ganzhi",
+      "calendarVerified": false,
+      "year": "己卯",
+      "month": "丁卯",
+      "day": "庚申",
+      "hour": "己卯"
+    },
+    "sourceNote": "原创虚构命盘；检查结构，不声称对应真实公历时刻",
+    "baseSkill": "hold_structure",
+    "initialPartyMember": false
+  },
+  {
+    "id": "sang_yu",
+    "name": "桑榆",
+    "role": "potential_companion",
+    "chart": {
+      "mode": "authored_ganzhi",
+      "calendarVerified": false,
+      "year": "癸未",
+      "month": "乙卯",
+      "day": "乙酉",
+      "hour": "丁亥"
+    },
+    "sourceNote": "原创虚构命盘；检查结构，不声称对应真实公历时刻",
+    "baseSkill": "protect_herbs",
+    "initialPartyMember": false
+  },
+  {
+    "id": "road_guest",
+    "name": "行脚客",
+    "role": "potential_companion",
+    "chart": {
+      "mode": "authored_ganzhi",
+      "calendarVerified": false,
+      "year": "癸酉",
+      "month": "乙丑",
+      "day": "丙寅",
+      "hour": "己丑"
+    },
+    "baseSkill": "trace_detour",
+    "sourceNote": "v0.4整合补齐的原创固定虚构盘；此前仅有相遇规则，没有提供命盘。",
+    "initialPartyMember": false
+  }
+]

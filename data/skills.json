@@ -1,0 +1,437 @@
+{
+  "schemaVersion": 4,
+  "skills": [
+    {
+      "id": "wood_growth",
+      "element": "wood",
+      "name": "催荣",
+      "requiredComponents": [
+        "Living",
+        "Moisture",
+        "GrowthReserve"
+      ],
+      "effects": [
+        "consume_growth_reserve",
+        "increase_biomass"
+      ],
+      "preconditionText": "含水0.25–0.70；有生长储备；目标已有活组织",
+      "limit": "含水过高先疏水；生长消耗储备，不凭空无限造木",
+      "feedback": "植物长势、叶形和缺水/过湿反馈",
+      "baseCost": 20,
+      "origin": "original_game_design",
+      "status": "specified_not_implemented",
+      "runtime": {
+        "handler": "grow",
+        "reservePerUse": 1,
+        "biomassDelta": 1,
+        "moistureMin": 0.25,
+        "moistureMax": 0.7,
+        "biomassCap": 3
+      },
+      "learnedAtStart": false
+    },
+    {
+      "id": "wood_shape",
+      "element": "wood",
+      "name": "曲直",
+      "requiredComponents": [
+        "Living",
+        "Flexible",
+        "Anchors"
+      ],
+      "effects": [
+        "reshape_connection"
+      ],
+      "preconditionText": "活的柔性组织；路径有承载许可",
+      "limit": "不移动承重玩家到非法格；不把石墙变植物",
+      "feedback": "弯折预览和受力线",
+      "baseCost": 20,
+      "origin": "original_game_design",
+      "status": "specified_not_implemented",
+      "runtime": {
+        "handler": "reshape",
+        "allowedModes": [
+          "clear_path",
+          "bridge",
+          "restore"
+        ],
+        "requiresAuthoredSafeAnchors": true
+      },
+      "learnedAtStart": true
+    },
+    {
+      "id": "wood_bind",
+      "element": "wood",
+      "name": "结络",
+      "requiredComponents": [
+        "Living",
+        "Anchors",
+        "GrowthReserve"
+      ],
+      "effects": [
+        "create_tension_link"
+      ],
+      "preconditionText": "两端锚点兼容；长度和材料足够",
+      "limit": "拉索有负载上限；不是任意跨图桥",
+      "feedback": "拉索绷紧/松弛可见",
+      "baseCost": 20,
+      "origin": "original_game_design",
+      "status": "specified_not_implemented",
+      "runtime": {
+        "handler": "bind",
+        "reservePerUse": 1,
+        "maxLengthTiles": 6,
+        "maxLoadActors": 2,
+        "durationTicks": 720
+      },
+      "learnedAtStart": false
+    },
+    {
+      "id": "fire_light",
+      "element": "fire",
+      "name": "照幽",
+      "requiredComponents": [
+        "OpticalReceiver"
+      ],
+      "effects": [
+        "set_illumination"
+      ],
+      "preconditionText": "存在可照亮、透照或热敏显影材料",
+      "limit": "不照出无依据的隐藏剧情；强光可能遮蔽弱光纹",
+      "feedback": "阴影、透光和材质反馈",
+      "baseCost": 20,
+      "origin": "original_game_design",
+      "status": "specified_not_implemented",
+      "runtime": {
+        "handler": "illuminate",
+        "levels": [
+          0,
+          1,
+          2
+        ],
+        "durationTicks": 720,
+        "revealOnlyAuthoredEvidence": true
+      },
+      "learnedAtStart": false
+    },
+    {
+      "id": "fire_heat",
+      "element": "fire",
+      "name": "温炼",
+      "requiredComponents": [
+        "Thermal"
+      ],
+      "effects": [
+        "add_bounded_heat"
+      ],
+      "preconditionText": "目标有热容量与损伤阈值",
+      "limit": "金属受热不自动成可熔物；过热损坏仅限非关键可修复对象",
+      "feedback": "温度分段/颜色/声音提示",
+      "baseCost": 20,
+      "origin": "original_game_design",
+      "status": "specified_not_implemented",
+      "runtime": {
+        "handler": "heat",
+        "deltaLevels": 1,
+        "maxLevel": 3,
+        "materialWindowRequired": true
+      },
+      "learnedAtStart": true
+    },
+    {
+      "id": "fire_rise",
+      "element": "fire",
+      "name": "炎升",
+      "requiredComponents": [
+        "Thermal",
+        "AirflowVolume"
+      ],
+      "effects": [
+        "increase_local_updraft"
+      ],
+      "preconditionText": "有可供加热的气流空间和安全出口",
+      "limit": "不是飞行万能开关；消耗维持灵力",
+      "feedback": "飘叶和尘粒显示升流",
+      "baseCost": 20,
+      "origin": "original_game_design",
+      "status": "specified_not_implemented",
+      "runtime": {
+        "handler": "updraft",
+        "deltaNormalized": 0.25,
+        "maximumNormalized": 1,
+        "durationTicks": 720,
+        "sustainCostPerSecond": 2
+      },
+      "learnedAtStart": false
+    },
+    {
+      "id": "earth_base",
+      "element": "earth",
+      "name": "培基",
+      "requiredComponents": [
+        "Soil",
+        "LoadBearing"
+      ],
+      "effects": [
+        "compact_soil"
+      ],
+      "preconditionText": "有可重排的土体",
+      "limit": "土量有限；封住出口先拒绝或提示",
+      "feedback": "承重预览、裂缝消退",
+      "baseCost": 20,
+      "origin": "original_game_design",
+      "status": "specified_not_implemented",
+      "runtime": {
+        "handler": "compact",
+        "deltaIntegrity": 0.5,
+        "maxIntegrity": 1,
+        "safeLoadActors": 2
+      },
+      "learnedAtStart": true
+    },
+    {
+      "id": "earth_channel",
+      "element": "earth",
+      "name": "辟畦",
+      "requiredComponents": [
+        "Soil",
+        "HydraulicBoundary"
+      ],
+      "effects": [
+        "edit_bounded_channel"
+      ],
+      "preconditionText": "有限施工区域内有土体可重排",
+      "limit": "不把象征气脉信号当真实守恒水量",
+      "feedback": "水沟流向及被改变土体",
+      "baseCost": 20,
+      "origin": "original_game_design",
+      "status": "specified_not_implemented",
+      "runtime": {
+        "handler": "rechannel",
+        "modes": [
+          "old_canal",
+          "bypass",
+          "restore"
+        ],
+        "conserveSoilMass": true
+      },
+      "learnedAtStart": false
+    },
+    {
+      "id": "earth_store",
+      "element": "earth",
+      "name": "镇藏",
+      "requiredComponents": [
+        "Reservoir",
+        "Containment"
+      ],
+      "effects": [
+        "cap_exchange_rate"
+      ],
+      "preconditionText": "容器/阵器具有额定储量",
+      "limit": "只减缓释放或储存已有能量；不可复制储量",
+      "feedback": "容器充盈程度/压力显示",
+      "baseCost": 20,
+      "origin": "original_game_design",
+      "status": "specified_not_implemented",
+      "runtime": {
+        "handler": "throttle",
+        "rateChoices": [
+          0,
+          0.5,
+          1
+        ],
+        "preserveExistingStock": true
+      },
+      "learnedAtStart": false
+    },
+    {
+      "id": "metal_cut",
+      "element": "metal",
+      "name": "裁形",
+      "requiredComponents": [
+        "Separable",
+        "Integrity"
+      ],
+      "effects": [
+        "separate_connection"
+      ],
+      "preconditionText": "存在切口或切削路径；硬度未超过当前工具能力",
+      "limit": "精细修剪≠整株杀死；关键结构保留修复入口",
+      "feedback": "切割路径和前后拓扑",
+      "baseCost": 20,
+      "origin": "original_game_design",
+      "status": "specified_not_implemented",
+      "runtime": {
+        "handler": "cut",
+        "cutModes": [
+          "trim",
+          "release",
+          "restore_jig"
+        ],
+        "requiresSafeCutPath": true,
+        "neverDestroyQuestBound": true
+      },
+      "learnedAtStart": true
+    },
+    {
+      "id": "metal_join",
+      "element": "metal",
+      "name": "合铸",
+      "requiredComponents": [
+        "JoinableMetal",
+        "MaterialReserve"
+      ],
+      "effects": [
+        "join_metal_connection"
+      ],
+      "preconditionText": "接触面兼容；需要的温度区间与焊料满足",
+      "limit": "不是隔空把任意物品焊一起",
+      "feedback": "接缝、导通/不导通反馈",
+      "baseCost": 20,
+      "origin": "original_game_design",
+      "status": "specified_not_implemented",
+      "runtime": {
+        "handler": "join",
+        "materialUnits": 1,
+        "requiredHeatLevel": 2,
+        "integrityAfter": 1,
+        "materialRefundOnFailure": true
+      },
+      "learnedAtStart": false
+    },
+    {
+      "id": "metal_resonate",
+      "element": "metal",
+      "name": "鸣金",
+      "requiredComponents": [
+        "Resonant",
+        "Connectivity"
+      ],
+      "effects": [
+        "probe_connected_resonance"
+      ],
+      "preconditionText": "沿实际连通的振动路径探查",
+      "limit": "不是雷元素复制；不穿越断路/隔音层读全图",
+      "feedback": "音色、回声方向和衰减",
+      "baseCost": 20,
+      "origin": "original_game_design",
+      "status": "specified_not_implemented",
+      "runtime": {
+        "handler": "resonate",
+        "maxGraphHops": 4,
+        "revealOnlyAuthoredEvidence": true
+      },
+      "learnedAtStart": false
+    },
+    {
+      "id": "water_moisten",
+      "element": "water",
+      "name": "润泽",
+      "requiredComponents": [
+        "Moisture",
+        "WaterAccessible"
+      ],
+      "effects": [
+        "transfer_finite_water"
+      ],
+      "preconditionText": "有附近水源或随身有限水量",
+      "limit": "不能从一次施法获得可售无限水；过湿影响生长",
+      "feedback": "湿润边界和水源扣除",
+      "baseCost": 20,
+      "origin": "original_game_design",
+      "status": "specified_not_implemented",
+      "runtime": {
+        "handler": "moisten",
+        "waterUnits": 1,
+        "moistureDelta": 0.25,
+        "moistureCap": 1,
+        "conserveWater": true
+      },
+      "learnedAtStart": false
+    },
+    {
+      "id": "water_flow",
+      "element": "water",
+      "name": "通流",
+      "requiredComponents": [
+        "HydraulicNetwork"
+      ],
+      "effects": [
+        "redirect_bounded_flow"
+      ],
+      "preconditionText": "存在进出水节点、有效水头/架空泵动力",
+      "limit": "守恒水系统与气脉图分开；方向错误可能淤积",
+      "feedback": "水位、流向与出口反馈",
+      "baseCost": 20,
+      "origin": "original_game_design",
+      "status": "specified_not_implemented",
+      "runtime": {
+        "handler": "redirect",
+        "modes": [
+          "old_canal",
+          "bypass",
+          "restore"
+        ],
+        "checkTopology": true,
+        "conserveFlow": true
+      },
+      "learnedAtStart": true
+    },
+    {
+      "id": "water_reflect",
+      "element": "water",
+      "name": "澄映",
+      "requiredComponents": [
+        "ReflectiveSurface",
+        "AuthoredEcho"
+      ],
+      "effects": [
+        "stabilize_reflection"
+      ],
+      "preconditionText": "有可平静的水面与作者预置的可观测反射/回响",
+      "limit": "不读心，不自动获取未发生事件的真相",
+      "feedback": "水波散去后显现线索",
+      "baseCost": 20,
+      "origin": "original_game_design",
+      "status": "specified_not_implemented",
+      "runtime": {
+        "handler": "reflect",
+        "rippleAfter": 0,
+        "durationTicks": 720,
+        "revealOnlyAuthoredEvidence": true
+      },
+      "learnedAtStart": false
+    }
+  ],
+  "resolverOrder": [
+    "validate_owner_target_revision",
+    "snapshot_preconditions",
+    "preview_consequences",
+    "reserve_resources",
+    "simulate_bounded_reactions_on_draft",
+    "validate_final_draft_and_safety",
+    "commit_atomic_state",
+    "publish_visual_feedback"
+  ],
+  "reactionPolicy": {
+    "maxDepth": 4,
+    "uniqueKey": [
+      "actionId",
+      "ruleId",
+      "targetId"
+    ],
+    "maxEventsPerAction": 32,
+    "rollbackOnInvalidPlan": true,
+    "visualsCannotProduceStateEvents": true
+  },
+  "prototypeRule": "skills are reusable component predicates, not target object id allowlists; placement metadata may constrain safety/collision but not fake element-lock compatibility",
+  "referenceNote": "原先先commit再反应与rollback冲突；本版先在草稿结算所有有限反应，最后单次提交。",
+  "coreSkillIds": [
+    "wood_shape",
+    "fire_heat",
+    "earth_base",
+    "metal_cut",
+    "water_flow"
+  ]
+}
