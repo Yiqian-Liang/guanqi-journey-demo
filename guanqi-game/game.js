@@ -111,17 +111,41 @@
     tianyi: "tianyiResolved", yima: "fastTravelUnlocked", huagai: "inscriptionCompared",
     xianchi: "publicStoryHeard", jiesha: "cargoDisputeResolved", xunkong: "missingNameReturned"
   };
-  function courtyardLayout(slide) {
-    if (!Number.isFinite(slide)) throw new Error("屏风位置必须是有限数值");
-    const value = clamp(slide, 0, 1);
-    const sheltered = value >= .56 && value <= .92;
-    const lightBlocked = value >= .84;
-    return { slide: value, x: 3 - 4.1 * value, z: 3.4 - 4.2 * value, sheltered, lightBlocked, safe: sheltered && !lightBlocked };
+  function courtyardLayout(slide, fold = 0) {
+    if (!Number.isFinite(slide) || !Number.isFinite(fold)) throw new Error("屏风位置和折角必须是有限数值");
+    const value = clamp(slide, 0, 1), angle = clamp(fold, -1, 1);
+    const x = value <= .5 ? 2.5 : 2.5 - (value - .5) * 6.8;
+    const z = value <= .5 ? 3.4 - value * 5.3 : .75;
+    const pivot = { x, z }, length = 1.5, base = .28;
+    const panels = [
+      [pivot, { x: x - Math.sin(base) * length, z: z - Math.cos(base) * length }],
+      [pivot, { x: x + Math.sin(base + angle * 1.35) * length, z: z + Math.cos(base + angle * 1.35) * length }]
+    ];
+    const crossing = (a, b, c, d) => {
+      const rx = b.x - a.x, rz = b.z - a.z, sx = d.x - c.x, sz = d.z - c.z;
+      const determinant = rx * sz - rz * sx;
+      if (Math.abs(determinant) < 1e-8) return null;
+      const t = ((c.x - a.x) * sz - (c.z - a.z) * sx) / determinant;
+      const u = ((c.x - a.x) * rz - (c.z - a.z) * rx) / determinant;
+      return t >= 0 && t <= 1 && u >= 0 && u <= 1 ? { x: a.x + t * rx, z: a.z + t * rz } : null;
+    };
+    const flows = Array.from({ length: 9 }, (_, i) => {
+      const lane = -.26 + i * .09;
+      const hits = panels.map(([a, b]) => crossing({ x: 5.9, z: lane }, { x: -5.6, z: lane }, a, b)).filter(Boolean).sort((a, b) => b.x - a.x);
+      return { z: lane, hit: hits[0] || null, lampBlocked: hits.some(hit => hit.x > -.8) };
+    });
+    const lampWind = 1 - flows.filter(flow => flow.lampBlocked).length / flows.length;
+    const blocked = flows.filter(flow => flow.hit).length / flows.length;
+    const opening = Math.sin(Math.abs(angle) * 1.35);
+    const bellWind = 1 - blocked + blocked * opening * .9;
+    const lightBlocked = panels.some(([a, b]) => crossing({ x: -.8, z: .1 }, { x: -.8, z: -5.7 }, a, b));
+    const sheltered = lampWind <= .25, safe = sheltered && !lightBlocked, bellRinging = bellWind >= .4;
+    return { slide: value, fold: angle, x, z, panels, flows, opening, lampWind, bellWind, sheltered, lightBlocked, safe, bellRinging, balanced: safe && bellRinging };
   }
   const courtyardNodes = [
     { id: "start", x: -3.6, z: 2.6 }, { id: "south", x: -.8, z: 2.6 },
     { id: "west", x: -3.6, z: .1 }, { id: "middle", x: -2.3, z: .1 },
-    { id: "lamp", x: -2.3, z: -1.6 }, { id: "shore", x: -.8, z: -2.2 },
+    { id: "lamp", x: -1.9, z: .8 }, { id: "shore", x: -.8, z: -2.2 },
     { id: "bridge1", x: -.8, z: -3.4 }, { id: "bridge2", x: -.8, z: -4.6 },
     { id: "landing", x: -.8, z: -5.7 }, { id: "gate", x: -.8, z: -7 }
   ];
@@ -141,8 +165,8 @@
     return [];
   }
   const guideSteps = [
-    { id: "screen", section: "藏风小院", title: "拉动屏风，把风引到灯旁", target: "camp", action: null, text: "风从右侧缺口吹进院里。沿铜轨移动朱红屏风，留住灯前的空地。", done: s => s.environment.trainingScreen === "angled" || !!s.flags.reachedVillage },
-    { id: "lamp", section: "藏风小院", title: "点亮背风处的灯", target: "camp", action: "courtyard_light", text: "风绕开了灯台，通往桥面的光路也空着。", done: s => !!s.environment.trainingLampLit || !!s.flags.reachedVillage },
+    { id: "screen", section: "藏风小院", title: "挪动屏风，护住灯台", target: "camp", action: null, text: "风从右侧缺口吹进院里。沿铜轨移动朱红屏风，看灯穗怎样回应。", done: s => s.environment.trainingScreen === "angled" || !!s.flags.reachedVillage },
+    { id: "lamp", section: "藏风小院", title: "护灯，也给风铃留一条路", target: "camp", action: "courtyard_light", text: "试着引火，再折开侧扇。灯稳定、铃响起，才有通往对岸的桥。", done: s => !!s.environment.trainingBridgeOpen || !!s.flags.reachedVillage },
     { id: "village", section: "藏风小院", title: "沿亮起的石阶走到对岸", target: "village", action: null, text: "灯光照出了旧桥。去对岸的亭子里，守灯人正在等你。", done: s => !!s.flags.courtyardComplete || !!s.flags.reachedVillage },
     { id: "canal", section: "送信任务", title: "调查旧渠", target: "canal", action: "observe", text: "教学完成。现在前往旧渠，先观察水为什么没有流向雾门。", hints: ["仍然沿用刚才的顺序：先看异常，再改一处。", "水尺和堵根都在旧渠。", "前往旧渠并点击“观察”。"], done: s => !!s.flags.canalItemsTaken },
     { id: "repair", section: "送信任务", title: "先修好水门", target: "canal", action: "repair", text: "观察得到旧轴芯。先点击“手工装回轴芯”，让水门恢复工作。", hints: ["断轴是第一个可见条件。", "背包里的旧轴芯正好用于水门。", "点击“手工装回轴芯”。"], done: s => !!s.environment.gateRepaired },
@@ -153,7 +177,7 @@
   ];
   const storyScenes = {
     opening: [
-      { speaker: "守灯人", portrait: "ferryman", text: "这盏灯总被穿堂风吹灭。帮我挪一挪朱红屏风吧，别挡住灯照向桥的地方。" }
+      { speaker: "守灯人", portrait: "ferryman", text: "帮我护住这盏灯，也让桥头的风铃继续响。你看，这架屏风还可以折。" }
     ],
     village: [
       { speaker: "阿澜", portrait: "a_lan", text: "渡口没消失，是旧渠断了，雾才压住了路。" },
@@ -441,7 +465,7 @@
       flags: { letterReceived: true },
       environment: {
         gateRepaired: false, rootMode: "blocked", ventState: "closed", herbShield: false,
-        trainingScreen: "home", trainingScreenSlide: 0, trainingLampLit: false, trainingBridgeRevealed: false, trainingBridgeOpen: false, trainingAwning: "home"
+        trainingScreen: "home", trainingScreenSlide: 0, trainingScreenFold: 0, trainingIgnition: 0, trainingLampLit: false, trainingBridgeRevealed: false, trainingBridgeOpen: false, trainingAwning: "home"
       },
       inventory: { letter: 1, reed_rope: 2, solder: 2 }, clues: {}, statuses: {}, visited: { camp: true },
       party: [], supportId: null,
@@ -588,9 +612,10 @@
     const env = state.environment;
     if (kind === "courtyard_light") {
       if (!state.started || dialogueOpen() || state.flags.reachedVillage) return;
-      if (!courtyardLayout(env.trainingScreenSlide).safe) return notify("风或屏风仍挡着灯。再挪一挪朱红屏风。");
-      env.trainingLampLit = env.trainingBridgeRevealed = env.trainingBridgeOpen = true;
-      notify("灯焰稳住了，光照到了对岸。旧桥上的雾正在散开。");
+      if (env.trainingIgnition || env.trainingLampLit) return;
+      env.trainingIgnition = 1.1;
+      setFlag("courtyardTriedLight");
+      notify("火折子靠近灯芯，火星落下了。");
     } else if (kind === "inspect_lamp") {
       setFlag("trainingWindSeen");
       state.lens = true;
@@ -636,22 +661,47 @@
 
   function setScreenSlide(value) {
     if (!state.started || dialogueOpen() || state.flags.courtyardComplete || state.flags.reachedVillage) return;
-    const layout = courtyardLayout(value);
+    const layout = courtyardLayout(value, state.environment.trainingScreenFold);
     if (state.environment.trainingScreenSlide === layout.slide) return;
     state.environment.trainingScreenSlide = layout.slide;
+    refreshCourtyard();
+  }
+
+  function setScreenFold(value) {
+    if (!state.started || dialogueOpen() || state.flags.courtyardComplete || state.flags.reachedVillage) return;
+    const layout = courtyardLayout(state.environment.trainingScreenSlide, value);
+    if (state.environment.trainingScreenFold === layout.fold) return;
+    state.environment.trainingScreenFold = layout.fold;
+    refreshCourtyard();
+  }
+
+  function refreshCourtyard() {
+    const env = state.environment, layout = courtyardLayout(env.trainingScreenSlide, env.trainingScreenFold);
     state.environment.trainingScreen = layout.lightBlocked ? "cross" : layout.safe ? "angled" : "home";
     state.flags.trainingWindSeen = true;
-    if (!layout.safe) {
-      state.environment.trainingLampLit = false;
-      state.environment.trainingBridgeRevealed = false;
-      state.environment.trainingBridgeOpen = false;
+    if (!layout.sheltered) {
+      env.trainingLampLit = false;
     }
+    env.trainingBridgeRevealed = env.trainingLampLit;
+    env.trainingBridgeOpen = env.trainingLampLit && layout.balanced;
     state.revision += 1;
     markDirty();
   }
 
+  function advanceCourtyard(seconds) {
+    if (!Number.isFinite(seconds) || seconds < 0) throw new Error("点灯时间无效");
+    if (!state.started || dialogueOpen() || state.flags.reachedVillage || !state.environment.trainingIgnition) return;
+    state.environment.trainingIgnition = Math.max(0, state.environment.trainingIgnition - seconds);
+    if (state.environment.trainingIgnition) return;
+    const layout = courtyardLayout(state.environment.trainingScreenSlide, state.environment.trainingScreenFold);
+    state.environment.trainingLampLit = layout.sheltered;
+    refreshCourtyard();
+    notify(!layout.sheltered ? "火苗一歪，又被风带走了。" : layout.lightBlocked ? "灯稳住了，但屏风遮住了照桥方向。" : layout.bellRinging ? "灯稳住了，铃声也回来了。光正照向对岸。" : "灯稳住了，院子却安静了。桥头的铃还在等风。");
+  }
+
   function completeCourtyard() {
     if (!state.started || dialogueOpen() || !state.environment.trainingBridgeOpen || state.flags.courtyardComplete) return;
+    if (!state.environment.trainingLampLit || !courtyardLayout(state.environment.trainingScreenSlide, state.environment.trainingScreenFold).balanced) return;
     setFlag("courtyardComplete");
     state.revision += 1;
     markDirty();
@@ -1201,7 +1251,11 @@
     if (!["home","cross","angled"].includes(payload.environment.trainingScreen)) throw new Error("教学屏风状态损坏");
     if (payload.environment.trainingScreenSlide === undefined) payload.environment.trainingScreenSlide = { home: 0, angled: .7, cross: 1 }[payload.environment.trainingScreen];
     if (!Number.isFinite(payload.environment.trainingScreenSlide) || payload.environment.trainingScreenSlide < 0 || payload.environment.trainingScreenSlide > 1) throw new Error("教学屏风位置损坏");
-    const screenLayout = courtyardLayout(payload.environment.trainingScreenSlide);
+    if (payload.environment.trainingScreenFold === undefined) payload.environment.trainingScreenFold = payload.environment.trainingLampLit || oldTutorialComplete ? .55 : 0;
+    if (!Number.isFinite(payload.environment.trainingScreenFold) || Math.abs(payload.environment.trainingScreenFold) > 1) throw new Error("屏风折角损坏");
+    if (payload.environment.trainingIgnition === undefined) payload.environment.trainingIgnition = 0;
+    if (!Number.isFinite(payload.environment.trainingIgnition) || payload.environment.trainingIgnition < 0 || payload.environment.trainingIgnition > 1.1) throw new Error("点灯状态损坏");
+    const screenLayout = courtyardLayout(payload.environment.trainingScreenSlide, payload.environment.trainingScreenFold);
     if (!oldTutorialComplete) payload.environment.trainingScreen = screenLayout.lightBlocked ? "cross" : screenLayout.safe ? "angled" : "home";
     if (payload.environment.trainingLampLit === undefined) payload.environment.trainingLampLit = oldTutorialComplete;
     if (payload.environment.trainingBridgeRevealed === undefined) payload.environment.trainingBridgeRevealed = oldTutorialComplete;
@@ -1209,10 +1263,12 @@
     for (const key of ["trainingLampLit", "trainingBridgeRevealed", "trainingBridgeOpen"]) {
       if (typeof payload.environment[key] !== "boolean") throw new Error("教学装置状态损坏");
     }
-    if (!oldTutorialComplete && !screenLayout.safe) {
+    if (!oldTutorialComplete && !screenLayout.sheltered) {
       payload.environment.trainingLampLit = payload.environment.trainingBridgeRevealed = payload.environment.trainingBridgeOpen = false;
       if (payload.flags.courtyardComplete) throw new Error("小院完成状态与屏风位置冲突");
     }
+    if (!oldTutorialComplete) payload.environment.trainingBridgeOpen = payload.environment.trainingLampLit && screenLayout.balanced;
+    if (!oldTutorialComplete && payload.flags.courtyardComplete && !screenLayout.balanced) throw new Error("小院完成状态与风铃通路冲突");
     if (payload.environment.trainingAwning === undefined) payload.environment.trainingAwning = oldTutorialComplete ? "raised" : "home";
     if (!["home","flat","raised"].includes(payload.environment.trainingAwning)) throw new Error("教学风帆状态损坏");
     if (oldTutorialComplete && payload.flags.trainingTransferSolved === undefined) payload.flags.trainingTransferSolved = true;
@@ -1487,6 +1543,7 @@
     lastFrame = now;
     if (state.started && !dialogueOpen()) {
       state.tick += delta * 60;
+      advanceCourtyard(delta);
       const traceNow = traceActive();
       if (traceNow !== lastTraceState) { lastTraceState = traceNow; markDirty(); }
       const p = state.player, speed = 190 * delta;
@@ -1516,35 +1573,39 @@
   function setHtml(id, html) { document.getElementById(id).innerHTML = html; }
 
   function syncCourtyard() {
-    const env = state.environment, layout = courtyardLayout(env.trainingScreenSlide);
+    const env = state.environment, layout = courtyardLayout(env.trainingScreenSlide, env.trainingScreenFold);
     const complete = !!state.flags.courtyardComplete;
-    const step = complete ? 3 : env.trainingLampLit ? 2 : layout.safe ? 1 : 0;
-    const titles = ["把屏风拉到来风处", "风绕开了，可以点灯了", "灯稳了，去对岸吧", "第一局 · 藏风小院完成"];
-    const descriptions = ["沿铜轨挪动朱红屏风，看看风怎样走。", "灯前的空地和照桥的方向都留着。", "点亮的石阶通向对岸亭子。", "挪开直冲灯台的风，保留照桥的光。"];
+    const step = complete ? 3 : env.trainingBridgeOpen ? 2 : env.trainingScreenSlide > .25 ? 1 : 0;
+    const titles = ["护住这盏灯，也让风铃继续响", "护住这盏灯，也让风铃继续响", "灯火和铃声，一起引你过桥", "第一局 · 护灯留铃"];
+    const descriptions = ["推一推屏风，抓住边角折一折，听听院子怎样回应。", "推一推屏风，抓住边角折一折，听听院子怎样回应。", "沿亮起的石阶走到对岸。", "你给灯留了安静处，也给风留了去路。"];
     document.getElementById("courtyardObjective").textContent = titles[step];
     document.getElementById("courtyardDetail").textContent = descriptions[step];
-    document.getElementById("windStatus").textContent = layout.sheltered ? "风绕过灯台" : "风直吹灯台";
+    document.getElementById("windStatus").textContent = layout.sheltered ? "灯穗安静了" : "灯穗在摇";
     document.getElementById("windStatus").dataset.good = String(layout.sheltered);
     document.getElementById("lightStatus").textContent = layout.lightBlocked ? "屏风挡住照桥方向" : "照桥方向留空";
     document.getElementById("lightStatus").dataset.good = String(!layout.lightBlocked);
     document.getElementById("lampStatus").textContent = env.trainingLampLit ? "灯焰稳定" : "灯还没点亮";
+    document.getElementById("bellStatus").textContent = layout.bellRinging ? "铃声清亮" : "风铃安静了";
+    document.getElementById("bellStatus").dataset.good = String(layout.bellRinging);
     const slide = document.getElementById("screenSlide");
     slide.value = Math.round(env.trainingScreenSlide * 100);
     slide.disabled = complete || dialogueOpen();
     slide.setAttribute("aria-valuetext", `${slide.value}%，${layout.lightBlocked ? "挡住灯光" : layout.safe ? "风已绕行" : "风仍直吹"}`);
-    document.getElementById("courtyardLamp").disabled = !state.started || env.trainingLampLit || dialogueOpen();
-    document.getElementById("courtyardLamp").textContent = env.trainingLampLit ? "灯已点亮" : "点亮护路灯";
-    document.getElementById("courtyardLamp").classList.toggle("ready", layout.safe && !env.trainingLampLit);
-    document.getElementById("courtyardReset").disabled = complete || dialogueOpen() || !env.trainingScreenSlide;
+    const fold = document.getElementById("screenFold");
+    fold.value = Math.round(env.trainingScreenFold * 100); fold.disabled = slide.disabled;
+    fold.setAttribute("aria-valuetext", `${Math.round(Math.abs(env.trainingScreenFold) * 77)}度，${env.trainingScreenFold < 0 ? "向内折" : "向外折"}`);
+    document.getElementById("courtyardLamp").disabled = !state.started || env.trainingLampLit || env.trainingIgnition > 0 || dialogueOpen();
+    document.getElementById("courtyardLamp").textContent = env.trainingIgnition > 0 ? "引火中…" : env.trainingLampLit ? "灯已点亮" : "引火点灯";
+    document.getElementById("courtyardReset").disabled = complete || dialogueOpen() || (!env.trainingScreenSlide && !env.trainingScreenFold);
     document.getElementById("courtyardNext").classList.toggle("hide", !complete);
     document.getElementById("courtyardControls").classList.toggle("hide", complete);
-    document.getElementById("courtyardWalk").classList.toggle("hide", !env.trainingLampLit || complete);
+    document.getElementById("courtyardWalk").classList.toggle("hide", !env.trainingBridgeOpen || complete);
     document.querySelectorAll("[data-courtyard-step]").forEach((item, index) => {
       item.classList.toggle("done", complete || index < step);
       item.classList.toggle("current", !complete && index === step);
       item.setAttribute("aria-current", !complete && index === step ? "step" : "false");
     });
-    document.getElementById("courtyardFeedback").textContent = layout.lightBlocked ? "拉过头了，屏风也挡住了灯光。往回挪一点。" : layout.safe ? "风正绕过屏风，从灯台旁边穿过。" : state.log[0]?.startsWith("风或屏风") ? "风还在吹灯，灯点不亮。再挪一挪屏风。" : "灯穗被吹向左边，风正穿过灯台。";
+    document.getElementById("courtyardFeedback").textContent = env.trainingIgnition ? "火折子靠近灯芯，火苗正在试着站稳。" : layout.lightBlocked ? "屏风遮住了灯照向桥的地方。" : layout.safe && !layout.bellRinging ? "灯边安静了，桥头的铃也停了。" : layout.balanced ? "灯穗轻垂，铃声从屏风另一侧传来。" : state.flags.courtyardTriedLight && !env.trainingLampLit ? "火星被风带走了。灯穗还在摇。" : "听见铃声了吗？同一阵风也在吹灯。";
   }
 
   function syncPanel() {
@@ -1803,7 +1864,8 @@
     document.getElementById("dialogueNext").onclick = advanceDialogue;
     document.getElementById("dialogueSkip").onclick = closeDialogue;
     document.getElementById("screenSlide").oninput = event => setScreenSlide(Number(event.target.value) / 100);
-    document.getElementById("courtyardReset").onclick = () => setScreenSlide(0);
+    document.getElementById("screenFold").oninput = event => setScreenFold(Number(event.target.value) / 100);
+    document.getElementById("courtyardReset").onclick = () => { setScreenSlide(0); setScreenFold(0); };
     document.getElementById("courtyardLamp").onclick = () => trainingAction("courtyard_light");
     document.getElementById("courtyardNext").onclick = leaveCourtyard;
     document.getElementById("courtyardNotes").onclick = () => {
@@ -1883,6 +1945,8 @@
         active: !state.flags.reachedVillage,
         complete: !!state.flags.courtyardComplete,
         slide: state.environment.trainingScreenSlide,
+        fold: state.environment.trainingScreenFold,
+        ignition: state.environment.trainingIgnition,
         windSeen: !!state.flags.trainingWindSeen,
         screen: state.environment.trainingScreen,
         lampLit: !!state.environment.trainingLampLit,
@@ -1901,7 +1965,7 @@
     canEnterFerry, routeOpen, projectEnvironment, skillList, shenshaRows, saveShape, loadShape, templates,
     deriveChart, generate, encodeSelection, decodeSelection, importHero, castCost, makeState, migrateLegacy, guideStep,
     pillarVoid, naYinFor, baziTable, chartClassics, viewState, setViewMode,
-    courtyardLayout, courtyardPath, setScreenSlide, trainingAction, completeCourtyard, leaveCourtyard,
+    courtyardLayout, courtyardPath, setScreenSlide, setScreenFold, advanceCourtyard, trainingAction, completeCourtyard, leaveCourtyard,
     courtyardData: { nodes: clone(courtyardNodes), links: clone(courtyardLinks) },
     worldData: { spots: clone(spots), links: clone(links) }
   };

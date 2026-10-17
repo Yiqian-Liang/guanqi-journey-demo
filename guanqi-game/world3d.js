@@ -1,5 +1,5 @@
 import * as THREE from "./vendor/three.module.js";
-import { createCourtyard } from "./courtyard.js?v=0.6.0";
+import { createCourtyard } from "./courtyard.js?v=0.7.0";
 
 const game = window.GuanqiGame;
 const canvas = document.getElementById("world3d");
@@ -95,6 +95,7 @@ function initWorld() {
       if (renderCheck && renderCheckFrame++ === 12) writeRenderHealth();
       return;
     }
+    courtyard.silence();
 
     const targetPosition = toWorld(state.player);
     playerPosition.lerp(targetPosition, .22);

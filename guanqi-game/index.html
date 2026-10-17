@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="在一座可触摸的藏风小院中，挪屏、看风、点灯、过桥。">
+  <meta name="description" content="在一座可触摸的藏风小院中推屏、折屏、引火：护住灯，也让风铃继续响。">
   <title>观气行旅：雾隐渡</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='5' fill='%23283d38'/%3E%3Cpath d='M6 19c5-8 15-8 20 0-5 8-15 8-20 0Z' fill='%23f2e9d7'/%3E%3Ccircle cx='16' cy='19' r='4' fill='%23b55c3e'/%3E%3Cpath d='M16 4v8M12 8h8' stroke='%23d9b760' stroke-width='2'/%3E%3C/svg%3E">
-  <link rel="stylesheet" href="./style.css?v=0.6.0">
+  <link rel="stylesheet" href="./style.css?v=0.7.0">
 </head>
 <body>
   <main class="shell">
@@ -17,24 +17,27 @@
         <section id="courtyard" class="courtyard" aria-label="第一局：藏风小院">
           <header class="courtyardHead">
             <div><p>观气行旅 / 第一局</p><h1>藏风小院</h1></div>
-            <button id="courtyardNotes" aria-expanded="false" aria-controls="courtyardSource">古籍与局意</button>
+            <div class="courtyardTools"><label class="soundSwitch"><input id="courtyardSound" type="checkbox" checked>声音</label><button id="courtyardNotes" aria-expanded="false" aria-controls="courtyardSource">古籍与局意</button></div>
           </header>
           <ol class="courtyardSteps" aria-label="本局进度">
-            <li data-courtyard-step class="current"><span>一</span>挪屏</li>
-            <li data-courtyard-step><span>二</span>点灯</li>
+            <li data-courtyard-step class="current"><span>一</span>布屏</li>
+            <li data-courtyard-step><span>二</span>护灯留铃</li>
             <li data-courtyard-step><span>三</span>过桥</li>
           </ol>
-          <div class="courtyardLegend" aria-label="现场状态"><span id="windStatus">风直吹灯台</span><span id="lightStatus">照桥方向留空</span><span id="lampStatus">灯还没点亮</span></div>
+          <div class="courtyardLegend" aria-label="现场状态"><span id="windStatus">灯穗在摇</span><span id="bellStatus">铃声清亮</span><span id="lightStatus">照桥方向留空</span><span id="lampStatus">灯还没点亮</span></div>
           <button id="screenHandle" class="sceneHandle" aria-label="拖动朱红屏风" title="沿铜轨拖动屏风">↔</button>
+          <button id="foldHandle" class="sceneHandle foldHandle" aria-label="折动屏风侧扇" title="左右拖动，折开侧扇">↶</button>
+          <button id="tinderHandle" class="tinderHandle" aria-label="把火折子拖到灯台，或点击前去点灯" title="把火折子拖到灯台">引火</button>
           <button id="lampHandle" class="sceneLabel" aria-label="点亮灯台">灯台</button>
+          <span id="bellLabel" class="sceneLabel bellLabel">风铃</span>
           <button id="gateHandle" class="sceneLabel gateLabel" aria-label="走到对岸亭子">对岸</button>
           <button id="courtyardWalk" class="sceneWalk hide">走到对岸</button>
           <footer class="courtyardFooter">
-            <div class="courtyardTask" aria-live="polite"><h2 id="courtyardObjective">把屏风拉到来风处</h2><p id="courtyardDetail">沿铜轨挪动朱红屏风，看看风怎样走。</p></div>
+            <div class="courtyardTask" aria-live="polite"><h2 id="courtyardObjective">护住这盏灯，也让风铃继续响</h2><p id="courtyardDetail">推一推屏风，抓住边角折一折，听听院子怎样回应。</p></div>
             <div id="courtyardControls" class="courtyardControls">
-              <label for="screenSlide">屏风位置<input id="screenSlide" type="range" min="0" max="100" value="0" step="1"></label>
+              <div class="screenRanges"><label for="screenSlide">推屏<input id="screenSlide" type="range" min="0" max="100" value="0" step="1"></label><label for="screenFold">折扇<input id="screenFold" type="range" min="-100" max="100" value="0" step="1"></label></div>
               <button id="courtyardReset" title="把屏风收回原处">收回屏风</button>
-              <button id="courtyardLamp" class="primary">点亮护路灯</button>
+              <button id="courtyardLamp" class="primary">引火点灯</button>
               <p id="courtyardFeedback" aria-live="polite">灯穗被吹向左边，风正穿过灯台。</p>
             </div>
             <button id="courtyardNext" class="primary hide">继续去雾隐渡 →</button>
@@ -44,7 +47,7 @@
             <p class="eyebrow">形势观察 · 本作演绎</p><h2 id="courtyardSourceTitle">藏风，须留其通</h2>
             <blockquote>气乘风则散，界水则止。<br>古人聚之使不散，行之使有止。</blockquote>
             <p>《葬书·内篇》论气的聚散。本局借山体作后靠、两侧作围护、前方留水与开口，让你能直接观察“来、挡、绕、通”。</p>
-            <p>屏风把直冲灯台的风引到一旁，灯前仍留空。若把屏风继续拉到灯前，光也会被挡住。</p>
+            <p>灯需要背风，铃需要通风。屏风可以护出灯台旁的安静处，折开的侧扇又给风留出一条去路。靠近风口斜引，或靠近灯台围护，都有可用的布置。</p>
             <small>屏风、灯和桥是本作的空间谜题，并非古籍中已有的固定风水局；灯火表现的是可见气流，不代替古籍的“气”。</small>
           </aside>
         </section>
@@ -222,7 +225,7 @@
         <button id="continue" class="secondary hide">继续上次行旅</button>
       </div>
 
-      <p class="startStory">过桥之前，先帮守灯人护住院里的灯。</p>
+      <p class="startStory">过桥之前，护住院里的灯，也让桥头的风铃继续响。</p>
       <p id="renderWarning" class="hint hide" role="alert"></p>
       <button id="confirm" class="primary startPlay">走进藏风小院 →</button>
       <details class="characterCreation"><summary>行旅人命盘 · 可选</summary>
@@ -272,7 +275,7 @@
     </div>
   </div>
 
-  <script src="./game.js?v=0.6.0"></script>
-  <script type="module" src="./world3d.js?v=0.6.1"></script>
+  <script src="./game.js?v=0.7.0"></script>
+  <script type="module" src="./world3d.js?v=0.7.0"></script>
 </body>
 </html>

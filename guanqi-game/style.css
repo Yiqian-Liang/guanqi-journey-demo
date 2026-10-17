@@ -808,6 +808,9 @@ body.courtyardMode .courtyard { position: absolute; inset: 0; z-index: 3; displa
 .courtyardHead p { margin: 0 0 4px; color: #476a69; font-size: 12px; }
 .courtyardHead h1 { font-family: "Songti SC", "STSong", serif; font-size: 30px; color: #254441; }
 .courtyardHead button { padding: 6px 12px; border-color: #9bb7b1; background: #edf4f0; font-size: 13px; }
+.courtyardTools { display: flex; align-items: center; gap: 12px; }
+.soundSwitch { display: flex; align-items: center; gap: 5px; color: #526d67; font-size: 12px; pointer-events: auto; cursor: pointer; }
+.soundSwitch input { min-width: 0; min-height: 0; width: 14px; height: 14px; margin: 0; padding: 0; accent-color: #497d6c; }
 .courtyardSteps { position: absolute; top: 31px; left: 50%; display: flex; gap: 24px; margin: 0; padding: 0; list-style: none; transform: translateX(-50%); }
 .courtyardSteps li { display: flex; align-items: center; gap: 8px; color: #718b85; font-size: 13px; white-space: nowrap; }
 .courtyardSteps span { display: grid; place-items: center; width: 28px; height: 28px; border: 1px solid #a8beb7; border-radius: 50%; }
@@ -823,18 +826,23 @@ body.courtyardMode .courtyard { position: absolute; inset: 0; z-index: 3; displa
 .courtyardLegend span[data-good="false"] { color: #a34e42; }
 .sceneHandle { position: absolute; top: 0; left: 0; display: grid; place-items: center; width: 44px; height: 44px; min-height: 44px; padding: 0; border: 2px solid #f7e6d6; border-radius: 50%; color: #fff7e7; background: #af4540; box-shadow: 0 0 0 5px #ad493a26, 0 5px 12px #253f3726; font-size: 24px; transform: translate(-50%, -50%); cursor: ew-resize; touch-action: none; }
 .sceneHandle:active { box-shadow: 0 0 0 8px #ad493a30; }
+.foldHandle { width: 40px; height: 40px; min-height: 40px; background: #557e79; box-shadow: 0 0 0 4px #557e7926; cursor: grab; }
+.foldHandle:active { cursor: grabbing; }
+.tinderHandle { position: absolute; z-index: 4; width: 46px; min-height: 34px; padding: 4px; border-color: #ae8142; color: #825421; background: #fff0c7; font-size: 12px; transform: translate(-50%,-50%); touch-action: none; cursor: grab; }
+.tinderHandle.dragging { box-shadow: 0 0 0 5px #d9a33d26; cursor: grabbing; }
 .sceneLabel { position: absolute; top: 0; left: 0; min-height: 30px; padding: 3px 10px; border: 1px solid #ab8a4b; color: #765d2d; background: #fff6dce8; font-size: 12px; transform: translate(-50%, -50%); }
+.bellLabel { pointer-events: none; color: #3c7383; border-color: #83adb4; background: #eaf7f8e8; }
 .gateLabel { color: #375e54; border-color: #8eb8a5; background: #eef5edf0; }
 .sceneWalk { position: absolute; bottom: 203px; left: 50%; min-height: 32px; padding: 3px 14px; transform: translateX(-50%); color: #fff; border-color: #3a7869; background: #3a7869; font-size: 13px; }
 .courtyardFooter { position: absolute; right: 0; bottom: 0; left: 0; display: grid; justify-items: center; min-height: 180px; padding: 16px 24px 22px; background: #edf3f0f5; border-top: 1px solid #abc3b63b; }
 .courtyardTask { text-align: center; }
 .courtyardTask h2 { margin: 0 0 4px; font-family: "Songti SC", "STSong", serif; color: #294a43; font-size: 23px; }
 .courtyardTask p { margin: 0; color: #678077; font-size: 13px; }
-.courtyardControls { display: grid; grid-template-columns: minmax(180px, 300px) auto auto; gap: 5px 14px; align-items: center; margin-top: 12px; }
+.courtyardControls { display: grid; grid-template-columns: minmax(320px, 440px) auto auto; gap: 5px 14px; align-items: center; margin-top: 12px; }
+.screenRanges { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 16px; }
 .courtyardControls label { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 14px; color: #547164; font-size: 12px; pointer-events: auto; }
 .courtyardControls input[type="range"] { width: 100%; min-height: 40px; margin: 0; padding: 0; accent-color: #ad4940; border: 0; background: transparent; cursor: ew-resize; }
 .courtyardControls button { min-height: 38px; padding: 6px 13px; font-size: 13px; }
-.courtyardControls button.ready { background: #a94831; box-shadow: 0 0 0 3px #b85b3d20; }
 .courtyardControls p { grid-column: 1 / -1; min-height: 20px; margin: 1px 0 0; color: #7c7466; text-align: center; font-size: 12px; }
 .courtyardSource { position: absolute; z-index: 8; top: 85px; right: 24px; width: min(350px, calc(100% - 32px)); max-height: calc(100dvh - 120px); overflow: auto; padding: 22px; border: 1px solid #b6c8bd; border-radius: 6px; background: #f8faf6; box-shadow: 0 14px 40px #203d3526; }
 .courtyardSource button { position: absolute; top: 5px; right: 5px; min-height: 30px; width: 30px; padding: 0; border: 0; background: transparent; font-size: 25px; }
@@ -859,21 +867,38 @@ body.courtyardMode .startBox { width: min(520px, calc(100% - 32px)); padding: 30
   .courtyardHead h1 { font-size: 25px; }
   .courtyardHead p { font-size: 10px; }
   .courtyardHead button { font-size: 11px; }
+  .courtyardTools { gap: 8px; }
+  .soundSwitch { font-size: 10px; }
   .courtyardSteps { top: 83px; gap: 25px; }
   .courtyardSteps li { gap: 6px; font-size: 12px; }
   .courtyardSteps span { width: 24px; height: 24px; }
   .courtyardLegend { top: 125px; flex-wrap: wrap; width: calc(100% - 24px); gap: 5px 13px; font-size: 10px; }
-  .courtyardLegend span:nth-child(3) { display: none; }
+  .courtyardLegend span:nth-child(3), .courtyardLegend span:nth-child(4) { display: none; }
   .courtyardFooter { min-height: 211px; padding: 12px 16px max(14px, env(safe-area-inset-bottom)); }
   .courtyardTask h2 { font-size: 19px; }
   .courtyardTask p { max-width: 350px; font-size: 11px; }
   .courtyardControls { width: min(390px, 100%); grid-template-columns: 1fr 1fr; gap: 5px 10px; margin-top: 4px; }
-  .courtyardControls label { grid-column: 1 / -1; }
+  .screenRanges { grid-column: 1 / -1; gap: 12px; }
+  .courtyardControls label { gap: 6px; }
   .courtyardControls p { font-size: 10px; }
   .sceneWalk { bottom: 220px; }
   .courtyardSource { top: 75px; right: 16px; }
   body.courtyardMode .toast { bottom: 220px; }
   body.courtyardMode .startBox { max-height: calc(100dvh - 32px); padding: 24px; border: 1px solid #b3c6b8; border-radius: 6px; }
+}
+@media (max-height: 650px) and (max-width: 640px) {
+  .courtyardHead { top: 10px; }
+  .courtyardHead h1 { font-size: 22px; }
+  .courtyardSteps { top: 58px; gap: 18px; }
+  .courtyardSteps li { font-size: 11px; }
+  .courtyardSteps span { width: 22px; height: 22px; }
+  .courtyardLegend { top: 94px; }
+  .courtyardFooter { min-height: 178px; padding-top: 9px; padding-bottom: 10px; }
+  .courtyardTask h2 { font-size: 17px; }
+  .courtyardTask p { font-size: 10px; }
+  .courtyardControls input[type="range"] { min-height: 30px; }
+  .courtyardControls button { min-height: 34px; }
+  .sceneWalk { bottom: 188px; }
 }
 @media (max-height: 600px) and (min-width: 641px) {
   .courtyardHead { top: 12px; }
