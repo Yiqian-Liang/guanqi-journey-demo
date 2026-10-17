@@ -6,6 +6,18 @@ const { chromium } = require("playwright");
 (async () => {
   const browser = await chromium.launch({ headless: true, channel: "chrome" });
   try {
+    const unavailable = await browser.newPage();
+    await unavailable.addInitScript(() => {
+      const getContext = HTMLCanvasElement.prototype.getContext;
+      HTMLCanvasElement.prototype.getContext = function (type, ...args) {
+        return type.startsWith("webgl") ? null : getContext.call(this, type, ...args);
+      };
+    });
+    await unavailable.goto("http://127.0.0.1:4173/");
+    await unavailable.locator("#renderWarning").waitFor({ state: "visible" });
+    assert(await unavailable.locator("#confirm").isDisabled(), "a missing WebGL context must show a recoverable explanation instead of entering a blank scene");
+    await unavailable.close();
+    console.log("PASS: unavailable WebGL shows an explicit explanation");
     for (const viewport of [{ width: 1366, height: 900 }, { width: 390, height: 844 }]) {
       const mobile = viewport.width < 640;
       const page = await browser.newPage({ viewport, deviceScaleFactor: 1, hasTouch: mobile, isMobile: mobile });

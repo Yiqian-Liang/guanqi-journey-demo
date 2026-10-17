@@ -7,8 +7,12 @@ const canvas = document.getElementById("world3d");
 try {
   initWorld();
 } catch (error) {
-  console.warn("3D scene unavailable; using map view.", error);
-  game.setViewMode("map");
+  console.warn("3D scene unavailable.", error);
+  const warning = document.getElementById("renderWarning");
+  warning.textContent = "立体场景未能启动。请使用支持 WebGL 的浏览器，并开启硬件加速后重新进入。";
+  warning.classList.remove("hide");
+  document.getElementById("confirm").disabled = true;
+  document.getElementById("continue").disabled = true;
 }
 
 function initWorld() {
