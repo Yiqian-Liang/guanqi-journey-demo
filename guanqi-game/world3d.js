@@ -1,4 +1,5 @@
 import * as THREE from "./vendor/three.module.js";
+import { createCourtyard } from "./courtyard.js?v=0.6.0";
 
 const game = window.GuanqiGame;
 const canvas = document.getElementById("world3d");
@@ -26,7 +27,8 @@ function initWorld() {
   scene.background = sky;
   scene.fog = new THREE.FogExp2(sky, .026);
 
-  const camera = new THREE.PerspectiveCamera(58, 16 / 9, .1, 100);
+  const camera = new THREE.OrthographicCamera(-9, 9, 6, -6, .1, 100);
+  const courtyard = createCourtyard(renderer, canvas, game);
   const gradientMap = new THREE.DataTexture(new Uint8Array([62, 126, 196, 255]), 4, 1, THREE.RedFormat);
   gradientMap.minFilter = THREE.NearestFilter;
   gradientMap.magFilter = THREE.NearestFilter;
@@ -79,23 +81,16 @@ function initWorld() {
 
   const playerPosition = new THREE.Vector3();
   const cameraPosition = new THREE.Vector3();
-  let orbitYaw = 0;
-  let dragging = false;
-  let pointerX = 0;
-  canvas.addEventListener("pointerdown", event => { dragging = true; pointerX = event.clientX; canvas.setPointerCapture(event.pointerId); });
-  canvas.addEventListener("pointermove", event => {
-    if (!dragging) return;
-    orbitYaw -= (event.clientX - pointerX) * .006;
-    pointerX = event.clientX;
-  });
-  canvas.addEventListener("pointerup", () => { dragging = false; });
-  canvas.addEventListener("pointercancel", () => { dragging = false; });
-
   function render() {
     requestAnimationFrame(render);
     const state = game.viewState();
     resize();
     if (state.viewMode !== "close") return;
+    if (state.training.active) {
+      courtyard.render(state, performance.now());
+      if (renderCheck && renderCheckFrame++ === 12) writeRenderHealth();
+      return;
+    }
 
     const targetPosition = toWorld(state.player);
     playerPosition.lerp(targetPosition, .22);
@@ -103,13 +98,10 @@ function initWorld() {
     player.position.copy(playerPosition);
     player.position.y = Math.sin(state.tick * .12) * (moving ? .04 : .015);
 
-    const facing = new THREE.Vector3(state.facing.x, 0, state.facing.y).normalize();
-    facing.applyAxisAngle(new THREE.Vector3(0, 1, 0), orbitYaw);
     player.rotation.y = Math.atan2(state.facing.x, state.facing.y);
-    const side = new THREE.Vector3(facing.z, 0, -facing.x);
-    cameraPosition.copy(playerPosition).addScaledVector(facing, -4.45).addScaledVector(side, 1.35).add(new THREE.Vector3(0, 2.75, 0));
-    camera.position.lerp(cameraPosition, .1);
-    camera.lookAt(playerPosition.clone().addScaledVector(facing, 4.8).add(new THREE.Vector3(0, .95, 0)));
+    cameraPosition.copy(playerPosition).add(new THREE.Vector3(12, 17, 22));
+    camera.position.copy(cameraPosition);
+    camera.lookAt(playerPosition);
 
     const fogAmount = state.environment.fog / 100;
     scene.fog.density = .014 + fogAmount * .021;
@@ -161,7 +153,11 @@ function initWorld() {
     const pixelRatio = renderer.getPixelRatio();
     if (canvas.width !== Math.floor(width * pixelRatio) || canvas.height !== Math.floor(height * pixelRatio)) {
       renderer.setSize(width, height, false);
-      camera.aspect = width / height;
+      const span = Math.max(10, 12 * height / width);
+      camera.left = -span * width / height / 2;
+      camera.right = span * width / height / 2;
+      camera.top = span / 2;
+      camera.bottom = -span / 2;
       camera.updateProjectionMatrix();
     }
   }
@@ -320,7 +316,7 @@ function initWorld() {
       cross: toWorld({ x: 106, y: 162 }),
       angled: toWorld({ x: 86, y: 182 })
     };
-    training.screen.position.copy(screenPoints[state.screen]);
+    training.screen.position.lerp(screenPoints[state.screen], .14);
     training.screen.rotation.y = state.screen === "angled" ? -.68 : 0;
     training.wind.visible = state.windSeen && state.lens;
     training.wind.traverse(object => { if (object.material) object.material.opacity = state.screen === "angled" ? .24 : .72; });

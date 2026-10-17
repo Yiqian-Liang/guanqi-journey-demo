@@ -63,15 +63,10 @@ for (const skill of game.skillList) assert.equal(game.castCost(imported, skill.e
 const guided = game.makeState(imported);
 assert.equal(guided.viewMode, "close");
 assert.deepEqual(guided.facing, { x: 0, y: -1 });
-assert.equal(game.guideStep(guided).id, "lamp_observe");
-guided.flags.trainingWindSeen = true;
 assert.equal(game.guideStep(guided).id, "screen");
 guided.environment.trainingScreen = "angled";
 assert.equal(game.guideStep(guided).id, "lamp");
 guided.environment.trainingLampLit = true;
-assert.equal(game.guideStep(guided).id, "jing");
-guided.environment.trainingBridgeRevealed = true;
-assert.equal(game.guideStep(guided).id, "kai");
 guided.environment.trainingBridgeOpen = true;
 assert.equal(game.guideStep(guided).id, "village");
 guided.flags.reachedVillage = true;
@@ -89,6 +84,34 @@ assert.equal(game.guideStep(guided).id, "deliver");
 guided.flags.letterDelivered = true;
 assert.equal(game.guideStep(guided).id, "complete");
 
+assert.equal(game.courtyardLayout(0).sheltered, false);
+assert.equal(game.courtyardLayout(.55).safe, false);
+assert.equal(game.courtyardLayout(.56).safe, true);
+assert.equal(game.courtyardLayout(.7).safe, true);
+assert.equal(game.courtyardLayout(.84).lightBlocked, true);
+assert.equal(game.courtyardLayout(1).safe, false);
+assert.throws(() => game.courtyardLayout(NaN), /有限数值/);
+assert.equal(game.courtyardPath("start", "gate", false).length, 0, "the closed bridge must block the walking route");
+assert.equal(game.courtyardPath("start", "shore", false).at(-1).id, "shore");
+assert.equal(game.courtyardPath("start", "gate", true).at(-1).id, "gate");
+assert.deepEqual(game.courtyardPath("unknown", "gate", true), []);
+const room = game.makeState(imported);
+room.started = true;
+game.loadShape(room);
+game.trainingAction("courtyard_light");
+assert.equal(game.saveShape().environment.trainingLampLit, false, "an exposed lamp cannot unlock the bridge");
+game.setScreenSlide(.7);
+game.trainingAction("courtyard_light");
+assert.equal(game.saveShape().environment.trainingBridgeOpen, true);
+game.setScreenSlide(.95);
+assert.equal(game.saveShape().environment.trainingLampLit, false, "overdrawing the screen extinguishes the lamp");
+assert.equal(game.saveShape().environment.trainingBridgeOpen, false, "the route follows the current layout");
+game.setScreenSlide(.7);
+game.trainingAction("courtyard_light");
+game.completeCourtyard();
+game.setScreenSlide(0);
+assert.equal(game.saveShape().environment.trainingScreenSlide, .7, "completed scenes preserve their solved arrangement");
+
 const source = fs.readFileSync(require.resolve("./game.js"), "utf8");
 for (const skill of game.skillList) {
   const uses = source.split(skill.id).length - 1;
@@ -101,7 +124,8 @@ assert(fs.existsSync(require.resolve("./vendor/three.module.js")), "Three.js mod
 assert(fs.existsSync(require.resolve("./vendor/three.core.js")), "Three.js core module must exist");
 assert(fs.existsSync(require.resolve("./vendor/THREE_LICENSE.txt")), "Three.js license must exist");
 const world3dSource = fs.readFileSync(require.resolve("./world3d.js"), "utf8");
-assert(["来风", "照桥", "灯"].every(label => world3dSource.includes(label)), "3D site reading labels must exist");
+assert(world3dSource.includes("createCourtyard"), "the opening diorama must be wired into the renderer");
+assert(fs.existsSync(require.resolve("./courtyard.js")), "the interactive diorama must be bundled");
 
 const migrated = game.migrateLegacy({ hero: ["旧行者", imported[1]], flags: { waterRoute: true, done: true }, spirit: 42 });
 assert.equal(migrated.hero[2].source.type, "migrated_unknown");

@@ -111,13 +111,39 @@
     tianyi: "tianyiResolved", yima: "fastTravelUnlocked", huagai: "inscriptionCompared",
     xianchi: "publicStoryHeard", jiesha: "cargoDisputeResolved", xunkong: "missingNameReturned"
   };
+  function courtyardLayout(slide) {
+    if (!Number.isFinite(slide)) throw new Error("屏风位置必须是有限数值");
+    const value = clamp(slide, 0, 1);
+    const sheltered = value >= .56 && value <= .92;
+    const lightBlocked = value >= .84;
+    return { slide: value, x: 3 - 4.1 * value, z: 3.4 - 4.2 * value, sheltered, lightBlocked, safe: sheltered && !lightBlocked };
+  }
+  const courtyardNodes = [
+    { id: "start", x: -3.6, z: 2.6 }, { id: "south", x: -.8, z: 2.6 },
+    { id: "west", x: -3.6, z: .1 }, { id: "middle", x: -2.3, z: .1 },
+    { id: "lamp", x: -2.3, z: -1.6 }, { id: "shore", x: -.8, z: -2.2 },
+    { id: "bridge1", x: -.8, z: -3.4 }, { id: "bridge2", x: -.8, z: -4.6 },
+    { id: "landing", x: -.8, z: -5.7 }, { id: "gate", x: -.8, z: -7 }
+  ];
+  const courtyardLinks = [["start","south"],["start","west"],["west","middle"],["south","middle"],["middle","lamp"],["lamp","shore"],["shore","bridge1"],["bridge1","bridge2"],["bridge2","landing"],["landing","gate"]];
+  function courtyardPath(from, to, bridgeOpen) {
+    if (![from, to].every(id => courtyardNodes.some(node => node.id === id))) return [];
+    const paths = [[from]], visited = new Set([from]);
+    while (paths.length) {
+      const path = paths.shift(), last = path[path.length - 1];
+      if (last === to) return path.map(id => ({ ...courtyardNodes.find(node => node.id === id) }));
+      courtyardLinks.filter(link => link.includes(last)).forEach(link => {
+        const next = link.find(id => id !== last);
+        if (visited.has(next) || (!bridgeOpen && [last, next].some(id => ["bridge1", "bridge2", "landing", "gate"].includes(id)))) return;
+        visited.add(next); paths.push([...path, next]);
+      });
+    }
+    return [];
+  }
   const guideSteps = [
-    { id: "lamp_observe", section: "学徒教学", title: "先看灯为什么会熄", target: "camp", focus: "护路灯", point: [112, 178], action: "inspect_lamp", text: "查看灯焰和门边布条。它们如果朝同一边倒，就能看出风从哪里来。", hints: ["先别管命盘和术语，只比较两样东西的方向。", "灯焰和布条都被院门吹向桥边。", "点击下方的“查看灯焰与布条”。"], done: s => !!s.flags.trainingWindSeen },
-    { id: "screen", section: "学徒教学", title: "把风引开，同时保留灯光", target: "camp", focus: "可移动屏风", point: [72, 185], action: "screen_good", direct: false, text: "试摆屏风。蓝线是风，黄线是灯必须照到的桥面；有效摆法要同时满足“风不吹灯、光不断”。", hints: ["只挡风还不够，灯前也要留出空间。", "横着封死会一起挡住光；斜放能把风引到灯旁。", "选择“斜放在迎风侧”；也可以先试另一种，看清失败原因。"], done: s => s.environment.trainingScreen === "angled" },
-    { id: "lamp", section: "学徒教学", title: "点灯验证刚才的摆法", target: "camp", focus: "护路灯", point: [112, 178], action: "light_lamp", text: "屏风已经把风引到灯旁，黄线仍然通向桥面。现在点灯，用结果验证判断。", hints: ["好的摆法应该让灯焰直立。", "若灯仍被吹灭，就回到屏风重试。", "点击“点灯验证”。"], done: s => !!s.environment.trainingLampLit },
-    { id: "jing", section: "学徒教学", title: "让稳定的灯照出桥痕", target: "camp", focus: "灯下光路", point: [105, 158], action: "jing_reveal", text: "灯稳以后，本关才介绍第一个阵局词：景门。这里把它改编为“让光影痕迹变清楚”，不会自动给出答案。", hints: ["景门只显露原本存在的桥痕。", "灯稳定是前置条件。", "点击“照向雾中桥面”。"], done: s => !!s.environment.trainingBridgeRevealed },
-    { id: "kai", section: "学徒教学", title: "启动已经看清的旧桥", target: "camp", focus: "旧桥台", point: [103, 148], action: "kai_open", text: "桥痕已经清晰。本关再介绍开门：它只启动条件已经满足的通路，不能凭空造桥。", hints: ["条件只有三项：灯稳定、桥痕清晰、开门当值。", "现在三项都已满足。", "点击“启动旧桥台”。"], done: s => !!s.environment.trainingBridgeOpen },
-    { id: "village", section: "学徒教学", title: "亲自走过恢复的旧桥", target: "village", action: "observe", text: "用方向键、WASD 或屏幕方向键沿亮起的石阶去雾村，到达后点击“观察”。", hints: ["金色目标在桥的另一端。", "刚才的屏风、灯和桥会保留，不会在成功后消失。", "向前走到雾村，再点击“观察”。"], done: s => !!s.flags.reachedVillage },
+    { id: "screen", section: "藏风小院", title: "拉动屏风，把风引到灯旁", target: "camp", action: null, text: "风从右侧缺口吹进院里。沿铜轨移动朱红屏风，留住灯前的空地。", done: s => s.environment.trainingScreen === "angled" || !!s.flags.reachedVillage },
+    { id: "lamp", section: "藏风小院", title: "点亮背风处的灯", target: "camp", action: "courtyard_light", text: "风绕开了灯台，通往桥面的光路也空着。", done: s => !!s.environment.trainingLampLit || !!s.flags.reachedVillage },
+    { id: "village", section: "藏风小院", title: "沿亮起的石阶走到对岸", target: "village", action: null, text: "灯光照出了旧桥。去对岸的亭子里，守灯人正在等你。", done: s => !!s.flags.courtyardComplete || !!s.flags.reachedVillage },
     { id: "canal", section: "送信任务", title: "调查旧渠", target: "canal", action: "observe", text: "教学完成。现在前往旧渠，先观察水为什么没有流向雾门。", hints: ["仍然沿用刚才的顺序：先看异常，再改一处。", "水尺和堵根都在旧渠。", "前往旧渠并点击“观察”。"], done: s => !!s.flags.canalItemsTaken },
     { id: "repair", section: "送信任务", title: "先修好水门", target: "canal", action: "repair", text: "观察得到旧轴芯。先点击“手工装回轴芯”，让水门恢复工作。", hints: ["断轴是第一个可见条件。", "背包里的旧轴芯正好用于水门。", "点击“手工装回轴芯”。"], done: s => !!s.environment.gateRepaired },
     { id: "roots", section: "送信任务", title: "再让水路畅通", target: "canal", action: "roots", text: "水门已修，但堵根仍截断水路。点击“手工牵根”，让水改道而不毁掉活根。", hints: ["水门能动不等于水已经能走。", "真正截断流向的是堵渠根。", "点击“手工牵根”。"], done: s => s.environment.rootMode !== "blocked" },
@@ -127,9 +153,7 @@
   ];
   const storyScenes = {
     opening: [
-      { speaker: "旁白", portrait: "narrator", text: "你是驿路署新入门的巡路学徒，奉命把一封信送往旧渡口。" },
-      { speaker: "旁白", portrait: "narrator", text: "村口护路灯熄了，通往雾村的旧桥也被雾遮住。守灯人正在小院里等你。" },
-      { speaker: "守灯人", portrait: "ferryman", text: "别急着记术语。先看灯焰，再看门边布条：它们会告诉你风从哪里来。" }
+      { speaker: "守灯人", portrait: "ferryman", text: "这盏灯总被穿堂风吹灭。帮我挪一挪朱红屏风吧，别挡住灯照向桥的地方。" }
     ],
     village: [
       { speaker: "阿澜", portrait: "a_lan", text: "渡口没消失，是旧渠断了，雾才压住了路。" },
@@ -417,7 +441,7 @@
       flags: { letterReceived: true },
       environment: {
         gateRepaired: false, rootMode: "blocked", ventState: "closed", herbShield: false,
-        trainingScreen: "home", trainingLampLit: false, trainingBridgeRevealed: false, trainingBridgeOpen: false, trainingAwning: "home"
+        trainingScreen: "home", trainingScreenSlide: 0, trainingLampLit: false, trainingBridgeRevealed: false, trainingBridgeOpen: false, trainingAwning: "home"
       },
       inventory: { letter: 1, reed_rope: 2, solder: 2 }, clues: {}, statuses: {}, visited: { camp: true },
       party: [], supportId: null,
@@ -562,19 +586,24 @@
 
   function trainingAction(kind) {
     const env = state.environment;
-    if (kind === "inspect_lamp") {
+    if (kind === "courtyard_light") {
+      if (!state.started || dialogueOpen() || state.flags.reachedVillage) return;
+      if (!courtyardLayout(env.trainingScreenSlide).safe) return notify("风或屏风仍挡着灯。再挪一挪朱红屏风。");
+      env.trainingLampLit = env.trainingBridgeRevealed = env.trainingBridgeOpen = true;
+      notify("灯焰稳住了，光照到了对岸。旧桥上的雾正在散开。");
+    } else if (kind === "inspect_lamp") {
       setFlag("trainingWindSeen");
       state.lens = true;
       notify("看清了：灯焰和布条同向偏斜，风正从院门直吹灯台。");
     } else if (kind === "screen_wrong") {
-      env.trainingScreen = "cross";
+      setScreenSlide(1);
       setFlag("trainingTriedWrong");
       notify("风挡住了，但屏风也截断了灯光。这个摆法可以撤回重试。");
     } else if (kind === "screen_reset") {
-      env.trainingScreen = "home";
+      setScreenSlide(0);
       notify("屏风已撤回原位；这次重置只影响眼前装置。");
     } else if (kind === "screen_good") {
-      env.trainingScreen = "angled";
+      setScreenSlide(.7);
       notify("风绕开灯台，灯光仍能照向桥面。你刚做到的是本关所说的“藏风而不闭塞”。");
     } else if (kind === "light_lamp") {
       if (env.trainingScreen !== "angled") return notify("灯焰仍会被风吹灭；先调整屏风的位置与朝向。");
@@ -602,6 +631,37 @@
       playScene("lesson");
     } else return;
     state.revision += 1;
+    markDirty();
+  }
+
+  function setScreenSlide(value) {
+    if (!state.started || dialogueOpen() || state.flags.courtyardComplete || state.flags.reachedVillage) return;
+    const layout = courtyardLayout(value);
+    if (state.environment.trainingScreenSlide === layout.slide) return;
+    state.environment.trainingScreenSlide = layout.slide;
+    state.environment.trainingScreen = layout.lightBlocked ? "cross" : layout.safe ? "angled" : "home";
+    state.flags.trainingWindSeen = true;
+    if (!layout.safe) {
+      state.environment.trainingLampLit = false;
+      state.environment.trainingBridgeRevealed = false;
+      state.environment.trainingBridgeOpen = false;
+    }
+    state.revision += 1;
+    markDirty();
+  }
+
+  function completeCourtyard() {
+    if (!state.started || dialogueOpen() || !state.environment.trainingBridgeOpen || state.flags.courtyardComplete) return;
+    setFlag("courtyardComplete");
+    state.revision += 1;
+    markDirty();
+  }
+
+  function leaveCourtyard() {
+    if (!state.flags.courtyardComplete) return;
+    state.player = { x: 105, y: 105 };
+    state.viewMode = "close";
+    observeSpot(byId("village"));
     markDirty();
   }
 
@@ -941,6 +1001,7 @@
 
   function trainingContextActions(s) {
     const env = state.environment;
+    if (!state.flags.reachedVillage) return [];
     if (s.id === "camp" && !env.trainingBridgeOpen) {
       if (!state.flags.trainingWindSeen) return [{ id: "inspect_lamp", label: "查看灯焰与布条", primary: true, run: () => trainingAction("inspect_lamp") }];
       if (env.trainingScreen === "cross") return [
@@ -1090,10 +1151,12 @@
 
   function moveStep(key, amount = 24) {
     const delta = { ArrowUp: [0,-amount], ArrowDown: [0,amount], ArrowLeft: [-amount,0], ArrowRight: [amount,0] }[key];
-    if (!delta || !state.started || dialogueOpen()) return;
-    state.facing = { x: delta[0] / amount, y: delta[1] / amount };
-    state.player.x += delta[0];
-    state.player.y += delta[1];
+    if (!delta || !state.started || dialogueOpen() || !state.flags.reachedVillage) return;
+    const dx = state.viewMode === "close" ? delta[0] * .878 + delta[1] * .479 : delta[0];
+    const dy = state.viewMode === "close" ? -delta[0] * .479 + delta[1] * .878 : delta[1];
+    state.facing = { x: dx / amount, y: dy / amount };
+    state.player.x += dx;
+    state.player.y += dy;
     constrainPlayer();
     markDirty();
   }
@@ -1136,9 +1199,20 @@
     const oldTutorialComplete = !!payload.flags.reachedVillage;
     if (payload.environment.trainingScreen === undefined) payload.environment.trainingScreen = oldTutorialComplete ? "angled" : "home";
     if (!["home","cross","angled"].includes(payload.environment.trainingScreen)) throw new Error("教学屏风状态损坏");
+    if (payload.environment.trainingScreenSlide === undefined) payload.environment.trainingScreenSlide = { home: 0, angled: .7, cross: 1 }[payload.environment.trainingScreen];
+    if (!Number.isFinite(payload.environment.trainingScreenSlide) || payload.environment.trainingScreenSlide < 0 || payload.environment.trainingScreenSlide > 1) throw new Error("教学屏风位置损坏");
+    const screenLayout = courtyardLayout(payload.environment.trainingScreenSlide);
+    if (!oldTutorialComplete) payload.environment.trainingScreen = screenLayout.lightBlocked ? "cross" : screenLayout.safe ? "angled" : "home";
     if (payload.environment.trainingLampLit === undefined) payload.environment.trainingLampLit = oldTutorialComplete;
     if (payload.environment.trainingBridgeRevealed === undefined) payload.environment.trainingBridgeRevealed = oldTutorialComplete;
     if (payload.environment.trainingBridgeOpen === undefined) payload.environment.trainingBridgeOpen = oldTutorialComplete;
+    for (const key of ["trainingLampLit", "trainingBridgeRevealed", "trainingBridgeOpen"]) {
+      if (typeof payload.environment[key] !== "boolean") throw new Error("教学装置状态损坏");
+    }
+    if (!oldTutorialComplete && !screenLayout.safe) {
+      payload.environment.trainingLampLit = payload.environment.trainingBridgeRevealed = payload.environment.trainingBridgeOpen = false;
+      if (payload.flags.courtyardComplete) throw new Error("小院完成状态与屏风位置冲突");
+    }
     if (payload.environment.trainingAwning === undefined) payload.environment.trainingAwning = oldTutorialComplete ? "raised" : "home";
     if (!["home","flat","raised"].includes(payload.environment.trainingAwning)) throw new Error("教学风帆状态损坏");
     if (oldTutorialComplete && payload.flags.trainingTransferSolved === undefined) payload.flags.trainingTransferSolved = true;
@@ -1418,7 +1492,8 @@
       const p = state.player, speed = 190 * delta;
       let dx = (state.keys.ArrowRight || state.keys.d ? 1 : 0) - (state.keys.ArrowLeft || state.keys.a ? 1 : 0);
       let dy = (state.keys.ArrowDown || state.keys.s ? 1 : 0) - (state.keys.ArrowUp || state.keys.w ? 1 : 0);
-      if (dx || dy) {
+      if ((dx || dy) && state.flags.reachedVillage) {
+        if (state.viewMode === "close") [dx, dy] = [dx * .878 + dy * .479, -dx * .479 + dy * .878];
         const m = Math.hypot(dx, dy);
         state.facing = { x: dx / m, y: dy / m };
         p.x += dx / m * speed;
@@ -1440,12 +1515,49 @@
 
   function setHtml(id, html) { document.getElementById(id).innerHTML = html; }
 
+  function syncCourtyard() {
+    const env = state.environment, layout = courtyardLayout(env.trainingScreenSlide);
+    const complete = !!state.flags.courtyardComplete;
+    const step = complete ? 3 : env.trainingLampLit ? 2 : layout.safe ? 1 : 0;
+    const titles = ["把屏风拉到来风处", "风绕开了，可以点灯了", "灯稳了，去对岸吧", "第一局 · 藏风小院完成"];
+    const descriptions = ["沿铜轨挪动朱红屏风，看看风怎样走。", "灯前的空地和照桥的方向都留着。", "点亮的石阶通向对岸亭子。", "挪开直冲灯台的风，保留照桥的光。"];
+    document.getElementById("courtyardObjective").textContent = titles[step];
+    document.getElementById("courtyardDetail").textContent = descriptions[step];
+    document.getElementById("windStatus").textContent = layout.sheltered ? "风绕过灯台" : "风直吹灯台";
+    document.getElementById("windStatus").dataset.good = String(layout.sheltered);
+    document.getElementById("lightStatus").textContent = layout.lightBlocked ? "屏风挡住照桥方向" : "照桥方向留空";
+    document.getElementById("lightStatus").dataset.good = String(!layout.lightBlocked);
+    document.getElementById("lampStatus").textContent = env.trainingLampLit ? "灯焰稳定" : "灯还没点亮";
+    const slide = document.getElementById("screenSlide");
+    slide.value = Math.round(env.trainingScreenSlide * 100);
+    slide.disabled = complete || dialogueOpen();
+    slide.setAttribute("aria-valuetext", `${slide.value}%，${layout.lightBlocked ? "挡住灯光" : layout.safe ? "风已绕行" : "风仍直吹"}`);
+    document.getElementById("courtyardLamp").disabled = !state.started || env.trainingLampLit || dialogueOpen();
+    document.getElementById("courtyardLamp").textContent = env.trainingLampLit ? "灯已点亮" : "点亮护路灯";
+    document.getElementById("courtyardLamp").classList.toggle("ready", layout.safe && !env.trainingLampLit);
+    document.getElementById("courtyardReset").disabled = complete || dialogueOpen() || !env.trainingScreenSlide;
+    document.getElementById("courtyardNext").classList.toggle("hide", !complete);
+    document.getElementById("courtyardControls").classList.toggle("hide", complete);
+    document.getElementById("courtyardWalk").classList.toggle("hide", !env.trainingLampLit || complete);
+    document.querySelectorAll("[data-courtyard-step]").forEach((item, index) => {
+      item.classList.toggle("done", complete || index < step);
+      item.classList.toggle("current", !complete && index === step);
+      item.setAttribute("aria-current", !complete && index === step ? "step" : "false");
+    });
+    document.getElementById("courtyardFeedback").textContent = layout.lightBlocked ? "拉过头了，屏风也挡住了灯光。往回挪一点。" : layout.safe ? "风正绕过屏风，从灯台旁边穿过。" : state.log[0]?.startsWith("风或屏风") ? "风还在吹灯，灯点不亮。再挪一挪屏风。" : "灯穗被吹向左边，风正穿过灯台。";
+  }
+
   function syncPanel() {
     const env = projectEnvironment(), current = skill(state.selectedSkill), budget = chartBudget(state.hero[1]), s = nearestSpot(), guide = activeGuide();
+    const inCourtyard = !state.flags.reachedVillage;
+    if (inCourtyard) state.viewMode = "close";
+    document.body.classList.toggle("courtyardMode", inCourtyard);
+    syncCourtyard();
     document.body.classList.toggle("guidedMode", !!(guide && !guide.complete));
     const mapCanvas = document.getElementById("game");
     mapCanvas.classList.remove("canvasHidden");
     mapCanvas.classList.toggle("miniMap", state.viewMode === "close");
+    if (inCourtyard) mapCanvas.classList.add("canvasHidden");
     document.getElementById("world3d").classList.toggle("canvasHidden", state.viewMode === "map");
     document.getElementById("viewToggle").textContent = state.viewMode === "close" ? "总览地图" : "返回现场";
     document.getElementById("lensToggle").textContent = state.lens ? "收起观局" : "观局";
@@ -1690,6 +1802,21 @@
     document.getElementById("lensToggle").onclick = toggleLens;
     document.getElementById("dialogueNext").onclick = advanceDialogue;
     document.getElementById("dialogueSkip").onclick = closeDialogue;
+    document.getElementById("screenSlide").oninput = event => setScreenSlide(Number(event.target.value) / 100);
+    document.getElementById("courtyardReset").onclick = () => setScreenSlide(0);
+    document.getElementById("courtyardLamp").onclick = () => trainingAction("courtyard_light");
+    document.getElementById("courtyardNext").onclick = leaveCourtyard;
+    document.getElementById("courtyardNotes").onclick = () => {
+      const notes = document.getElementById("courtyardSource");
+      notes.classList.toggle("hide");
+      document.getElementById("courtyardNotes").setAttribute("aria-expanded", String(!notes.classList.contains("hide")));
+      if (!notes.classList.contains("hide")) document.getElementById("courtyardSourceClose").focus();
+    };
+    document.getElementById("courtyardSourceClose").onclick = () => {
+      document.getElementById("courtyardSource").classList.add("hide");
+      document.getElementById("courtyardNotes").setAttribute("aria-expanded", "false");
+      document.getElementById("courtyardNotes").focus();
+    };
     document.getElementById("guideDo").onclick = runGuideAction;
     document.getElementById("guideHint").onclick = showGuideHint;
     document.getElementById("guideDismiss").onclick = () => setGuide(false);
@@ -1710,6 +1837,10 @@
       b.onclick = () => moveStep(key);
     });
     addEventListener("keydown", e => {
+      if (e.key === "Escape" && !document.getElementById("courtyardSource").classList.contains("hide")) {
+        document.getElementById("courtyardSourceClose").click();
+        return;
+      }
       if (["INPUT","SELECT","TEXTAREA"].includes(e.target.tagName)) return;
       if (dialogueOpen()) {
         if (["e","Enter"," "].includes(e.key)) advanceDialogue();
@@ -1717,6 +1848,7 @@
         e.preventDefault();
         return;
       }
+      if (!state.flags.reachedVillage) return;
       if ("wasd".includes(e.key.toLowerCase()) || e.key.startsWith("Arrow")) { state.keys[e.key.toLowerCase() === e.key ? e.key.toLowerCase() : e.key] = true; if (!e.repeat && e.key.startsWith("Arrow")) moveStep(e.key, 12); e.preventDefault(); }
       if ("12345".includes(e.key)) chooseElement(Object.keys(elementNames)[+e.key - 1]);
       if (e.key.toLowerCase() === "z") chooseSkill(-1);
@@ -1738,6 +1870,8 @@
     const guide = activeGuide(), target = guidePoint(guide);
     return {
       started: state.started,
+      seed: state.worldSeed,
+      dialogue: dialogueOpen(),
       viewMode: state.viewMode,
       lens: !!state.lens,
       tick: state.tick,
@@ -1746,6 +1880,9 @@
       target: target ? { id: target.id, name: target.name, x: target.x, y: target.y } : null,
       environment: projectEnvironment(),
       training: {
+        active: !state.flags.reachedVillage,
+        complete: !!state.flags.courtyardComplete,
+        slide: state.environment.trainingScreenSlide,
         windSeen: !!state.flags.trainingWindSeen,
         screen: state.environment.trainingScreen,
         lampLit: !!state.environment.trainingLampLit,
@@ -1764,6 +1901,8 @@
     canEnterFerry, routeOpen, projectEnvironment, skillList, shenshaRows, saveShape, loadShape, templates,
     deriveChart, generate, encodeSelection, decodeSelection, importHero, castCost, makeState, migrateLegacy, guideStep,
     pillarVoid, naYinFor, baziTable, chartClassics, viewState, setViewMode,
+    courtyardLayout, courtyardPath, setScreenSlide, trainingAction, completeCourtyard, leaveCourtyard,
+    courtyardData: { nodes: clone(courtyardNodes), links: clone(courtyardLinks) },
     worldData: { spots: clone(spots), links: clone(links) }
   };
   if (typeof module !== "undefined") module.exports = root.GuanqiGame;
