@@ -1,5 +1,6 @@
 import * as THREE from "./vendor/three.module.js";
-import { createCourtyard } from "./courtyard.js?v=0.7.0";
+import { createCourtyard } from "./courtyard.js?v=0.8.0";
+import { createJourney } from "./journey.js?v=0.8.0";
 
 const game = window.GuanqiGame;
 const canvas = document.getElementById("world3d");
@@ -33,6 +34,7 @@ function initWorld() {
 
   const camera = new THREE.OrthographicCamera(-9, 9, 6, -6, .1, 100);
   const courtyard = createCourtyard(renderer, canvas, game);
+  const journey = createJourney(renderer, canvas, game, courtyard);
   const gradientMap = new THREE.DataTexture(new Uint8Array([62, 126, 196, 255]), 4, 1, THREE.RedFormat);
   gradientMap.minFilter = THREE.NearestFilter;
   gradientMap.magFilter = THREE.NearestFilter;
@@ -92,7 +94,12 @@ function initWorld() {
     if (state.viewMode !== "close") return;
     if (state.training.active) {
       courtyard.render(state, performance.now());
-      if (renderCheck && renderCheckFrame++ === 12) writeRenderHealth();
+      if (renderCheck && renderCheckFrame++ % 30 === 12) writeRenderHealth();
+      return;
+    }
+    if (state.journey.active) {
+      journey.render(state, performance.now());
+      if (renderCheck && renderCheckFrame++ % 30 === 12) writeRenderHealth();
       return;
     }
     courtyard.silence();
@@ -128,23 +135,26 @@ function initWorld() {
       guideLine.computeLineDistances();
     }
     renderer.render(scene, camera);
-    if (renderCheck && renderCheckFrame++ === 12) writeRenderHealth();
+    if (renderCheck && renderCheckFrame++ % 30 === 12) writeRenderHealth();
   }
 
   function writeRenderHealth() {
     const gl = renderer.getContext();
     const pixel = new Uint8Array(4), colors = [];
+    const state=game.viewState(), framed=state.training.active||state.journey.active;
+    const view=framed?JSON.parse(canvas.dataset.view):{top:0,height:canvas.clientHeight};
     for (let y = 1; y <= 5; y += 1) {
       for (let x = 1; x <= 5; x += 1) {
         gl.readPixels(
           Math.floor(gl.drawingBufferWidth * x / 6),
-          Math.floor(gl.drawingBufferHeight * y / 6),
+          Math.floor((canvas.clientHeight-view.top-view.height+view.height*y/6)*renderer.getPixelRatio()),
           1, 1, gl.RGBA, gl.UNSIGNED_BYTE, pixel
         );
         colors.push(Array.from(pixel).join(","));
       }
     }
     canvas.dataset.renderHealth = JSON.stringify({
+      scope: game.viewState().training.active ? "courtyard" : game.viewState().journey.active ? game.viewState().journey.room : "world",
       width: gl.drawingBufferWidth,
       height: gl.drawingBufferHeight,
       sampled: colors.length,

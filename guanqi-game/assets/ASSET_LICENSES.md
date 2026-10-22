@@ -1,6 +1,6 @@
 # Game Assets
 
-- `courtyard-demo.png`: screenshot of this project's original Three.js courtyard scene, captured on 2026-10-18. Geometry, materials, interaction, and UI are authored in this repository; no commercial game artwork is included.
+- `courtyard-demo.png`, `journey-canal.png`, `journey-garden.png`, `journey-ferry.png`: actual screenshots of this project's original Three.js courtyard and chapter scenes, refreshed on 2026-10-22. Geometry, materials, interaction, and UI are authored in this repository; no commercial game artwork is included.
 - Courtyard wind, bell, hinge/wheel and ignition sounds: synthesized at runtime with the Web Audio API in `../courtyard.js`; no external audio recordings or samples.
 - `mist-ferry-world.png`: original AI-generated environment artwork created for this project on 2026-09-19. No third-party game art, map, logo, or font was used as a source asset.
 - `dialogue-cast.png`: original 2x2 dialogue portrait sheet generated for this project with OpenAI's built-in image generation tool on 2026-09-19. Prompt direction: an original eerie storybook-anime Chinese fantasy cast (traveler, water engineer A-Lan, herb keeper Sang-Yu, ferryman), muted ink colors, no text, no existing game characters.

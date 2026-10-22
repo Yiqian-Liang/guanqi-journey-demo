@@ -910,3 +910,102 @@ body.courtyardMode .startBox { width: min(520px, calc(100% - 32px)); padding: 30
   .courtyardControls { margin-top: 4px; }
   .sceneWalk { bottom: 153px; }
 }
+
+.srOnly { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.sceneViewTools { display: none; position: absolute; z-index: 4; right: 24px; bottom: calc(var(--scene-footer, 180px) + 10px); align-items: center; gap: 2px; padding: 3px; border: 1px solid #a8bfb7; border-radius: 6px; background: #f2f7f3eb; }
+.sceneViewTools button { display: grid; place-items: center; width: 40px; min-height: 36px; padding: 0; border: 0; background: transparent; font-size: 22px; }
+.sceneViewTools output { min-width: 40px; text-align: center; color: #46645b; font-size: 11px; }
+.courtyardControls .sceneWalk { position: static; left: auto; bottom: auto; transform: none; }
+body.courtyardMode .sceneViewTools, body.journeyMode .sceneViewTools { display: flex; }
+.screenTool { position: absolute; left: 24px; bottom: calc(var(--scene-footer, 180px) + 10px); display: flex; gap: 2px; margin: 0; padding: 3px; border: 1px solid #a8bfb7; border-radius: 6px; background: #f2f7f3eb; pointer-events: auto; }
+.screenTool label { position: relative; display: grid; place-items: center; min-height: 36px; min-width: 50px; padding: 0 8px; color: #46645b; font-size: 12px; cursor: pointer; }
+.screenTool input { position: absolute; opacity: 0; width: 100%; height: 100%; margin: 0; }
+.screenTool label:has(:checked) { color: #fff; border-radius: 3px; background: #527c70; }
+.screenTool label:has(:focus-visible) { outline: 2px solid #a94831; }
+.courtyard:has(#screenToolPush:checked) #foldHandle, .courtyard:has(#screenToolFold:checked) #screenHandle { visibility: hidden !important; }
+.journey { display: none; }
+body.journeyMode { overflow: hidden; background: #dce8e5; }
+body.journeyMode .shell { display: block; }
+body.journeyMode .game { height: 100dvh; padding: 0; }
+body.journeyMode .canvasWrap { width: 100%; max-width: none; height: 100dvh; margin: 0; box-shadow: none; }
+body.journeyMode canvas { border: 0; }
+body.journeyMode #world3d { touch-action: none; }
+body.journeyMode .panel, body.journeyMode .bar, body.journeyMode .contextPanel, body.journeyMode .touch, body.journeyMode .sceneHud, body.journeyMode .causeTrail, body.journeyMode .siteReading { display: none; }
+body.journeyMode .journey { position: absolute; inset: 0; z-index: 3; display: block; pointer-events: none; }
+.journey button, .journey input { pointer-events: auto; }
+.journeyHead { position: absolute; inset: 22px 28px auto; display: flex; justify-content: space-between; gap: 16px; align-items: center; }
+.journeyHead p { margin: 0 0 4px; color: #56766c; font-size: 11px; }
+.journeyHead h1 { margin: 0; color: #254441; font-family: "Songti SC", "STSong", serif; font-size: 28px; }
+.journeyHead button { border-color: #9bb7b1; color: #3f665d; background: #edf4f0; font-size: 12px; }
+.journeyHeadTools { display: flex; align-items: center; gap: 12px; }
+.journeyChapters { position: absolute; top: 27px; left: 50%; display: flex; gap: 30px; margin: 0; padding: 8px 0; list-style: none; transform: translateX(-50%); color: #759086; font-size: 12px; white-space: nowrap; }
+.journeyChapters .current { color: #a43d3e; font-weight: 700; }
+.journeyChapters .done { color: #3d7861; }
+.journeyReadings { position: absolute; top: 89px; left: 50%; display: flex; gap: 28px; transform: translateX(-50%); color: #466b61; font-size: 12px; white-space: nowrap; }
+.journeyReadings span { display: flex; align-items: center; gap: 7px; }
+.journeyReadings span::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: #3496ad; }
+.journeyReadings span.bad { color: #ac5140; }
+.journeyReadings span.bad::before { background: #b86246; }
+.worldAction, .worldLabel { position: absolute; transform: translate(-50%,-50%); white-space: nowrap; }
+.worldAction { min-height: 40px; padding: 6px 12px; color: #fff7eb; border: 1px solid #f1d4b0; background: #a94f47; box-shadow: 0 3px 12px #2c493329; font-size: 12px; touch-action: none; }
+.worldAction:active { background: #8f3d39; }
+.worldAction.dragging { box-shadow: 0 0 0 5px #b85b3d26; }
+.worldLabel { padding: 3px 10px; border: 1px solid #9dbdb0; border-radius: 4px; color: #416f60; background: #edf6f0e8; font-size: 11px; }
+.journeyFooter { position: absolute; bottom: 0; left: 0; right: 0; min-height: 168px; padding: 16px 24px 13px; border-top: 1px solid #abc3b63b; background: #edf3f0f5; text-align: center; }
+.journeyFooter h2 { margin: 2px 0 4px; color: #294a43; font-family: "Songti SC", "STSong", serif; font-size: 23px; }
+.journeyFooter p { margin: 0; color: #658075; font-size: 12px; }
+.journeyFooter #journeyEyebrow { color: #a45d44; font-size: 10px; }
+.journeyCommands { display: flex; justify-content: center; flex-wrap: wrap; align-items: center; gap: 12px; margin: 12px 0 6px; }
+.journeyCommands button { min-width: 130px; min-height: 38px; padding: 6px 14px; font-size: 13px; }
+.journeyCommands label { display: flex; align-items: center; gap: 10px; color: #466b61; font-size: 12px; pointer-events: auto; }
+.journeyCommands input { width: 160px; padding: 0; accent-color: #a94f47; }
+.journeyCommands label span { min-width: 30px; }
+.journeyFooter .journeyFeedback { min-height: 18px; color: #8a7565; font-size: 11px; }
+body.journeyMode .dialogue, body.journeyMode .dialogue.narratorLine { z-index: 6; right: auto; bottom: 16px; left: 50%; width: min(650px, calc(100% - 32px)); transform: translateX(-50%); }
+body.journeyMode.dialogueOpen .journeyFooter { visibility: hidden; }
+body.journeyMode .toast { display: none; }
+.journeyNotebook { width: min(560px, calc(100% - 32px)); max-height: calc(100dvh - 32px); padding: 0; border: 1px solid #a9c0b2; border-radius: 6px; background: #f3f7f1; }
+.journeyNotebook::backdrop { background: #23483b59; backdrop-filter: blur(3px); }
+.journeyNotebook > header { position: sticky; top: 0; z-index: 2; display: flex; justify-content: space-between; align-items: center; padding: 12px 20px; border-bottom: 1px solid #c3d2c9; background: #f3f7f1; }
+.journeyNotebook h2 { margin: 0; font-size: 18px; }
+.journeyNotebook > header button { width: 40px; padding: 0; border: 0; background: transparent; font-size: 24px; }
+#journeyNotebook .panel { display: block; position: static; width: 100%; height: auto; min-height: 0; max-height: none; overflow: visible; border: 0; border-radius: 0; box-shadow: none; background: transparent; }
+#journeyNotebook #guide, #journeyNotebook #goal, #journeyNotebook #guideToggle, #journeyNotebook .guideControls { display: none; }
+#journeyExplore { margin: 0 20px 20px; }
+@media (max-width: 760px) {
+  .journeyHead { inset: 14px 16px auto; }
+  .journeyHead h1 { font-size: 23px; }
+  .journeyHead p { font-size: 10px; }
+  .journeyHead button { min-height: 36px; padding: 5px 9px; font-size: 11px; }
+  .journeyHeadTools { gap: 8px; }
+  .journeyChapters { top: 74px; gap: 24px; font-size: 11px; }
+  .journeyReadings { top: 114px; gap: 20px; font-size: 10px; }
+  .journeyFooter { min-height: 185px; padding: 12px 16px max(12px, env(safe-area-inset-bottom)); }
+  .journeyFooter h2 { font-size: 20px; }
+  .journeyFooter p { font-size: 11px; }
+  .journeyCommands { gap: 8px; margin-top: 10px; }
+  .journeyCommands button { min-width: 110px; font-size: 12px; }
+  .journeyCommands label { order: -1; width: 100%; justify-content: center; }
+  .journeyCommands input { width: 190px; }
+  .journeyFooter .journeyFeedback { font-size: 10px; }
+  .worldAction { padding: 5px 8px; font-size: 11px; }
+  .screenTool { left: 16px; }
+  .sceneViewTools { right: 16px; }
+}
+@media (max-width: 640px) and (max-height: 650px) {
+  .journeyHead { top: 9px; }
+  .journeyHead h1 { font-size: 21px; }
+  .journeyChapters { top: 57px; }
+  .journeyReadings { top: 91px; }
+  .journeyFooter { min-height: 161px; padding-top: 8px; padding-bottom: 8px; }
+  .journeyFooter h2 { font-size: 17px; }
+  .journeyFooter #journeyEyebrow { display: none; }
+  .journeyFooter p { font-size: 10px; }
+  .journeyCommands { margin-top: 5px; }
+  .journeyCommands button { min-height: 34px; }
+}
+@media (max-width: 360px) {
+  .journeyHead { gap: 8px; }
+  .journeyHead h1 { font-size: 19px; }
+  .journeyHeadTools { gap: 6px; }
+}

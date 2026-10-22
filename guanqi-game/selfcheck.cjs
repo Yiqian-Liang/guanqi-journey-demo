@@ -155,6 +155,57 @@ for (const [field, value] of [["trainingScreenFold", 2], ["trainingScreenFold", 
 }
 
 const source = fs.readFileSync(require.resolve("./game.js"), "utf8");
+const journey = game.makeState(imported);
+journey.started = true; journey.flags.reachedVillage = true;
+game.loadShape(journey);
+assert.equal(game.journeyState().action, "pickup");
+assert.equal(game.journeyEnter("garden"), false);
+assert.equal(game.journeyEnter("ferry"), false);
+assert.equal(game.journeyAction("install"), false);
+assert.equal(game.journeyAction("roots"), false);
+assert.equal(game.journeyAction("shield"), false);
+assert(game.journeyAction("pickup"));
+assert.equal(game.saveShape().inventory.axis_core, 1);
+assert(game.journeyAction("install"));
+assert.equal(game.saveShape().inventory.axis_core, 0);
+assert.equal(game.projectEnvironment().water, false, "repairing the gate alone must not bypass the root");
+assert(game.journeyAction("roots"));
+assert.equal(game.projectEnvironment().water, true);
+assert.equal(game.projectEnvironment().fog, 55);
+assert(game.journeyEnter("garden"));
+assert.throws(() => game.journeyAction("vent", "invalid"), /无效/);
+for (let i = 0; i < 2; i++) for (const vent of ["notch", "open", "closed"]) assert(game.journeyAction("vent", vent), "wind boards must remain reversible after any number of cycles");
+assert(game.journeyAction("vent", "notch"));
+assert.equal(game.journeyState().ready, true, "a gentle wind is one valid solution without waiting for time-of-day");
+assert(game.journeyAction("vent", "open"));
+assert.equal(game.routeOpen(), true);
+assert.equal(game.journeyState().ready, false, "opening a path is not enough if the seedlings are flattened");
+assert.equal(game.journeyEnter("ferry"), false);
+assert(game.journeyAction("shield"));
+assert.equal(game.journeyState().ready, true, "a shield with full wind is a second solution");
+game.loadShape(game.saveShape());
+assert.equal(game.journeyState().room, "garden");
+const epoch = game.viewState().epoch;
+game.loadShape(game.saveShape());
+assert.equal(game.viewState().epoch, epoch + 1, "loading the same stage must invalidate old movement and action queues");
+assert(game.journeyEnter("ferry"));
+assert(game.journeyAction("deliver"));
+assert.equal(game.saveShape().inventory.letter, 0);
+assert.equal(game.journeyState().delivered, true);
+assert.equal(game.journeyAction("deliver"), false);
+assert.equal(game.saveShape().endingSnapshot.route, "mixed");
+const previousChapter = game.saveShape(); delete previousChapter.journeyRoom; delete previousChapter.journeyEnabled;
+game.loadShape(previousChapter);
+assert.equal(game.journeyState().room, "ferry", "old completed saves must not restart the canal");
+assert.equal(game.journeyState().active, true);
+for (const [key,value] of [["journeyRoom","missing"],["journeyEnabled","true"]]) {
+  const damaged=game.saveShape(); damaged[key]=value;
+  assert.throws(()=>game.loadShape(damaged), /损坏/);
+}
+game.setJourneyEnabled(false);
+assert.equal(game.journeyState().active,false);
+game.setJourneyEnabled(true);
+assert.equal(game.journeyState().delivered,true);
 for (const skill of game.skillList) {
   const uses = source.split(skill.id).length - 1;
   assert(uses >= 2, `${skill.id} must be connected beyond its catalog row`);
@@ -168,6 +219,8 @@ assert(fs.existsSync(require.resolve("./vendor/THREE_LICENSE.txt")), "Three.js l
 const world3dSource = fs.readFileSync(require.resolve("./world3d.js"), "utf8");
 assert(world3dSource.includes("createCourtyard"), "the opening diorama must be wired into the renderer");
 assert(fs.existsSync(require.resolve("./courtyard.js")), "the interactive diorama must be bundled");
+assert(fs.existsSync(require.resolve("./journey.js")), "the full chapter stages must be bundled");
+assert(fs.existsSync(require.resolve("./scene-view.js")), "the shared zoom and pan controls must be bundled");
 
 const migrated = game.migrateLegacy({ hero: ["旧行者", imported[1]], flags: { waterRoute: true, done: true }, spirit: 42 });
 assert.equal(migrated.hero[2].source.type, "migrated_unknown");
@@ -175,6 +228,8 @@ assert.equal(migrated.environment.gateRepaired, true);
 assert.equal(migrated.environment.rootMode, "shaped");
 assert.equal(migrated.inventory.letter, 0);
 assert.equal(migrated.spirit, 42);
+assert.equal(migrated.journeyRoom, "ferry");
+assert.equal(migrated.flags.reachedVillage, true, "completed legacy chapters must not restart the opening");
 
 const olderV4 = game.makeState(imported);
 delete olderV4.guide;

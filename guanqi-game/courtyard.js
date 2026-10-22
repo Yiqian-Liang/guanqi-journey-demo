@@ -1,4 +1,5 @@
 import * as THREE from "./vendor/three.module.js";
+import { createSceneView } from "./scene-view.js?v=0.8.0";
 
 export function createCourtyard(renderer, canvas, game) {
   const scene = new THREE.Scene();
@@ -7,6 +8,7 @@ export function createCourtyard(renderer, canvas, game) {
   camera.position.set(12, 17, 22);
   camera.lookAt(0, 0, -1.65);
   camera.updateMatrixWorld();
+  const view=createSceneView(renderer,canvas,camera,{width:15.4,height:11.7,active:()=>game.viewState().training.active,header:".courtyardLegend",footer:".courtyardFooter"});
   const palette = {};
   function mat(color, options = {}) {
     const key = color + JSON.stringify(options);
@@ -141,12 +143,12 @@ export function createCourtyard(renderer, canvas, game) {
   const bellWaves=[0,1,2].map(()=>{const ring=mesh(new THREE.RingGeometry(.3,.32,40),new THREE.MeshBasicMaterial({color:"#5ca9ad",transparent:true,opacity:0,side:THREE.DoubleSide,depthWrite:false}),[-4.5,.2,.1]);ring.rotation.x=-Math.PI/2;return ring;});
 
   const wind = [], windBranches = [], windDots = [];
-  for(let i=0;i<5;i++) {
+  for(let i=0;i<3;i++) {
     const geo=new THREE.BufferGeometry();geo.setAttribute("position",new THREE.BufferAttribute(new Float32Array(48*3),3));
     const ribbon=new THREE.Line(geo,new THREE.LineBasicMaterial({color:i%2?"#8ad2dd":"#269ab5",transparent:true,opacity:.68}));
     scene.add(ribbon);wind.push(ribbon);
     const branch=new THREE.Line(geo.clone(),ribbon.material.clone());scene.add(branch);windBranches.push(branch);
-    for(let j=0;j<4;j++) {const dot=mesh(new THREE.ConeGeometry(.06,.2,5),mat("#2e9fb9",{emissive:"#2e9fb9",emissiveIntensity:.25}),[0,0,0]);windDots.push({object:dot,lane:i,phase:(j%2)/2,branch:j>=2});}
+    for(let j=0;j<2;j++) {const dot=mesh(new THREE.ConeGeometry(.06,.2,5),mat("#2e9fb9",{emissive:"#2e9fb9",emissiveIntensity:.25}),[0,0,0]);windDots.push({object:dot,lane:i,phase:j*.4,branch:j===1});}
   }
   const lightMaterial=new THREE.MeshBasicMaterial({color:"#ffd884",side:THREE.DoubleSide,transparent:true,opacity:.03,depthWrite:false});
   const lightGeometry=new THREE.BufferGeometry();lightGeometry.setAttribute("position",new THREE.BufferAttribute(new Float32Array(9),3));
@@ -190,7 +192,7 @@ export function createCourtyard(renderer, canvas, game) {
   const handle=document.getElementById("screenHandle"),foldHandle=document.getElementById("foldHandle"),tinderHandle=document.getElementById("tinderHandle");
   const lampHandle=document.getElementById("lampHandle"),gateHandle=document.getElementById("gateHandle"),bellLabel=document.getElementById("bellLabel");
   const lampButton=document.getElementById("courtyardLamp"),soundToggle=document.getElementById("courtyardSound");
-  let slide=0,fold=0,opened=0,seed="",currentNode="start",queue=[],dragging=false,foldDragging=false,dragOffset=0,lastTime=0,viewport={top:0,height:1,width:1};
+  let slide=0,fold=0,opened=0,seed="",epoch=-1,currentNode="start",queue=[],dragging=false,foldDragging=false,dragOffset=0,lastTime=0,viewport={top:0,height:1,width:1};
   let foldStart=0,foldPointer=0,fireDragging=false,fireMoved=false,fireStart=null,firePoint=null,pendingLight=false;
   let previousBridgeOpen=false,previousIgnition=0,previousLit=false,lastBellAt=-10,bellStrikes=0,audio=null,sparkAge=10;
   function ray(event,height=0) {
@@ -201,8 +203,7 @@ export function createCourtyard(renderer, canvas, game) {
     return raycaster.ray.intersectPlane(floor,new THREE.Vector3());
   }
   function project(point) {
-    const p=point.clone().project(camera);
-    return {x:(p.x+1)*viewport.width/2,y:viewport.top+(1-p.y)*viewport.height/2};
+    return view.project(point);
   }
   function railProgress(event) {
     const rect=canvas.getBoundingClientRect(),p={x:event.clientX-rect.left,y:event.clientY-rect.top};
@@ -250,6 +251,7 @@ export function createCourtyard(renderer, canvas, game) {
   }
   canvas.addEventListener("pointerup",event=>{
     if(!game.viewState().training.active)return;
+    if(view.dragged)return;
     const state=game.viewState();if(!state.started||state.dialogue||state.training.complete)return;
     const p=ray(event);if(!p)return;
     if(Math.abs(p.x)<2&&p.z < -5){walkTo("gate");return;}
@@ -308,26 +310,23 @@ export function createCourtyard(renderer, canvas, game) {
     osc.connect(gain);gain.connect(master);osc.start();osc.stop(t+duration);osc.onended=()=>{osc.disconnect();gain.disconnect();};
   }
   function silence(){if(audio)audio.master.gain.setTargetAtTime(0,audio.context.currentTime,.06);}
-  soundToggle.onchange=()=>{if(soundToggle.checked)startAudio();else silence();};
+  const journeySound=document.getElementById("journeySound");
+  for(const toggle of [soundToggle,journeySound])toggle.onchange=()=>{soundToggle.checked=journeySound.checked=toggle.checked;if(toggle.checked)startAudio();else silence();};
+  function ambience(wind,water){
+    if(audio){
+      audio.master.gain.setTargetAtTime(soundToggle.checked&&!document.hidden?.18:0,audio.context.currentTime,.08);
+      audio.windGain.gain.setTargetAtTime(.02+wind*.05+water*.07,audio.context.currentTime,.1);
+    }
+    return audio?.context.state||"idle";
+  }
   document.addEventListener("pointerdown",startAudio,{once:true});
   document.addEventListener("visibilitychange",()=>{if(document.hidden)silence();});
   function fit() {
-    const width=canvas.clientWidth,height=canvas.clientHeight,mobile=width<=640;
-    const compact=mobile&&height<=650;
-    const top=compact?114:mobile?155:height<600?85:115;
-    const bottom=compact?190:mobile?225:height<600?155:195;
-    viewport={top,height:Math.max(100,height-top-bottom),width};
-    const ratio=width/viewport.height;
-    const viewHeight=Math.max(13.4,16.4/ratio);
-    camera.left=-viewHeight*ratio/2;camera.right=viewHeight*ratio/2;camera.top=viewHeight/2;camera.bottom=-viewHeight/2;
-    camera.updateProjectionMatrix();
-    renderer.setViewport(0,0,width,height);renderer.setScissorTest(false);renderer.clear();
-    renderer.setViewport(0,height-top-viewport.height,width,viewport.height);
-    renderer.setScissor(0,height-top-viewport.height,width,viewport.height);renderer.setScissorTest(true);
+    viewport=view.frame();
   }
   function render(state,time) {
     const dt=Math.min(.05,lastTime?(time-lastTime)/1000:.016);lastTime=time;
-    if(seed!==state.seed){seed=state.seed;slide=state.training.slide;fold=state.training.fold;opened=state.training.bridgeOpen?1:0;queue=[];pendingLight=false;currentNode="start";avatar.position.set(-3.6,.15,2.6);destination.visible=false;previousIgnition=0;previousLit=state.training.lampLit;sparkAge=10;bellStrikes=0;lastBellAt=-10;}
+    if(seed!==state.seed||epoch!==state.epoch){view.reset();seed=state.seed;epoch=state.epoch;slide=state.training.slide;fold=state.training.fold;opened=state.training.bridgeOpen?1:0;queue=[];pendingLight=false;currentNode=state.training.complete?"gate":"start";const node=navNodes.find(n=>n.id===currentNode);avatar.position.set(node.x,.15,node.z);destination.visible=false;previousIgnition=0;previousLit=state.training.lampLit;sparkAge=10;bellStrikes=0;lastBellAt=-10;}
     fit();
     const previousSlide=slide;
     slide=THREE.MathUtils.damp(slide,state.training.slide,dragging?30:10,dt);
@@ -341,7 +340,7 @@ export function createCourtyard(renderer, canvas, game) {
     // shortcut: rays sample the hinged panels; downstream flow uses authored curves until more obstacles are introduced.
     const curves=[],branches=[];
     wind.forEach((ribbon,i)=>{
-      const flow=layout.flows[i*2],y=.7+i*.08,z=flow.z;
+      const flow=layout.flows[i*4],y=.7+i*.08,z=flow.z;
       const end=flow.hit?new THREE.Vector3(flow.hit.x+.08,y,z):new THREE.Vector3(-5.6,y,z);
       const curve=new THREE.CatmullRomCurve3([new THREE.Vector3(5.9,y,z),new THREE.Vector3((5.9+end.x)/2,y,z+.025*Math.sin(seconds+i)),end]);curves.push(curve);
       const around=fold<0?-1.65:2.3;
@@ -407,12 +406,7 @@ export function createCourtyard(renderer, canvas, game) {
     handle.style.visibility=state.training.complete?"hidden":"visible";
     foldHandle.disabled=handle.disabled;foldHandle.style.visibility=handle.style.visibility;
     placeLabel(handle,screen.localToWorld(new THREE.Vector3(0,1.45,-.95)));
-    const pushGrip=project(screen.localToWorld(new THREE.Vector3(0,1.45,-.95)));
-    const foldGrip=project(wing.localToWorld(new THREE.Vector3(0,2.05,1.4)));
-    const dx=foldGrip.x-pushGrip.x,dy=foldGrip.y-pushGrip.y,distance=Math.hypot(dx,dy);
-    // Keep both touch targets reachable when the folded leaves overlap on screen.
-    if(distance<58){foldGrip.x=pushGrip.x+(dx||1)/Math.max(distance,1)*58;foldGrip.y=pushGrip.y+dy/Math.max(distance,1)*58;}
-    foldHandle.style.left=`${foldGrip.x}px`;foldHandle.style.top=`${foldGrip.y}px`;
+    placeLabel(foldHandle,wing.localToWorld(new THREE.Vector3(0,2.05,1.4)));
     placeLabel(lampHandle,new THREE.Vector3(-1.3,2.1,-.25));
     placeLabel(bellLabel,new THREE.Vector3(-4.5,2.5,.1));
     placeLabel(gateHandle,new THREE.Vector3(-.8,3.3,-7.2));
@@ -427,5 +421,5 @@ export function createCourtyard(renderer, canvas, game) {
     renderer.setScissorTest(false);renderer.setViewport(0,0,canvas.clientWidth,canvas.clientHeight);
     canvas.dataset.courtyard=JSON.stringify({slide:Number(slide.toFixed(3)),fold:Number(fold.toFixed(3)),screenX:Number(layout.x.toFixed(3)),screenZ:Number(layout.z.toFixed(3)),shelter:Number(shelter.toFixed(3)),bellWind:Number(layout.bellWind.toFixed(3)),bellRinging:layout.bellRinging,bellStrikes,sound:audio?.context.state||"idle",muted:!soundToggle.checked,lighting:igniting||pendingLight,lightBlocked:layout.lightBlocked,bridge:Number(opened.toFixed(3)),walking:queue.length>0,node:currentNode});
   }
-  return {render,silence};
+  return {render,silence,startAudio,tone,ambience};
 }

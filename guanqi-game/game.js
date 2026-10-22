@@ -180,22 +180,17 @@
       { speaker: "守灯人", portrait: "ferryman", text: "帮我护住这盏灯，也让桥头的风铃继续响。你看，这架屏风还可以折。" }
     ],
     village: [
-      { speaker: "阿澜", portrait: "a_lan", text: "渡口没消失，是旧渠断了，雾才压住了路。" },
-      { speaker: "阿澜", portrait: "a_lan", text: "水门的轴芯落在旧渠外侧。找到它、装回去，再把堵根牵开。" },
-      { speaker: "行旅人", portrait: "traveler", text: "先让水重新走，路自然会出现。明白了。" }
+      { speaker: "阿澜", portrait: "a_lan", text: "信是送去渡口的吧？旧渠断了，水车也停了。跟我来，轴芯就落在水门旁。" }
     ],
     canal: [
       { speaker: "旁白", portrait: "narrator", text: "水尺停在最低刻度。断轴旁的工具袋还很新，像有人刚刚放下。" },
       { speaker: "行旅人", portrait: "traveler", text: "轴芯找到了。先装回水门，再慢慢牵开堵住水路的根。" }
     ],
     herb: [
-      { speaker: "旁白", portrait: "narrator", text: "药圃背风，苦香暂时压住了湿冷。这里适合等晨雾散开。" },
-      { speaker: "行旅人", portrait: "traveler", text: "等雾势降到四十五，我就继续去渡口。" }
+      { speaker: "桑榆", portrait: "sang_yu", text: "水声回来了。留一道风缝，雾就会往渡口退。别让风直冲药苗；旁边那面竹屏，也能帮忙。" }
     ],
     ferry: [
-      { speaker: "摆渡人", portrait: "ferryman", text: "你走的不是最短的路，却是一条不会吞人的路。" },
-      { speaker: "行旅人", portrait: "traveler", text: "我来送信。" },
-      { speaker: "摆渡人", portrait: "ferryman", text: "走到码头边来。雾听见水声，就不会再拦你。" }
+      { speaker: "摆渡人", portrait: "ferryman", text: "水声先到了，你也到了。来栈桥这边，把信交给我吧。" }
     ],
     ending: [
       { speaker: "摆渡人", portrait: "ferryman", text: "信我收到了。水声回来了，雾隐渡也该重新开门。" },
@@ -219,6 +214,7 @@
   let worldArt;
   let dialogueQueue = [];
   let dialogueIndex = 0;
+  let viewEpoch = 0;
 
   const byId = id => spots.find(s => s.id === id);
   const skill = id => skillList.find(s => s.id === id);
@@ -460,7 +456,7 @@
     return {
       schemaVersion: 4, contentVersion: "0.4.0", cultureProfileId: "GQ-CULTURE-0.3", balanceProfileId: "GQ-BALANCE-0.4",
       started: false, hero: clone(hero), worldSeed: newSeedHex(), revision: 0, tick: 0, dayIndex: 0, phase: 0, phaseCount: 0,
-      spirit: 100, player: { x: 92, y: 205 }, facing: { x: 0, y: -1 }, keys: {}, selectedElement: "wood", selectedSkill: "wood_shape", lens: false, viewMode: "close",
+      spirit: 100, player: { x: 92, y: 205 }, facing: { x: 0, y: -1 }, keys: {}, selectedElement: "wood", selectedSkill: "wood_shape", lens: false, viewMode: "close", journeyEnabled: true, journeyRoom: "canal",
       learned: Object.fromEntries(skillList.filter(s => s.core).map(s => [s.id, true])),
       flags: { letterReceived: true },
       environment: {
@@ -715,6 +711,73 @@
     markDirty();
   }
 
+  function journeyState(s = state) {
+    const env = projectEnvironment(s);
+    const room = s.journeyRoom;
+    const ready = room === "canal" ? env.water : room === "garden" ? routeOpen(s) && env.herb >= 60 : !!s.flags.chapterComplete;
+    const action = room === "canal" ? !s.flags.canalItemsTaken ? "pickup" : !s.environment.gateRepaired ? "install" : s.environment.rootMode === "blocked" ? "roots" : "garden" : room === "garden" ? ready ? "ferry" : "vent" : s.flags.chapterComplete ? "complete" : "deliver";
+    return {
+      active: !!s.journeyEnabled && !!s.flags.reachedVillage,
+      room, ready, action, itemsTaken: !!s.flags.canalItemsTaken,
+      repaired: s.environment.gateRepaired, rootMode: s.environment.rootMode,
+      vent: s.environment.ventState, shield: s.environment.herbShield,
+      reachedDock: !!s.flags.reachedDock, delivered: !!s.flags.letterDelivered,
+      feedback: s.log[0] || ""
+    };
+  }
+
+  function journeyEnter(room) {
+    if (!["canal", "garden", "ferry"].includes(room)) throw new Error("未知行旅场景");
+    if (!state.started || dialogueOpen() || !state.flags.reachedVillage) return false;
+    if (room === "garden" && !projectEnvironment().water && !projectEnvironment().wind && !state.flags.reachedDock) return false;
+    if (room === "ferry" && !(routeOpen() && projectEnvironment().herb >= 60) && !state.flags.reachedDock) return false;
+    state.journeyRoom = room;
+    state.keys = {};
+    const destination = byId({ canal: "canal", garden: "herb", ferry: "gate" }[room]);
+    state.player = { x: destination.x, y: destination.y };
+    state.revision += 1;
+    if (room === "garden") playScene("herb");
+    if (room === "ferry") playScene("ferry");
+    markDirty();
+    return true;
+  }
+
+  function journeyAction(action, value) {
+    if (!state.started || dialogueOpen() || !journeyState().active) return false;
+    const room = state.journeyRoom;
+    if (room === "canal" && ["pickup", "install", "roots"].includes(action)) {
+      state.player = { x: byId("canal").x, y: byId("canal").y };
+      if (action === "pickup" && !state.flags.canalItemsTaken) { observeSpot(byId("canal")); return true; }
+      if (action === "install") return manualAction("repairGate", byId("canal"));
+      if (action === "roots") return manualAction("roots", byId("canal"));
+    }
+    if (room === "garden") {
+      if (action === "vent") {
+        if (!["closed", "notch", "open"].includes(value)) throw new Error("风板位置无效");
+        setFlag("planExplained");
+        return manualAction("vent", byId("wall"), value);
+      }
+      if (action === "shield") return manualAction("shield", byId("herb"));
+    }
+    if (room === "ferry" && action === "deliver" && routeOpen()) {
+      state.player = { x: byId("ferry").x, y: byId("ferry").y };
+      firstEntry();
+      // The handover has its own ending scene; the arrival is visible in the stage.
+      closeDialogue();
+      return manualAction("deliver", byId("ferry"));
+    }
+    return false;
+  }
+
+  function setJourneyEnabled(enabled) {
+    if (typeof enabled !== "boolean") throw new Error("行旅模式无效");
+    state.journeyEnabled = enabled;
+    if (!enabled) state.guide.enabled = false;
+    state.viewMode = "close";
+    state.keys = {};
+    markDirty();
+  }
+
   function transact(id, cost, guard, apply, success, repeat = false) {
     const error = guard ? guard() : "";
     if (error) { notify(error); return false; }
@@ -878,17 +941,17 @@
     return ` ${npcDefs[id].name}以${tg}·${coopEntries[tg][0]}协作。`;
   }
 
-  function manualAction(kind, s) {
+  function manualAction(kind, s, value) {
     if (kind === "repairGate") return transact("manual:repairGate", 0,
       () => state.inventory.axis_core ? "" : "先在水门外侧取得旧轴芯。",
       () => { state.inventory.axis_core -= 1; state.environment.gateRepaired = true; }, "用场景工具装回轴芯，水门修复。");
     if (kind === "roots") return transact("manual:roots", 0,
       () => state.environment.gateRepaired ? "" : "先修好水门，才能核对水流后果。",
       () => state.environment.rootMode = "shaped", "你慢慢牵开堵渠根，保留活组织并让出水路。");
-    if (kind === "vent") return transact("manual:vent:" + state.environment.ventState, 0,
+    if (kind === "vent") return transact("manual:vent:" + (value || state.environment.ventState), 0,
       () => state.flags.planExplained ? "" : "先观察两侧风铃和风板受力。",
-      () => state.environment.ventState = state.environment.ventState === "closed" ? "notch" : state.environment.ventState === "notch" ? "open" : "closed",
-      "你用手柄调整风板；环境变化会立刻反映在雾势与药圃。");
+      () => state.environment.ventState = value || (state.environment.ventState === "closed" ? "notch" : state.environment.ventState === "notch" ? "open" : "closed"),
+      "你用手柄调整风板；环境变化会立刻反映在雾势与药圃。", true);
     if (kind === "shield") return transact("manual:shield", 0, null,
       () => { state.environment.herbShield = true; setFlag("protectionActionCompleted"); }, "用场景材料加固护屏，药圃获得保护。");
     if (kind === "trace") return transact("trace:" + state.phaseCount, 0,
@@ -1279,6 +1342,11 @@
     if (typeof payload.guide.hintStep !== "string") payload.guide.hintStep = "";
     if (payload.viewMode === undefined) payload.viewMode = "close";
     if (!["close","map"].includes(payload.viewMode)) throw new Error("镜头状态损坏");
+    if (payload.journeyEnabled === undefined) payload.journeyEnabled = true;
+    if (typeof payload.journeyEnabled !== "boolean") throw new Error("行旅模式损坏");
+    if (payload.journeyRoom === undefined) payload.journeyRoom = payload.flags.reachedDock || payload.flags.chapterComplete ? "ferry" : projectEnvironment(payload).water || projectEnvironment(payload).wind ? "garden" : "canal";
+    if (!["canal", "garden", "ferry"].includes(payload.journeyRoom)) throw new Error("行旅场景损坏");
+    if (!["closed", "notch", "open"].includes(payload.environment.ventState) || typeof payload.environment.gateRepaired !== "boolean" || typeof payload.environment.herbShield !== "boolean") throw new Error("水风装置状态损坏");
     if (!payload.facing || !Number.isFinite(payload.facing.x) || !Number.isFinite(payload.facing.y) || !Math.hypot(payload.facing.x, payload.facing.y)) payload.facing = { x: 0, y: -1 };
     else {
       const length = Math.hypot(payload.facing.x, payload.facing.y);
@@ -1315,7 +1383,11 @@
       if (old.flags.waterRoute) { next.environment.gateRepaired = true; next.environment.rootMode = "shaped"; }
       if (old.flags.windRoute) next.environment.ventState = "open";
       if (old.flags.herb) next.environment.herbShield = true;
-      if (old.flags.done || old.flags.chapterComplete) { next.flags.chapterComplete = true; next.flags.letterDelivered = true; next.inventory.letter = 0; }
+      if (old.flags.done || old.flags.chapterComplete) {
+        next.flags.chapterComplete = next.flags.letterDelivered = next.flags.reachedVillage = next.flags.reachedDock = true;
+        next.environment.trainingBridgeOpen = true;
+        next.journeyRoom = "ferry"; next.inventory.letter = 0;
+      }
     }
     Object.entries(old.npcs || {}).forEach(([id, npc]) => {
       if (!next.npcs[id]) return;
@@ -1343,9 +1415,14 @@
   function loadShape(payload) {
     closeDialogue();
     state = validateSave(clone(payload));
+    viewEpoch += 1;
     state.keys = {};
     state.started = true;
-    if (typeof document !== "undefined") document.getElementById("start").classList.add("hide");
+    if (typeof document !== "undefined") {
+      document.getElementById("start").classList.add("hide");
+      const notebook = document.getElementById("journeyNotebook");
+      if (notebook.open) notebook.close();
+    }
     markDirty();
   }
 
@@ -1433,6 +1510,7 @@
   }
 
   function draw() {
+    if (!state.flags.reachedVillage || journeyState().active) return;
     const c = document.getElementById("game"), g = c.getContext("2d"), env = projectEnvironment(), camera = cameraFor(c), miniMap = c.classList.contains("miniMap");
     g.clearRect(0, 0, c.width, c.height);
     g.imageSmoothingEnabled = true;
@@ -1549,7 +1627,7 @@
       const p = state.player, speed = 190 * delta;
       let dx = (state.keys.ArrowRight || state.keys.d ? 1 : 0) - (state.keys.ArrowLeft || state.keys.a ? 1 : 0);
       let dy = (state.keys.ArrowDown || state.keys.s ? 1 : 0) - (state.keys.ArrowUp || state.keys.w ? 1 : 0);
-      if ((dx || dy) && state.flags.reachedVillage) {
+      if ((dx || dy) && state.flags.reachedVillage && !journeyState().active) {
         if (state.viewMode === "close") [dx, dy] = [dx * .878 + dy * .479, -dx * .479 + dy * .878];
         const m = Math.hypot(dx, dy);
         state.facing = { x: dx / m, y: dy / m };
@@ -1596,6 +1674,7 @@
     fold.setAttribute("aria-valuetext", `${Math.round(Math.abs(env.trainingScreenFold) * 77)}度，${env.trainingScreenFold < 0 ? "向内折" : "向外折"}`);
     document.getElementById("courtyardLamp").disabled = !state.started || env.trainingLampLit || env.trainingIgnition > 0 || dialogueOpen();
     document.getElementById("courtyardLamp").textContent = env.trainingIgnition > 0 ? "引火中…" : env.trainingLampLit ? "灯已点亮" : "引火点灯";
+    document.getElementById("courtyardLamp").classList.toggle("hide", env.trainingBridgeOpen);
     document.getElementById("courtyardReset").disabled = complete || dialogueOpen() || (!env.trainingScreenSlide && !env.trainingScreenFold);
     document.getElementById("courtyardNext").classList.toggle("hide", !complete);
     document.getElementById("courtyardControls").classList.toggle("hide", complete);
@@ -1611,14 +1690,17 @@
   function syncPanel() {
     const env = projectEnvironment(), current = skill(state.selectedSkill), budget = chartBudget(state.hero[1]), s = nearestSpot(), guide = activeGuide();
     const inCourtyard = !state.flags.reachedVillage;
-    if (inCourtyard) state.viewMode = "close";
+    const inJourney = journeyState().active;
+    if (inCourtyard || inJourney) state.viewMode = "close";
     document.body.classList.toggle("courtyardMode", inCourtyard);
+    document.body.classList.toggle("journeyMode", inJourney);
     syncCourtyard();
-    document.body.classList.toggle("guidedMode", !!(guide && !guide.complete));
+    document.body.classList.toggle("guidedMode", !!(guide && !guide.complete && !inCourtyard && !inJourney));
     const mapCanvas = document.getElementById("game");
     mapCanvas.classList.remove("canvasHidden");
     mapCanvas.classList.toggle("miniMap", state.viewMode === "close");
-    if (inCourtyard) mapCanvas.classList.add("canvasHidden");
+    if (inCourtyard || inJourney) mapCanvas.classList.add("canvasHidden");
+    document.getElementById("returnJourney").classList.toggle("hide", inCourtyard || inJourney);
     document.getElementById("world3d").classList.toggle("canvasHidden", state.viewMode === "map");
     document.getElementById("viewToggle").textContent = state.viewMode === "close" ? "总览地图" : "返回现场";
     document.getElementById("lensToggle").textContent = state.lens ? "收起观局" : "观局";
@@ -1790,6 +1872,7 @@
       const old = localStorage.getItem("guanqi-save-v4-current");
       if (old) localStorage.setItem("guanqi-save-v4-previous", old);
       state = makeState(draft);
+      viewEpoch += 1;
       state.started = true;
       document.getElementById("start").classList.add("hide");
       notify(`${draft[0]}携带渡口信出发；完整四柱从此固定。`);
@@ -1847,6 +1930,18 @@
 
   function initDom() {
     initCreation();
+    document.getElementById("returnJourney").onclick = () => setJourneyEnabled(true);
+    const notebook = document.getElementById("journeyNotebook"), panel = document.querySelector(".panel");
+    document.getElementById("journeyNotes").onclick = () => {
+      notebook.querySelector(".notebookContent").appendChild(panel);
+      notebook.showModal();
+    };
+    document.getElementById("journeyNotesClose").onclick = () => notebook.close();
+    notebook.addEventListener("close", () => {
+      document.querySelector(".shell").appendChild(panel);
+      document.getElementById("journeyNotes").focus();
+    });
+    document.getElementById("journeyExplore").onclick = () => { notebook.close(); setJourneyEnabled(false); };
     document.querySelectorAll("[data-element]").forEach(b => b.onclick = () => chooseElement(b.dataset.element));
     document.querySelectorAll("[data-tab]").forEach(b => b.onclick = () => {
       document.querySelectorAll("[data-tab]").forEach(x => x.classList.toggle("active", x === b));
@@ -1863,8 +1958,8 @@
     document.getElementById("lensToggle").onclick = toggleLens;
     document.getElementById("dialogueNext").onclick = advanceDialogue;
     document.getElementById("dialogueSkip").onclick = closeDialogue;
-    document.getElementById("screenSlide").oninput = event => setScreenSlide(Number(event.target.value) / 100);
-    document.getElementById("screenFold").oninput = event => setScreenFold(Number(event.target.value) / 100);
+    document.getElementById("screenSlide").oninput = event => { document.getElementById("screenToolPush").checked = true; setScreenSlide(Number(event.target.value) / 100); };
+    document.getElementById("screenFold").oninput = event => { document.getElementById("screenToolFold").checked = true; setScreenFold(Number(event.target.value) / 100); };
     document.getElementById("courtyardReset").onclick = () => { setScreenSlide(0); setScreenFold(0); };
     document.getElementById("courtyardLamp").onclick = () => trainingAction("courtyard_light");
     document.getElementById("courtyardNext").onclick = leaveCourtyard;
@@ -1884,9 +1979,11 @@
     document.getElementById("guideDismiss").onclick = () => setGuide(false);
     document.getElementById("guideToggle").onclick = () => setGuide(!(state.guide && state.guide.enabled));
     document.getElementById("newGame").onclick = () => {
+      if (notebook.open) notebook.close();
       closeDialogue();
       draft = randomHero(state.hero[0]);
       renderDraft();
+      document.getElementById("continue").classList.toggle("hide", !localStorage.getItem("guanqi-save-v4-current"));
       document.getElementById("start").classList.remove("hide");
     };
     document.getElementById("touchObserve").onclick = toggleLens;
@@ -1899,6 +1996,7 @@
       b.onclick = () => moveStep(key);
     });
     addEventListener("keydown", e => {
+      if (notebook.open) return;
       if (e.key === "Escape" && !document.getElementById("courtyardSource").classList.contains("hide")) {
         document.getElementById("courtyardSourceClose").click();
         return;
@@ -1911,6 +2009,7 @@
         return;
       }
       if (!state.flags.reachedVillage) return;
+      if (journeyState().active) return;
       if ("wasd".includes(e.key.toLowerCase()) || e.key.startsWith("Arrow")) { state.keys[e.key.toLowerCase() === e.key ? e.key.toLowerCase() : e.key] = true; if (!e.repeat && e.key.startsWith("Arrow")) moveStep(e.key, 12); e.preventDefault(); }
       if ("12345".includes(e.key)) chooseElement(Object.keys(elementNames)[+e.key - 1]);
       if (e.key.toLowerCase() === "z") chooseSkill(-1);
@@ -1933,6 +2032,7 @@
     return {
       started: state.started,
       seed: state.worldSeed,
+      epoch: viewEpoch,
       dialogue: dialogueOpen(),
       viewMode: state.viewMode,
       lens: !!state.lens,
@@ -1956,7 +2056,8 @@
         transferSolved: !!state.flags.trainingTransferSolved
       },
       routeOpen: routeOpen(),
-      chapterComplete: !!state.flags.chapterComplete
+      chapterComplete: !!state.flags.chapterComplete,
+      journey: journeyState()
     };
   }
 
@@ -1966,6 +2067,7 @@
     deriveChart, generate, encodeSelection, decodeSelection, importHero, castCost, makeState, migrateLegacy, guideStep,
     pillarVoid, naYinFor, baziTable, chartClassics, viewState, setViewMode,
     courtyardLayout, courtyardPath, setScreenSlide, setScreenFold, advanceCourtyard, trainingAction, completeCourtyard, leaveCourtyard,
+    journeyState, journeyEnter, journeyAction, setJourneyEnabled,
     courtyardData: { nodes: clone(courtyardNodes), links: clone(courtyardLinks) },
     worldData: { spots: clone(spots), links: clone(links) }
   };
